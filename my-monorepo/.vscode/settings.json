@@ -1,0 +1,6 @@
+{
+  "terminal.integrated.env.linux": {
+    "PATH": "/usr/local/node-22.15.0/bin:${env:PATH}"
+  },
+  "npm.packageManager": "pnpm"
+}

@@ -1,0 +1,14 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "test": {
+      "extends": false
+    },
+    "test:cov": {
+      "extends": false
+    },
+    "test:e2e": {
+      "extends": false
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "my-monorepo",
+  "private": true,
+  "packageManager": "pnpm@10.28.1",
+  "scripts": {
+    "preinstall": "node -e \"const ua=process.env.npm_config_user_agent||''; if(!ua.includes('pnpm')){console.error('❌ This repo uses pnpm. Please run: pnpm install'); process.exit(1)}\"",
+    "compose:dev:up": "docker compose -f docker-compose.dev.yml up -d",
+    "compose:dev:stop": "docker compose -f docker-compose.dev.yml stop",
+    "compose:dev:stop:backend": "docker compose -f docker-compose.dev.yml stop backend",
+    "compose:dev:down": "docker compose -f docker-compose.dev.yml down",
+    "compose:dev:rebuild": "docker compose -f docker-compose.dev.yml up -d --build --force-recreate",
+    "compose:deps:up": "docker compose -f docker-compose.dev.yml -f docker-compose.dev.expose.yml up -d postgres redis",
+    "compose:deps:down": "docker compose -f docker-compose.dev.yml -f docker-compose.dev.expose.yml down",
+    "dev:local": "pnpm -s compose:dev:down && pnpm -s compose:deps:up && turbo dev",
+    "compose:prod:up": "docker compose -f docker-compose.production.yml up -d",
+    "compose:prod:down": "docker compose -f docker-compose.production.yml down",
+    "compose:prod:build": "docker compose -f docker-compose.production.yml build",
+    "compose:prod:rebuild": "docker compose -f docker-compose.production.yml up -d --build --force-recreate",
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "postinstall": "pnpm --filter backend prisma:generate"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@prisma/engines",
+      "esbuild",
+      "prisma",
+      "unrs-resolver"
+    ]
+  },
+  "devDependencies": {
+    "turbo": "latest"
+  }
+}
