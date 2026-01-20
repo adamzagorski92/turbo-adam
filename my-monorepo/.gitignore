@@ -21,4 +21,3 @@ yarn-error.log*
 
 # TLS certs (production)
 certs/
-apps/nginx/certs/

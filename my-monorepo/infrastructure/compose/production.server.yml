@@ -1,26 +1,30 @@
-# Production compose scaffold.
-# Notes:
-# - Does NOT use `-v` / does NOT remove volumes; DB data persists.
-# - Does NOT publish Postgres/Redis ports to the host by default.
-# - Exposes backend and web only.
+# Server-only production compose.
 #
-# You will likely want to:
-# - provide production Dockerfiles (apps/backend/Dockerfile, apps/web/Dockerfile)
-# - add a reverse proxy (nginx/traefik) and only expose web (80/443)
-# - use secrets/managed DB in real production
+# This file is meant to live on the server under $APP_DIR and pull images from GHCR.
+# It intentionally does NOT contain any `build:` sections, so the server never needs
+# a full repo checkout and cannot accidentally build dev images.
 
 services:
+  migrate:
+    image: ghcr.io/adamzagorski92/turbo-adam-migrate:${IMAGE_TAG:-latest}
+    container_name: my-migrate
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      - postgres
+    networks:
+      - private
+    restart: "no"
+
   nginx:
     image: ghcr.io/adamzagorski92/turbo-adam-nginx:${IMAGE_TAG:-latest}
-    build:
-      context: .
-      dockerfile: apps/nginx/Dockerfile
     container_name: my-nginx
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./certs:/etc/nginx/certs:ro
+      - ../../certs:/etc/nginx/certs:ro
     depends_on:
       - web
       - backend
@@ -29,9 +33,6 @@ services:
     restart: unless-stopped
 
   backend:
-    build:
-      context: .
-      dockerfile: apps/backend/Dockerfile
     image: ghcr.io/adamzagorski92/turbo-adam-backend:${IMAGE_TAG:-latest}
     container_name: my-backend
     environment:
@@ -49,9 +50,6 @@ services:
     restart: unless-stopped
 
   web:
-    build:
-      context: .
-      dockerfile: apps/web/Dockerfile
     image: ghcr.io/adamzagorski92/turbo-adam-web:${IMAGE_TAG:-latest}
     container_name: my-web
     environment:
@@ -65,9 +63,10 @@ services:
   redis:
     image: redis:7-alpine
     container_name: my-redis
-    command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
+      - ../redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    command: redis-server /usr/local/etc/redis/redis.conf
     networks:
       - private
     restart: unless-stopped
@@ -81,6 +80,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ../postgres/init:/docker-entrypoint-initdb.d:ro
     networks:
       - private
     restart: unless-stopped

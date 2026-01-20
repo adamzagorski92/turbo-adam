@@ -1,0 +1,12 @@
+# Optional dev override: expose DB/cache ports to the host.
+# Usage:
+#   docker compose -f infrastructure/compose/dev.yml -f infrastructure/compose/dev.expose.yml up -d
+
+services:
+  postgres:
+    ports:
+      - "5432:5432"
+
+  redis:
+    ports:
+      - "6379:6379"

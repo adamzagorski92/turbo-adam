@@ -1,12 +1,73 @@
-# Deployment (Cloudflare Full (strict) + Docker Compose)
+# Deployment (Mikrus + Cloudflare Full (strict) + Docker Compose)
 
-This repo supports "Option A": Nginx runs in Docker and is the only public entrypoint.
+This repo uses "Option A": Nginx runs in Docker and is the only public entrypoint.
 
 ## Prerequisites
 
 - A Linux VPS ("mikrus") with Docker Engine and Docker Compose v2 plugin.
 - A domain managed in Cloudflare.
 - Cloudflare **SSL/TLS mode: Full (strict)** (orange cloud enabled).
+
+Assumptions:
+
+- The server runs the production stack with Docker Compose and pulls images from GHCR.
+- The server does not need a full repo checkout.
+- TLS is terminated on the server by the nginx container using a Cloudflare Origin Certificate.
+
+## Cloudflare setup (app subdomain)
+
+This setup assumes you will serve the app on a dedicated subdomain (e.g. `app.your-domain`).
+
+In Cloudflare:
+
+1. DNS
+
+- Create an `AAAA` record named `app` pointing to your server IPv6.
+- Proxy status: **Proxied** (orange cloud).
+
+2. SSL/TLS
+
+- SSL/TLS → Overview → **Encryption mode: Full (strict)**.
+- SSL/TLS → Edge Certificates:
+  - Enable **Always Use HTTPS**.
+  - (Optional) Enable **Automatic HTTPS Rewrites**.
+  - (Optional, advanced) Consider HSTS only after everything works reliably.
+
+3. Origin Server (Origin Certificate)
+
+- SSL/TLS → Origin Server → **Create certificate**.
+- Hostnames: include at least `app.your-domain`.
+- Install the generated cert/key on the server as described in section 4.
+
+## Cloudflare hardening (recommended)
+
+These are optional but useful defaults once the site is working.
+
+1. WAF
+
+- Security → WAF → Managed rules: enable Cloudflare managed rules (defaults are usually fine).
+- (Optional) Enable Bot protection features (depends on your plan).
+
+2. Rate limiting (protect API)
+
+Add a rate limit rule for your API paths (example: `/api/*`). Start conservative (so you don’t block yourself) and tune later.
+
+3. Caching rules
+
+- Ensure API responses are not cached:
+  - Cache Rule: if URI path starts with `/api/` → **Bypass cache**.
+- For the web app itself you can keep caching enabled for static assets (usually safe), but avoid caching HTML if your app is dynamic.
+
+4. (Advanced) Lock down origin access to Cloudflare only
+
+If you want extra hardening, restrict inbound `80/443` on the server to **Cloudflare IP ranges only**.
+This reduces direct-to-origin attacks, but requires you to keep the Cloudflare IP list up to date (IPv4 + IPv6).
+
+Workflow:
+
+- Keep SSH reachable from your trusted IP(s) (or via VPN).
+- Allow `80/443` only from Cloudflare IP ranges.
+- Deny `80/443` from everywhere else.
 
 ## 1) Create a deploy user (server)
 
@@ -70,10 +131,15 @@ mkdir -p /var/lib/turbo-adam
 chown -R deploy:deploy /var/lib/turbo-adam
 ```
 
-Copy these files into `/var/lib/turbo-adam`:
+What goes into this directory:
 
-- `docker-compose.production.yml`
-- `certs/origin.pem` and `certs/origin.key` (see next section)
+- The deploy workflow uploads the production compose and infra config on each deploy:
+  - `infrastructure/compose/production.server.yml`
+  - `infrastructure/redis/redis.conf`
+  - `infrastructure/postgres/init/` (used only on first DB initialization)
+- TLS certs are **not** uploaded by the workflow (by design). You will add them manually in the next step.
+
+Do NOT copy any dev-only compose files to the server.
 
 Important:
 
@@ -85,7 +151,7 @@ Important:
 In Cloudflare:
 
 - SSL/TLS → Origin Server → **Create certificate**
-- Hostnames: your domain (and optionally `*.your-domain`)
+- Hostnames: include your app subdomain (e.g. `app.your-domain`) (and optionally `*.your-domain`)
 
 On the server:
 
@@ -108,9 +174,8 @@ The production reverse proxy expects:
 - `/var/lib/turbo-adam/certs/origin.pem` (certificate)
 - `/var/lib/turbo-adam/certs/origin.key` (private key)
 
-In production compose we mount `./certs` from the app directory into nginx as read-only:
+In production compose we mount the app directory certs folder into nginx as read-only:
 
-- host: `/opt/turbo-adam/certs/*`
 - host: `/var/lib/turbo-adam/certs/*`
 - container: `/etc/nginx/certs/*`
 
@@ -137,7 +202,7 @@ After adding or rotating certs, restart nginx:
 
 ```bash
 cd /var/lib/turbo-adam
-docker compose -f docker-compose.production.yml up -d nginx
+docker compose -f infrastructure/compose/production.server.yml up -d nginx
 ```
 
 ### Key gotcha
@@ -159,7 +224,52 @@ ufw enable
 
 Ensure IPv6 is enabled in `/etc/default/ufw` (`IPV6=yes`).
 
-## 6) GitHub Actions secrets
+Extra notes:
+
+- If you don’t need SSH from “anywhere”, restrict port `22` to your trusted IP(s).
+- Avoid exposing Postgres/Redis on the host in production (this repo’s production compose does not publish them).
+
+## 5a) Automatic security updates (recommended)
+
+On Ubuntu/Debian you can enable unattended security updates:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y unattended-upgrades
+sudo dpkg-reconfigure -plow unattended-upgrades
+```
+
+## 6) Fail2ban (recommended)
+
+Install and enable `fail2ban` to reduce SSH brute-force noise.
+
+On Ubuntu/Debian:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y fail2ban
+sudo systemctl enable --now fail2ban
+```
+
+At minimum, ensure the SSH jail is enabled (defaults are often OK). You can check status:
+
+```bash
+sudo fail2ban-client status
+sudo fail2ban-client status sshd
+```
+
+## 7) Account hardening (recommended)
+
+- Enable 2FA for the Mikrus panel/account.
+- Use strong passwords and keep server packages updated.
+
+Also recommended:
+
+- Keep Docker itself updated.
+- Monitor disk usage (Postgres volume + logs can fill disks).
+- Back up Postgres (at least `pg_dump`) and test restoring.
+
+## 8) GitHub Actions secrets
 
 In GitHub repo settings → Secrets and variables → Actions → **Secrets**:
 
@@ -180,24 +290,93 @@ Optional (only if GHCR packages are private):
 
 - `GHCR_PAT` (a GitHub Personal Access Token with `read:packages`)
 
-## 7) First run (server)
+## 9) Database migrations (safe approach)
 
-Once the compose file and certs exist on the server:
+Production deploy runs migrations as a separate one-off container before updating the app.
+
+Why:
+
+- The backend runtime image is kept minimal (no Prisma CLI in runtime).
+- Migrations can fail fast without partially updating the app.
+
+In practice, the workflow does:
+
+- `docker compose pull`
+- `docker compose up -d postgres`
+- wait for Postgres readiness
+- `docker compose run --rm migrate` (runs `prisma migrate deploy`)
+- `docker compose up -d --remove-orphans`
+
+## 10) First deploy (server)
+
+Before the first deploy, ensure:
+
+- `/var/lib/turbo-adam/certs/origin.pem` and `/var/lib/turbo-adam/certs/origin.key` exist with correct permissions.
+- Docker + Docker Compose v2 plugin are installed.
+- Ports 80/443 are open on the firewall.
+
+Trigger the GitHub Actions workflow (recommended):
+
+- Push to `main` or run the workflow manually (workflow_dispatch).
+
+If you want to do a manual first start on the server (after copying the files):
 
 ```bash
 cd /var/lib/turbo-adam
-docker compose -f docker-compose.production.yml up -d
+docker compose -f infrastructure/compose/production.server.yml pull
+docker compose -f infrastructure/compose/production.server.yml up -d postgres
+docker compose -f infrastructure/compose/production.server.yml run --rm migrate
+docker compose -f infrastructure/compose/production.server.yml up -d --remove-orphans
 ```
 
-## 8) CI/CD
+## 11) CI/CD
 
 Workflow: `.github/workflows/deploy-production.yml`
 
 - On push to `main`, it builds images and pushes them to GHCR.
-- Then it SSHes into the server and runs `docker compose pull && up -d`.
+- Then it SSHes into the server, runs migrations, and updates containers.
+
+## 12) Verify after deploy
+
+On the server:
+
+```bash
+cd /var/lib/turbo-adam
+
+# Container status
+docker compose -f infrastructure/compose/production.server.yml ps
+
+# Tail logs (nginx + backend are usually most important)
+docker compose -f infrastructure/compose/production.server.yml logs -n 200 --no-color nginx
+docker compose -f infrastructure/compose/production.server.yml logs -n 200 --no-color backend
+
+# Check local ports on the server
+curl -I http://localhost/
+curl -Ik https://localhost/
+```
+
+From your machine (or any external box):
+
+```bash
+curl -I https://app.your-domain/
+```
+
+If HTTPS returns errors:
+
+- Check that `/var/lib/turbo-adam/certs/origin.pem` and `/var/lib/turbo-adam/certs/origin.key` exist with correct permissions.
+- Inspect nginx logs and confirm it can read `/etc/nginx/certs/origin.pem` and `/etc/nginx/certs/origin.key` inside the container.
 
 ## Notes
 
 - With Cloudflare orange cloud enabled, your origin should still accept connections on `80/443`.
 - Consider restricting `80/443` inbound to Cloudflare IP ranges for extra hardening.
-- Avoid keeping certs inside the repo (e.g. under `apps/nginx/certs/`). Keep them only on the server.
+- Avoid keeping certs inside the repo. Keep them only on the server.
+
+Troubleshooting quick commands (server):
+
+- Show containers: `docker ps`
+- Show compose status: `docker compose -f infrastructure/compose/production.server.yml ps`
+- Logs: `docker compose -f infrastructure/compose/production.server.yml logs -n 200 --no-color`
+- Migrations logs (last run): `docker compose -f infrastructure/compose/production.server.yml logs -n 200 --no-color migrate`
+
+Note: on the server we use `infrastructure/compose/production.server.yml`.

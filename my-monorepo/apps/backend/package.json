@@ -9,7 +9,9 @@
   "scripts": {
     "dev": "nest start --watch",
     "build": "nest build",
-    "prisma:generate": "prisma generate",
+    "prisma:generate": "prisma generate --config prisma.config.ts",
+    "prisma:migrate:dev": "prisma migrate dev --config prisma.config.ts",
+    "prisma:migrate:deploy": "prisma migrate deploy --config prisma.config.ts",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
