@@ -97,6 +97,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           port: ${{ secrets.DEPLOY_PORT }}
+          envs: APP_DIR
           script_stop: true
           script: |
             set -euo pipefail
@@ -134,6 +135,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           port: ${{ secrets.DEPLOY_PORT }}
+          envs: IMAGE_TAG,APP_DIR,POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,DATABASE_URL,GHCR_OWNER,GHCR_PAT
           script_stop: true
           script: |
             set -euo pipefail
