@@ -102,8 +102,7 @@ jobs:
             set -euo pipefail
             mkdir -p "$APP_DIR/infrastructure/compose" \
               "$APP_DIR/infrastructure/redis" \
-              "$APP_DIR/infrastructure/postgres/init" \
-              "$APP_DIR/certs"
+              "$APP_DIR/infrastructure/postgres/init"
 
       - name: Upload infrastructure (prod)
         uses: appleboy/scp-action@v0.1.7

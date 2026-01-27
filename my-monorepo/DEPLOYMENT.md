@@ -156,15 +156,15 @@ In Cloudflare:
 On the server:
 
 ```bash
-mkdir -p /var/lib/turbo-adam/certs
+sudo mkdir -p /var/lib/turbo-adam/certs
 # Paste the certificate to:
 # /var/lib/turbo-adam/certs/origin.pem
 # Paste the private key to:
 # /var/lib/turbo-adam/certs/origin.key
-chmod 700 /var/lib/turbo-adam/certs
-chmod 600 /var/lib/turbo-adam/certs/origin.key
-chmod 644 /var/lib/turbo-adam/certs/origin.pem
-chown -R deploy:deploy /var/lib/turbo-adam/certs
+sudo chown -R root:root /var/lib/turbo-adam/certs
+sudo chmod 700 /var/lib/turbo-adam/certs
+sudo chmod 600 /var/lib/turbo-adam/certs/origin.key
+sudo chmod 644 /var/lib/turbo-adam/certs/origin.pem
 ```
 
 ### Where do the files go?
@@ -184,14 +184,14 @@ In production compose we mount the app directory certs folder into nginx as read
 From your local machine (replace host/port if needed):
 
 ```bash
-scp -P 22 ./origin.pem deploy@YOUR_SERVER:/var/lib/turbo-adam/certs/origin.pem
-scp -P 22 ./origin.key deploy@YOUR_SERVER:/var/lib/turbo-adam/certs/origin.key
+scp -P <YOUR_SSH_PORT> ./origin.pem admin@YOUR_SERVER:/var/lib/turbo-adam/certs/origin.pem
+scp -P <YOUR_SSH_PORT> ./origin.key admin@YOUR_SERVER:/var/lib/turbo-adam/certs/origin.key
 ```
 
 Then fix permissions on the server:
 
 ```bash
-sudo chown deploy:deploy /var/lib/turbo-adam/certs/origin.pem /var/lib/turbo-adam/certs/origin.key
+sudo chown root:root /var/lib/turbo-adam/certs/origin.pem /var/lib/turbo-adam/certs/origin.key
 sudo chmod 644 /var/lib/turbo-adam/certs/origin.pem
 sudo chmod 600 /var/lib/turbo-adam/certs/origin.key
 ```
@@ -216,7 +216,7 @@ Open only SSH + HTTP/HTTPS.
 If you use UFW:
 
 ```bash
-ufw allow 22/tcp
+ufw allow <YOUR_SSH_PORT>/tcp
 ufw allow 80/tcp
 ufw allow 443/tcp
 ufw enable
@@ -274,7 +274,7 @@ Also recommended:
 In GitHub repo settings → Secrets and variables → Actions → **Secrets**:
 
 - `DEPLOY_HOST` (IPv6 or hostname)
-- `DEPLOY_PORT` (usually `22`)
+- `DEPLOY_PORT` (your SSH port; on Mikrus it's typically a 5-digit port)
 - `DEPLOY_USER` (usually `deploy`)
 - `DEPLOY_SSH_KEY` (private key from `ssh-keygen`)
 - `DEPLOY_APP_DIR` (e.g. `/var/lib/turbo-adam`)
