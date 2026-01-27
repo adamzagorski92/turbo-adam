@@ -3,8 +3,6 @@ name: Build & Deploy (Production)
 on:
   push:
     branches: [master, main]
-    paths:
-      - my-monorepo/**
   workflow_dispatch:
 
 permissions:
