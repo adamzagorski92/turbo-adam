@@ -112,10 +112,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           port: ${{ secrets.DEPLOY_PORT }}
-          source: |
-            my-monorepo/infrastructure/compose/production.server.yml
-            my-monorepo/infrastructure/redis/redis.conf
-            my-monorepo/infrastructure/postgres/init/**
+          source: my-monorepo/infrastructure/compose/production.server.yml,my-monorepo/infrastructure/redis/redis.conf,my-monorepo/infrastructure/postgres/init/**
           target: ${{ secrets.DEPLOY_APP_DIR }}
           strip_components: 1
 
