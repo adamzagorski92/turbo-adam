@@ -8,6 +8,8 @@ services:
   migrate:
     image: ghcr.io/adamzagorski92/turbo-adam-migrate:${IMAGE_TAG:-latest}
     container_name: my-migrate
+    security_opt:
+      - apparmor=unconfined
     environment:
       NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL}
@@ -20,6 +22,8 @@ services:
   nginx:
     image: ghcr.io/adamzagorski92/turbo-adam-nginx:${IMAGE_TAG:-latest}
     container_name: my-nginx
+    security_opt:
+      - apparmor=unconfined
     ports:
       - "80:80"
       - "443:443"
@@ -35,6 +39,8 @@ services:
   backend:
     image: ghcr.io/adamzagorski92/turbo-adam-backend:${IMAGE_TAG:-latest}
     container_name: my-backend
+    security_opt:
+      - apparmor=unconfined
     environment:
       NODE_ENV: production
       PORT: "3000"
@@ -52,6 +58,8 @@ services:
   web:
     image: ghcr.io/adamzagorski92/turbo-adam-web:${IMAGE_TAG:-latest}
     container_name: my-web
+    security_opt:
+      - apparmor=unconfined
     environment:
       NODE_ENV: production
     depends_on:
@@ -63,6 +71,8 @@ services:
   redis:
     image: redis:7-alpine
     container_name: my-redis
+    security_opt:
+      - apparmor=unconfined
     volumes:
       - redis_data:/data
       - ../redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
@@ -74,6 +84,8 @@ services:
   postgres:
     image: postgres:17-alpine
     container_name: my-postgres
+    security_opt:
+      - apparmor=unconfined
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
