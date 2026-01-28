@@ -137,6 +137,19 @@ jobs:
             set -euo pipefail
             cd "$APP_DIR"
 
+            echo "Disk usage before cleanup:"
+            df -h || true
+            docker system df || true
+
+            # Free space on the Docker host (safe: does NOT remove named volumes / DB data).
+            # This helps avoid: "failed to register layer: ... no space left on device".
+            docker system prune -af || true
+            docker builder prune -af || true
+
+            echo "Disk usage after cleanup:"
+            df -h || true
+            docker system df || true
+
             # Optional: login for private GHCR packages.
             if [ -n "${GHCR_PAT:-}" ]; then
               echo "$GHCR_PAT" | docker login ghcr.io -u "$GHCR_OWNER" --password-stdin
