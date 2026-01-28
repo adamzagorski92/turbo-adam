@@ -124,7 +124,6 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
           GHCR_OWNER: ${{ env.OWNER }}
           GHCR_PAT: ${{ secrets.GHCR_PAT }}
         with:
@@ -132,7 +131,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           port: ${{ secrets.DEPLOY_PORT }}
-          envs: IMAGE_TAG,APP_DIR,POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,DATABASE_URL,GHCR_OWNER,GHCR_PAT
+          envs: IMAGE_TAG,APP_DIR,POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,GHCR_OWNER,GHCR_PAT
           script_stop: true
           script: |
             set -euo pipefail
@@ -142,6 +141,28 @@ jobs:
             if [ -n "${GHCR_PAT:-}" ]; then
               echo "$GHCR_PAT" | docker login ghcr.io -u "$GHCR_OWNER" --password-stdin
             fi
+
+            # Build a safe in-docker DATABASE_URL for Prisma (postgres service on port 5432).
+            # This avoids malformed DATABASE_URL secrets (e.g. quoted/invalid port) and URL-encodes credentials.
+            if ! command -v python3 >/dev/null 2>&1; then
+              echo "python3 is required on the server to build DATABASE_URL safely" >&2
+              exit 1
+            fi
+            DATABASE_URL="$(python3 - <<'PY'
+import os
+import urllib.parse
+
+u = os.environ["POSTGRES_USER"]
+p = os.environ["POSTGRES_PASSWORD"]
+d = os.environ["POSTGRES_DB"]
+
+u_q = urllib.parse.quote(u, safe="")
+p_q = urllib.parse.quote(p, safe="")
+d_q = urllib.parse.quote(d, safe="")
+
+print(f"postgresql://{u_q}:{p_q}@postgres:5432/{d_q}?schema=public")
+PY
+            )"
 
             # Compose interpolation vars (used by infrastructure/compose/production.server.yml)
             printf "IMAGE_TAG=%s\nPOSTGRES_USER=%s\nPOSTGRES_PASSWORD=%s\nPOSTGRES_DB=%s\nDATABASE_URL=%s\n" \
