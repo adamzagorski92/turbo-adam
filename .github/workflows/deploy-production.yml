@@ -137,6 +137,9 @@ jobs:
             set -euo pipefail
             cd "$APP_DIR"
 
+            COMPOSE_FILE="infrastructure/compose/production.server.yml"
+            COMPOSE_ENV_FILE="$APP_DIR/.env"
+
             echo "Disk usage before cleanup:"
             df -h || true
             docker system df || true
@@ -172,18 +175,18 @@ jobs:
               "$DATABASE_URL" \
               > .env
 
-            docker compose -f infrastructure/compose/production.server.yml pull
+            docker compose --env-file "$COMPOSE_ENV_FILE" -f "$COMPOSE_FILE" pull
 
-            docker compose -f infrastructure/compose/production.server.yml up -d postgres
+            docker compose --env-file "$COMPOSE_ENV_FILE" -f "$COMPOSE_FILE" up -d postgres
 
             for i in $(seq 1 30); do
-              if docker compose -f infrastructure/compose/production.server.yml exec -T postgres pg_isready -U "$POSTGRES_USER" >/dev/null 2>&1; then
+              if docker compose --env-file "$COMPOSE_ENV_FILE" -f "$COMPOSE_FILE" exec -T postgres pg_isready -U "$POSTGRES_USER" >/dev/null 2>&1; then
                 break
               fi
               echo "Waiting for Postgres... ($i/30)"
               sleep 2
             done
 
-            docker compose -f infrastructure/compose/production.server.yml run --rm migrate
+            docker compose --env-file "$COMPOSE_ENV_FILE" -f "$COMPOSE_FILE" run --rm migrate
 
-            docker compose -f infrastructure/compose/production.server.yml up -d --remove-orphans
+            docker compose --env-file "$COMPOSE_ENV_FILE" -f "$COMPOSE_FILE" up -d --remove-orphans
