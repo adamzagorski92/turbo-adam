@@ -148,21 +148,7 @@ jobs:
               echo "python3 is required on the server to build DATABASE_URL safely" >&2
               exit 1
             fi
-            DATABASE_URL="$(python3 - <<'PY'
-import os
-import urllib.parse
-
-u = os.environ["POSTGRES_USER"]
-p = os.environ["POSTGRES_PASSWORD"]
-d = os.environ["POSTGRES_DB"]
-
-u_q = urllib.parse.quote(u, safe="")
-p_q = urllib.parse.quote(p, safe="")
-d_q = urllib.parse.quote(d, safe="")
-
-print(f"postgresql://{u_q}:{p_q}@postgres:5432/{d_q}?schema=public")
-PY
-            )"
+            DATABASE_URL="$(python3 -c 'import os,urllib.parse as u; user=u.quote(os.environ["POSTGRES_USER"],safe=""); pw=u.quote(os.environ["POSTGRES_PASSWORD"],safe=""); db=u.quote(os.environ["POSTGRES_DB"],safe=""); print(f"postgresql://{user}:{pw}@postgres:5432/{db}?schema=public")')"
 
             # Compose interpolation vars (used by infrastructure/compose/production.server.yml)
             printf "IMAGE_TAG=%s\nPOSTGRES_USER=%s\nPOSTGRES_PASSWORD=%s\nPOSTGRES_DB=%s\nDATABASE_URL=%s\n" \
