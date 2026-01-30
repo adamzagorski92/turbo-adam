@@ -1,0 +1,35 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text-primary: var(--color-gray-50);
+    --color-text-secondary: var(--color-gray-400);
+    --color-text-tertiary: var(--color-gray-500);
+    --color-background: var(--color-gray-900);
+    --color-surface: var(--color-gray-800);
+    --color-border: var(--color-gray-700);
+
+    --color-surface-elevated: var(--color-gray-800);
+    --color-surface-hover: var(--color-gray-700);
+
+    --color-primary-500: #60a5fa;
+
+    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+    --shadow-dropdown: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+  }
+}
+
+[data-theme="dark"] {
+  --color-text-primary: var(--color-gray-50);
+  --color-text-secondary: var(--color-gray-400);
+  --color-text-tertiary: var(--color-gray-500);
+  --color-background: var(--color-gray-900);
+  --color-surface: var(--color-gray-800);
+  --color-border: var(--color-gray-700);
+
+  --color-surface-elevated: var(--color-gray-800);
+  --color-surface-hover: var(--color-gray-700);
+
+  --color-primary-500: #60a5fa;
+
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+  --shadow-dropdown: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+}
