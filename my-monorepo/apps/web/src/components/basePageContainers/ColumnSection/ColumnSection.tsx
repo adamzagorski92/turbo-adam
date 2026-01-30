@@ -1,7 +1,7 @@
 import { Children, type CSSProperties, type ReactNode } from "react";
 import clsx from "clsx";
 
-import styles from "./ColumnSection.module.scss";
+import styles from "./ColumnSection.module.css";
 
 export type ContentSectionJustify =
   | "start"

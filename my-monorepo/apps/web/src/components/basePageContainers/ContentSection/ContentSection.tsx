@@ -6,7 +6,7 @@ import {
   type VerticalAlign,
 } from "../utils/align";
 
-import styles from "./ContentSection.module.scss";
+import styles from "./ContentSection.module.css";
 
 export function ContentSection({
   children,
