@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Button > Snapshot > renders button snapshot with default props 1`] = `
+<button
+  id="btn-id"
+  type="button"
+>
+  <div>
+    Click me
+  </div>
+</button>
+`;
