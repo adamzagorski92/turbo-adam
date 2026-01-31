@@ -9,11 +9,14 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
+    "test:run": "vitest run",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@my-monorepo/components": "workspace:*",
+    "@my-monorepo/styles": "workspace:*",
+    "lucide-react": "^0.563.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "scheduler": "^0.27.0"

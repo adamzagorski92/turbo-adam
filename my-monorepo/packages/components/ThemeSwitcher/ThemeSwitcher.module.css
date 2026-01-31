@@ -9,27 +9,37 @@
 }
 
 .switcher button {
-  padding: var(--spacing-2) var(--spacing-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
   background: transparent;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   cursor: pointer;
-  font-size: var(--font-size-lg);
   transition: var(--transition-colors);
-  opacity: 0.6;
+  opacity: 0.75;
+  color: var(--color-text-secondary);
 }
 
 .switcher button:hover {
   opacity: 1;
-  background-color: var(--color-surface-hover);
-}
-
-.switcher button.active {
-  opacity: 1;
-  background-color: var(--color-primary-500);
+  color: var(--color-text-primary);
 }
 
 .switcher button:focus-visible {
   outline: 2px solid var(--color-primary-500);
   outline-offset: 2px;
+}
+
+.switcher button.active {
+  opacity: 1;
+  color: var(--color-primary-500);
+}
+
+.icon {
+  width: 1.125rem;
+  height: 1.125rem;
 }

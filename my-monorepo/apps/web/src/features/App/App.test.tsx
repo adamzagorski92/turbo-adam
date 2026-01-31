@@ -3,16 +3,25 @@ import { describe, expect, it, vi } from "vitest";
 
 import App from "./App";
 
-vi.mock("@my-monorepo/components/ThemeSwitcher/ThemeSwitcher", () => ({
-  ThemeSwitcher: () => <div data-testid="theme-switcher" />,
-}));
+vi.mock("@my-monorepo/components", async () => {
+  const actual = await vi.importActual<
+    typeof import("@my-monorepo/components")
+  >("@my-monorepo/components");
+
+  return {
+    ...actual,
+    ThemeSwitcher: () => <div data-testid="theme-switcher" />,
+  };
+});
 
 describe("App", () => {
   it("renders main heading", () => {
     render(<App />);
 
     expect(
-      screen.getByRole("heading", { name: /Jestem Adam/i, level: 1 }),
+      screen.getByRole("heading", { name: /Frontend Developer/i, level: 1 }),
     ).toBeTruthy();
+
+    expect(screen.getByText(/Cześć, tu Adam/i)).toBeTruthy();
   });
 });

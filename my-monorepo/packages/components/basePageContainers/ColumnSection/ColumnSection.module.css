@@ -1,6 +1,6 @@
 .contentSection {
-  --cs-gap-x: var(--margin-lg);
-  --cs-gap-y: var(--margin-lg);
+  --cs-gap-x: var(--spacing-8);
+  --cs-gap-y: var(--spacing-8);
   display: flex;
   flex-wrap: wrap;
   gap: var(--cs-gap-y) var(--cs-gap-x);
@@ -8,17 +8,17 @@
 }
 
 .contentSection:global(.gx-16) {
-  --cs-gap-x: var(--margin-md);
+  --cs-gap-x: var(--spacing-4);
 }
 .contentSection:global(.gx-32) {
-  --cs-gap-x: var(--margin-xl);
+  --cs-gap-x: var(--spacing-8);
 }
 
 .contentSection:global(.gy-16) {
-  --cs-gap-y: var(--margin-md);
+  --cs-gap-y: var(--spacing-4);
 }
 .contentSection:global(.gy-32) {
-  --cs-gap-y: var(--margin-xl);
+  --cs-gap-y: var(--spacing-8);
 }
 
 .contentSection:global(.jx-start) {
