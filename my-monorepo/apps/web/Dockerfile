@@ -26,6 +26,11 @@ COPY apps/web/src apps/web/src
 # that package in the build context for pnpm workspace linking and Vite bundling.
 COPY packages/components packages/components
 
+# The web app also depends on @my-monorepo/styles (workspace:*). Without copying
+# it into the image, Vite/Rollup cannot resolve imports like:
+#   import "@my-monorepo/styles/global.css";
+COPY packages/styles packages/styles
+
 RUN pnpm install --frozen-lockfile --ignore-scripts
 RUN pnpm --filter web build
 

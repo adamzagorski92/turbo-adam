@@ -17,6 +17,8 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
 COPY .npmrc ./.npmrc
 COPY apps/backend/package.json ./apps/backend/package.json
 COPY apps/web/package.json ./apps/web/package.json
+COPY packages/components/package.json ./packages/components/package.json
+COPY packages/styles/package.json ./packages/styles/package.json
 
 # Install workspace deps (will be reused via volumes at runtime)
 RUN pnpm install --frozen-lockfile --ignore-scripts

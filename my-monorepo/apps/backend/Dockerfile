@@ -16,6 +16,7 @@ COPY .npmrc ./
 # Minimal workspace package manifests (needed for pnpm workspace + frozen lockfile).
 COPY apps/web/package.json apps/web/
 COPY packages/components/package.json packages/components/
+COPY packages/styles/package.json packages/styles/
 
 # Copy backend sources.
 COPY apps/backend/package.json apps/backend/
@@ -63,6 +64,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
 COPY .npmrc ./
 COPY apps/web/package.json apps/web/
 COPY packages/components/package.json packages/components/
+COPY packages/styles/package.json packages/styles/
 COPY apps/backend/package.json apps/backend/
 COPY apps/backend/prisma.config.ts apps/backend/
 COPY apps/backend/prisma ./apps/backend/prisma
