@@ -1,6 +1,6 @@
 import styles from "./App.module.css";
 import "../../styles/global.css";
-import { ThemeSwitcher } from "../../components/ThemeSwitcher/ThemeSwitcher";
+import { ThemeSwitcher } from "@my-monorepo/components/ThemeSwitcher/ThemeSwitcher";
 
 function App() {
   return (

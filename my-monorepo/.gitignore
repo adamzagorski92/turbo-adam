@@ -19,5 +19,10 @@ yarn-error.log*
 .DS_Store
 .pnpm-store/
 
+# Env files
+.env
+.env.*
+!.env*.example
+
 # TLS certs (production)
 certs/
