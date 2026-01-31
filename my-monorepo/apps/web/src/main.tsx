@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./styles/index.scss";
-import App from "./App";
+import "@my-monorepo/styles/global.css";
+import App from "./features/App/App";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

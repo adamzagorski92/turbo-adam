@@ -1,0 +1,20 @@
+{
+  "name": "@my-monorepo/styles",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "**/*.css"
+  ],
+  "exports": {
+    "./global.css": "./global.css",
+    "./base/*": "./base/*.css",
+    "./layout/*": "./layout/*.css",
+    "./themes/*": "./themes/*.css",
+    "./tokens/*": "./tokens/*.css",
+    "./utilities/*": "./utilities/*.css"
+  }
+}

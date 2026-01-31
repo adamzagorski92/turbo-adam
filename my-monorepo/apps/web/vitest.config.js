@@ -8,7 +8,7 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: [],
     coverage: {
-      enabled: true,
+      enabled: false,
       provider: "v8",
       reporter: ["text", "json", "html"],
       reportsDirectory: "./coverage",
@@ -24,6 +24,8 @@ export default defineConfig({
         "dist",
         "**/main.tsx",
         "**/types/**",
+        "**/*.css",
+        "**/*.module.css",
         "**/*.scss",
       ],
     },
