@@ -48,11 +48,11 @@
   color: var(--color-text-secondary);
   line-height: var(--line-height-relaxed);
   margin-bottom: var(--spacing-6);
-}
 
-.paragraph strong {
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold);
+  & strong {
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semibold);
+  }
 }
 
 /* Links section */
