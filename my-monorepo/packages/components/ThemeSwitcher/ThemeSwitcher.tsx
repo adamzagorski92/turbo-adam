@@ -9,20 +9,26 @@ function isTheme(value: unknown): value is Theme {
   return value === "light" || value === "dark";
 }
 
+function getSystemTheme(): Theme {
+  if (typeof window === "undefined") return DEFAULT_THEME;
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
 function getInitialTheme(): Theme {
   if (typeof window === "undefined") return DEFAULT_THEME;
   const saved = window.localStorage.getItem("theme");
-  return isTheme(saved) ? saved : DEFAULT_THEME;
+  return isTheme(saved) ? saved : getSystemTheme();
 }
 
 export function ThemeSwitcher() {
   const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
 
-  // Runs before the browser paints -> no visible theme flicker.
   useLayoutEffect(() => {
     const saved = localStorage.getItem("theme");
-    if (saved === "system") {
-      localStorage.removeItem("theme");
+    if (!isTheme(saved)) {
+      localStorage.setItem("theme", theme);
     }
   }, []);
 
