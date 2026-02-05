@@ -1,5 +1,5 @@
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
     --color-text-primary: var(--color-gray-50);
     --color-text-secondary: var(--color-gray-400);
     --color-text-tertiary: var(--color-gray-500);
@@ -17,7 +17,7 @@
   }
 }
 
-[data-theme="dark"] {
+html[data-theme="dark"] {
   --color-text-primary: var(--color-gray-50);
   --color-text-secondary: var(--color-gray-400);
   --color-text-tertiary: var(--color-gray-500);
