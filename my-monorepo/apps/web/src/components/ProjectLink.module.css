@@ -1,0 +1,15 @@
+.linkInner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.linkIcon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.linkLabel {
+  line-height: var(--line-height-normal);
+}
