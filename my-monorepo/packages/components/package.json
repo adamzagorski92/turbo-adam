@@ -9,7 +9,7 @@
     }
   },
   "scripts": {
-    "build": "node -e \"process.exit(0)\"",
+    "build": "node -e \"const fs=require('node:fs'); fs.mkdirSync('dist',{recursive:true}); fs.writeFileSync('dist/.keep','');\"",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "node -e \"process.exit(0)\"",
     "test": "vitest run",
