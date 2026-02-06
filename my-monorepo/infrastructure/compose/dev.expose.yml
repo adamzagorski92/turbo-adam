@@ -4,9 +4,15 @@
 
 services:
   postgres:
+    networks:
+      - private
+      - public
     ports:
       - "5432:5432"
 
   redis:
+    networks:
+      - private
+      - public
     ports:
       - "6379:6379"

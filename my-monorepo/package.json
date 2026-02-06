@@ -15,6 +15,9 @@
     "build": "turbo build"
   },
   "pnpm": {
+    "overrides": {
+      "test-exclude": "7.0.1"
+    },
     "onlyBuiltDependencies": [
       "@nestjs/core",
       "@prisma/engines",
@@ -26,6 +29,6 @@
   "devDependencies": {
     "postcss": "^8.5.6",
     "postcss-nesting": "^14.0.0",
-    "turbo": "latest"
+    "turbo": "^2.8.3"
   }
 }
