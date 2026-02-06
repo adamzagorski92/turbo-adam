@@ -11,8 +11,13 @@
     "compose": "node scripts/compose.mjs --help",
     "compose:dev": "node scripts/compose.mjs dev",
     "compose:prod": "node scripts/compose.mjs prod",
-    "dev": "turbo dev",
-    "build": "turbo build"
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "test:cov": "turbo run test:cov",
+    "test:e2e": "turbo run test:e2e"
   },
   "pnpm": {
     "overrides": {
