@@ -1,4 +1,5 @@
-import ProjectLink from "../../components/ProjectLink";
+import Card from "../../components/Card/Card";
+import ProjectLink from "../../components/ProjectLink/ProjectLink";
 import { projectGroups, quickLinks } from "../../constans/links";
 import styles from "./App.module.css";
 
@@ -54,14 +55,7 @@ function App() {
               </section>
             </div>
 
-            <ContentSection
-              direction="column"
-              gap={16}
-              boxed
-              className={styles.card}
-            >
-              <h3 className={styles.cardTitle}>Szybkie linki</h3>
-
+            <Card title="Szybkie linki">
               <nav className={styles.links}>
                 {quickLinks.map((l) => (
                   <ProjectLink
@@ -72,7 +66,7 @@ function App() {
                   />
                 ))}
               </nav>
-            </ContentSection>
+            </Card>
           </ColumnSection>
         </SectionContainer>
 
@@ -88,12 +82,7 @@ function App() {
           <div className={styles.projectGrid}>
             {projectGroups.map((group) => (
               <div key={group.title} className={styles.projectGridItem}>
-                <ContentSection
-                  direction="column"
-                  gap={16}
-                  boxed
-                  className={styles.projectCard}
-                >
+                <Card variant="project">
                   <div className={styles.projectCardHeader}>
                     <span className={styles.projectCardIconWrap}>
                       <group.Icon
@@ -119,7 +108,7 @@ function App() {
                       />
                     ))}
                   </nav>
-                </ContentSection>
+                </Card>
               </div>
             ))}
           </div>

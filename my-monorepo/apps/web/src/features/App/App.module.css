@@ -71,15 +71,6 @@
 }
 
 /* Card */
-.card {
-  border: 1px solid var(--color-border-default);
-  box-shadow: var(--shadow-sm);
-}
-
-.cardTitle {
-  margin: 0;
-  font-size: var(--font-size-lg);
-}
 
 /* Projects */
 .projectsHeader {
@@ -128,20 +119,6 @@
       (100% - var(--spacing-4) - var(--spacing-4) - var(--spacing-4)) / 4
     );
   }
-
-  .projectCard.projectCard {
-    padding: var(--spacing-4);
-  }
-}
-
-.projectCard {
-  border: 1px solid var(--color-border-default);
-  box-shadow: var(--shadow-sm);
-  height: 100%;
-}
-
-.projectCard.projectCard {
-  padding: var(--spacing-6);
 }
 
 .projectCardHeader {
