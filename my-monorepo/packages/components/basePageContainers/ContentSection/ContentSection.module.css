@@ -42,7 +42,7 @@
 
 .boxed {
   padding: var(--spacing-8);
-  background: var(--color-surface);
+  background: var(--color-bg-surface);
   border-radius: var(--radius-lg);
 }
 
@@ -57,7 +57,7 @@
 }
 
 .highlighted {
-  border-left: 2px solid var(--color-primary-300);
+  border-left: 2px solid var(--color-border-accent);
   padding-left: var(--spacing-4);
   padding-block: var(--spacing-2);
 }
@@ -68,11 +68,11 @@
   padding-block: var(--spacing-2);
 }
 .unlighted h3 {
-  color: var(--color-text-secondary);
+  color: var(--color-fg-secondary);
 }
 
 .unlighted p {
-  color: var(--color-text-tertiary);
+  color: var(--color-fg-tertiary);
 }
 
 @media (max-width: 768px) {

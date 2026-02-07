@@ -12,8 +12,8 @@ body {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-normal);
   line-height: var(--line-height-normal);
-  color: var(--color-text-primary);
-  background-color: var(--color-background);
+  color: var(--color-fg-primary);
+  background-color: var(--color-bg-canvas);
   height: 100%;
 }
 

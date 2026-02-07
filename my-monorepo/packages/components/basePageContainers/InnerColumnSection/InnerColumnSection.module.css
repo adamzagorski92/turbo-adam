@@ -49,12 +49,12 @@
   border-radius: var(--radius-lg);
 }
 
-.bgGrey100 {
-  background: var(--color-surface);
+.bgSurface {
+  background: var(--color-bg-surface);
 }
 
-.bgBlue100 {
-  background: var(--color-primary-100);
+.bgBrandSubtle {
+  background: var(--color-bg-brand-subtle);
 }
 
 @media (max-width: 768px) {
