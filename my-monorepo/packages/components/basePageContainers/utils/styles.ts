@@ -1,19 +1,19 @@
 import type { CSSProperties } from "react";
 
-export type BackgroundColor = "black" | "ink900" | "grey100" | "blue100";
+export type BackgroundColor = "scrim" | "strong" | "surface" | "brandSubtle";
 
 export const BG_CLASS = {
-  ink900: "bg-ink-900",
-  grey100: "bg-grey-100",
-  blue100: "bg-blue-100",
+  strong: "bg-strong",
+  surface: "bg-surface",
+  brandSubtle: "bg-brand-subtle",
 } as const;
 
-export const HEX_MAP: Record<BackgroundColor, string> = {
-  black: "#000000",
-  ink900: "#081A34",
-  grey100: "#f9f9f9",
-  blue100: "#ecf3ff",
-};
+const COLOR_TOKEN: Record<BackgroundColor, string> = {
+  scrim: "var(--color-bg-scrim)",
+  strong: "var(--color-bg-strong)",
+  surface: "var(--color-bg-surface)",
+  brandSubtle: "var(--color-bg-brand-subtle)",
+} as const;
 
 export function normalizeAlpha(value: number | undefined): number | undefined {
   if (value === undefined) return undefined;
@@ -21,13 +21,9 @@ export function normalizeAlpha(value: number | undefined): number | undefined {
   return Math.min(Math.max(value, 0), 1);
 }
 
-export function hexToRgba(hex: string, alpha: number): string {
-  const clean = hex.replace("#", "");
-  const bigint = parseInt(clean, 16);
-  const r = (bigint >> 16) & 255;
-  const g = (bigint >> 8) & 255;
-  const b = bigint & 255;
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+function withAlpha(color: string, alpha: number): string {
+  const percent = `${Math.round(alpha * 10000) / 100}%`;
+  return `color-mix(in srgb, ${color} ${percent}, transparent)`;
 }
 
 export function resolveBackground(
@@ -36,23 +32,28 @@ export function resolveBackground(
 ): { className?: string; style?: CSSProperties } {
   if (!backgroundColor) return {};
   const alpha = normalizeAlpha(backgroundOpacity);
-  if (backgroundColor === "black") {
+  if (backgroundColor === "scrim") {
     return {
       style: {
-        backgroundColor: HEX_MAP.black,
+        backgroundColor:
+          alpha === undefined
+            ? COLOR_TOKEN.scrim
+            : withAlpha(COLOR_TOKEN.scrim, alpha),
         borderRadius: "var(--border-radius)",
       },
     };
   }
   if (alpha !== undefined) {
     return {
-      style: { backgroundColor: hexToRgba(HEX_MAP[backgroundColor], alpha) },
+      style: {
+        backgroundColor: withAlpha(COLOR_TOKEN[backgroundColor], alpha),
+      },
     };
   }
   const className = (BG_CLASS as Record<string, string>)[backgroundColor];
   return className
     ? { className }
-    : { style: { backgroundColor: HEX_MAP[backgroundColor] } };
+    : { style: { backgroundColor: COLOR_TOKEN[backgroundColor] } };
 }
 
 export type PaddingProps = {

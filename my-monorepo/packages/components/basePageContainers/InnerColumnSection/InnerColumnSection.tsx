@@ -23,7 +23,7 @@ export function InnerColumnSection({
   direction?: Direction;
   gap?: 16 | 24 | 32;
   boxed?: boolean;
-  backgroundColor?: "grey100" | "blue100";
+  backgroundColor?: "surface" | "brandSubtle";
   className?: string;
 }) {
   const {
@@ -34,7 +34,10 @@ export function InnerColumnSection({
     alignItemsVertical,
   } = buildAlignMaps(styles);
   const GAP = { 16: styles.gap16, 24: styles.gap24, 32: styles.gap32 } as const;
-  const BG = { grey100: styles.bgGrey100, blue100: styles.bgBlue100 } as const;
+  const BG = {
+    surface: styles.bgSurface,
+    brandSubtle: styles.bgBrandSubtle,
+  } as const;
 
   const dirClass = directionClasses[direction];
   const hClass =
