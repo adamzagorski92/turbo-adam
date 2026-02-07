@@ -26,7 +26,7 @@ Short usage rules for layout containers following KISS/DRY.
 ## PageBody
 
 - Wrap the page content.
-- Set background via `backgroundColor` (e.g., `ink900`, `grey100`, `blue100`).
+- Set background via `backgroundColor` (semantic roles): `strong`, `surface`, `brandSubtle`.
 - Control paddings: `paddingTop|Right|Bottom|Left` (px).
 - Remove horizontal padding on mobile: `resetHorizontalPaddingOnMobile`.
 
@@ -36,6 +36,7 @@ Short usage rules for layout containers following KISS/DRY.
 - Span full viewport width: `fullBleed`.
 - Remove padding: `noPadding` or selectively `noTopPadding`, `noBottomPadding`.
 - Set background: `backgroundColor` + optional `backgroundOpacity` (0–1 or 0–100).
+  - `backgroundColor`: `surface` | `brandSubtle` | `strong` | `scrim`
 - Override section paddings: `paddingTop|Right|Bottom|Left`.
 - Remove horizontal padding on mobile: `resetHorizontalPaddingOnMobile`.
 - Add a custom class: `className`.
@@ -58,7 +59,7 @@ Short usage rules for layout containers following KISS/DRY.
 - Set vertical alignment: `verticalAlign` (`top|middle|bottom`).
 - Set child spacing: `gap` (`16|24|32`).
 - Add boxed padding: `boxed`.
-- Set background: `backgroundColor` (`grey100|blue100`).
+- Set background: `backgroundColor` (`surface|brandSubtle`).
 - Add a custom class: `className`.
 
 ## ContentSection

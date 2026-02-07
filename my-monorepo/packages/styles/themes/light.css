@@ -1,31 +1,26 @@
 :root {
-  --color-text-primary: var(--color-gray-900);
-  --color-text-secondary: var(--color-gray-600);
-  --color-text-tertiary: var(--color-gray-500);
-  --color-background: #ffffff;
-  --color-surface: var(--color-gray-50);
-  --color-border: var(--color-gray-200);
+  /* Foreground */
+  --color-fg-primary: var(--palette-neutral-900);
+  --color-fg-secondary: var(--palette-neutral-600);
+  --color-fg-tertiary: var(--palette-neutral-500);
 
-  --color-surface-elevated: #ffffff;
-  --color-surface-hover: var(--color-gray-100);
+  /* Surfaces */
+  --color-bg-canvas: var(--palette-neutral-0);
+  --color-bg-surface: var(--palette-neutral-50);
+  --color-bg-surface-elevated: var(--palette-neutral-0);
+  --color-bg-surface-hover: var(--palette-neutral-100);
 
-  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-dropdown:
-    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
+  /* Borders */
+  --color-border-default: var(--palette-neutral-200);
+  --color-border-accent: var(--palette-brand-300);
 
-html[data-theme="light"] {
-  --color-text-primary: var(--color-gray-900);
-  --color-text-secondary: var(--color-gray-600);
-  --color-text-tertiary: var(--color-gray-500);
-  --color-background: #ffffff;
-  --color-surface: var(--color-gray-50);
-  --color-border: var(--color-gray-200);
+  /* Accent */
+  --color-accent: var(--palette-brand-500);
+  --color-accent-hover: var(--palette-brand-600);
+  --color-fg-on-accent: var(--palette-neutral-0);
 
-  --color-surface-elevated: #ffffff;
-  --color-surface-hover: var(--color-gray-100);
-
-  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-dropdown:
-    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  /* Background roles (used by basePageContainers) */
+  --color-bg-strong: var(--palette-neutral-950);
+  --color-bg-scrim: var(--palette-neutral-1000);
+  --color-bg-brand-subtle: var(--palette-brand-100);
 }

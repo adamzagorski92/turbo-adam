@@ -1,5 +1,3 @@
-/* Page container primitives used by @my-monorepo/components basePageContainers */
-
 .page-container {
   width: 100%;
   min-height: 100%;
@@ -17,7 +15,18 @@
   padding: var(--spacing-12) var(--spacing-12);
 }
 
-/* Full-bleed sections that still allow an inner .container */
+.page-section-container.no-padding {
+  padding: 0;
+}
+
+.page-section-container.no-top-padding {
+  padding-top: 0;
+}
+
+.page-section-container.no-bottom-padding {
+  padding-bottom: 0;
+}
+
 .page-section-container.full-bleed {
   width: 100vw;
   margin-left: calc(50% - 50vw);
@@ -29,24 +38,30 @@
     width: 100%;
     min-width: 100%;
   }
+
+  .page-body.reset-horizontal-padding-mobile {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .page-section-container {
     padding: var(--spacing-2xl) var(--spacing-md);
   }
+
+  .page-section-container.reset-horizontal-padding-mobile {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
-/* Background helpers used by SectionContainer/PageBody */
-.bg-ink-900 {
-  background-color: #081a34;
+.bg-strong {
+  background-color: var(--color-bg-strong);
 }
 
-.bg-grey-100 {
-  background-color: var(--color-surface);
+.bg-surface {
+  background-color: var(--color-bg-surface);
 }
 
-.bg-blue-100 {
-  background-color: var(--color-primary-100);
-}
-
-html[data-theme="dark"] .bg-blue-100 {
-  background-color: rgba(96, 165, 250, 0.12);
+.bg-brand-subtle {
+  background-color: var(--color-bg-brand-subtle);
 }

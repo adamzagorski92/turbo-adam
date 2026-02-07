@@ -1,7 +1,31 @@
+.link {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-base);
+  color: var(--color-accent);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: var(--transition-colors);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  text-align: left;
+}
+
+.link:hover {
+  background-color: var(--color-accent);
+  color: var(--color-fg-on-accent);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+}
+
 .linkInner {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: var(--spacing-3);
+  min-width: 0;
 }
 
 .linkIcon {
@@ -11,5 +35,8 @@
 }
 
 .linkLabel {
+  min-width: 0;
+  flex: 1 1 auto;
   line-height: var(--line-height-normal);
+  overflow-wrap: anywhere;
 }

@@ -15,7 +15,7 @@ function App() {
   return (
     <PageContainer>
       <PageBody>
-        <SectionContainer backgroundColor="blue100" noTopPadding>
+        <SectionContainer backgroundColor="brandSubtle" noTopPadding>
           <ContentSection
             direction="row"
             horizontalAlign="right"
@@ -76,7 +76,7 @@ function App() {
           </ColumnSection>
         </SectionContainer>
 
-        <SectionContainer backgroundColor="grey100">
+        <SectionContainer backgroundColor="surface">
           <header className={styles.projectsHeader}>
             <h2 className={styles.projectsTitle}>Projekty</h2>
             <p className={styles.projectsSubtitle}>
@@ -85,66 +85,61 @@ function App() {
             </p>
           </header>
 
-          <div
-            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ${styles.projectGrid}`}
-          >
+          <div className={styles.projectGrid}>
             {projectGroups.map((group) => (
-              <ContentSection
-                key={group.title}
-                direction="column"
-                gap={16}
-                boxed
-                className={styles.projectCard}
-              >
-                <div className={styles.projectCardHeader}>
-                  <span className={styles.projectCardIconWrap}>
-                    <group.Icon
-                      className={styles.projectCardIcon}
-                      aria-hidden="true"
-                    />
-                  </span>
-                  <div>
-                    <h3 className={styles.projectCardTitle}>{group.title}</h3>
-                    <p className={styles.projectCardDesc}>
-                      {group.description}
-                    </p>
+              <div key={group.title} className={styles.projectGridItem}>
+                <ContentSection
+                  direction="column"
+                  gap={16}
+                  boxed
+                  className={styles.projectCard}
+                >
+                  <div className={styles.projectCardHeader}>
+                    <span className={styles.projectCardIconWrap}>
+                      <group.Icon
+                        className={styles.projectCardIcon}
+                        aria-hidden="true"
+                      />
+                    </span>
+                    <div className={styles.projectCardHeaderText}>
+                      <h3 className={styles.projectCardTitle}>{group.title}</h3>
+                      <p className={styles.projectCardDesc}>
+                        {group.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                <nav className={styles.links}>
-                  {group.links.map((l) => (
-                    <ProjectLink
-                      key={l.href}
-                      href={l.href}
-                      title={l.title}
-                      Icon={l.Icon}
-                    />
-                  ))}
-                </nav>
-              </ContentSection>
+                  <nav className={styles.links}>
+                    {group.links.map((l) => (
+                      <ProjectLink
+                        key={l.href}
+                        href={l.href}
+                        title={l.title}
+                        Icon={l.Icon}
+                      />
+                    ))}
+                  </nav>
+                </ContentSection>
+              </div>
             ))}
           </div>
         </SectionContainer>
 
-        <SectionContainer backgroundColor="grey100" noTopPadding>
-          <div className="container">
-            <hr className={styles.divider} />
-
-            <footer className={styles.footer}>
-              <p>
-                Stronę zbudowałem przy użyciu React, TypeScript i Turborepo na
-                serwerze deweloperskim{" "}
-                <a
-                  href="https://mikr.us/?r=adamzagorski"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Mikrus
-                </a>
-                . Więcej informacji w kodzie źródłowym.
-              </p>
-            </footer>
-          </div>
+        <SectionContainer backgroundColor="surface" noTopPadding>
+          <footer className={styles.footer}>
+            <p>
+              Stronę zbudowałem przy użyciu React, TypeScript i Turborepo na
+              serwerze deweloperskim{" "}
+              <a
+                href="https://mikr.us/?r=adamzagorski"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Mikrus
+              </a>
+              . Więcej informacji w kodzie źródłowym.
+            </p>
+          </footer>
         </SectionContainer>
       </PageBody>
     </PageContainer>

@@ -1,35 +1,63 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    --color-text-primary: var(--color-gray-50);
-    --color-text-secondary: var(--color-gray-400);
-    --color-text-tertiary: var(--color-gray-500);
-    --color-background: var(--color-gray-900);
-    --color-surface: var(--color-gray-800);
-    --color-border: var(--color-gray-700);
+    /* Foreground */
+    --color-fg-primary: var(--palette-neutral-50);
+    --color-fg-secondary: var(--palette-neutral-400);
+    --color-fg-tertiary: var(--palette-neutral-500);
 
-    --color-surface-elevated: var(--color-gray-800);
-    --color-surface-hover: var(--color-gray-700);
+    /* Surfaces */
+    --color-bg-canvas: var(--palette-neutral-900);
+    --color-bg-surface: var(--palette-neutral-800);
+    --color-bg-surface-elevated: var(--palette-neutral-800);
+    --color-bg-surface-hover: var(--palette-neutral-700);
 
-    --color-primary-500: #60a5fa;
+    /* Borders */
+    --color-border-default: var(--palette-neutral-700);
+    --color-border-accent: var(--palette-brand-400);
 
-    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.3);
-    --shadow-dropdown: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+    /* Accent */
+    --color-accent: var(--palette-brand-400);
+    --color-accent-hover: var(--palette-brand-500);
+    --color-fg-on-accent: var(--palette-neutral-0);
+
+    /* Background roles (used by basePageContainers) */
+    --color-bg-strong: var(--palette-neutral-950);
+    --color-bg-scrim: var(--palette-neutral-1000);
+    --color-bg-brand-subtle: color-mix(
+      in srgb,
+      var(--palette-brand-400) 12%,
+      transparent
+    );
   }
 }
 
 html[data-theme="dark"] {
-  --color-text-primary: var(--color-gray-50);
-  --color-text-secondary: var(--color-gray-400);
-  --color-text-tertiary: var(--color-gray-500);
-  --color-background: var(--color-gray-900);
-  --color-surface: var(--color-gray-800);
-  --color-border: var(--color-gray-700);
+  /* Foreground */
+  --color-fg-primary: var(--palette-neutral-50);
+  --color-fg-secondary: var(--palette-neutral-400);
+  --color-fg-tertiary: var(--palette-neutral-500);
 
-  --color-surface-elevated: var(--color-gray-800);
-  --color-surface-hover: var(--color-gray-700);
+  /* Surfaces */
+  --color-bg-canvas: var(--palette-neutral-900);
+  --color-bg-surface: var(--palette-neutral-800);
+  --color-bg-surface-elevated: var(--palette-neutral-800);
+  --color-bg-surface-hover: var(--palette-neutral-700);
 
-  --color-primary-500: #60a5fa;
+  /* Borders */
+  --color-border-default: var(--palette-neutral-700);
+  --color-border-accent: var(--palette-brand-400);
 
-  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.3);
-  --shadow-dropdown: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+  /* Accent */
+  --color-accent: var(--palette-brand-400);
+  --color-accent-hover: var(--palette-brand-500);
+  --color-fg-on-accent: var(--palette-neutral-0);
+
+  /* Background roles (used by basePageContainers) */
+  --color-bg-strong: var(--palette-neutral-950);
+  --color-bg-scrim: var(--palette-neutral-1000);
+  --color-bg-brand-subtle: color-mix(
+    in srgb,
+    var(--palette-brand-400) 12%,
+    transparent
+  );
 }

@@ -21,7 +21,6 @@
     "./base/*": "./base/*.css",
     "./layout/*": "./layout/*.css",
     "./themes/*": "./themes/*.css",
-    "./tokens/*": "./tokens/*.css",
-    "./utilities/*": "./utilities/*.css"
+    "./tokens/*": "./tokens/*.css"
   }
 }
