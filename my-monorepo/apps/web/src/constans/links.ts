@@ -12,6 +12,7 @@ import {
   Shirt,
   Users,
   UserRound,
+  ClipboardList,
 } from "lucide-react";
 import type { LinkGroup, LinkItem } from "../types/linkType";
 
@@ -97,14 +98,19 @@ export const projectGroups: LinkGroup[] = [
     ],
   },
   {
-    title: "Wtyczka Thunderbird",
-    description: "Ekstraktor i segregator unikatowych adresów e-mail.",
-    Icon: Mail,
+    title: "Inne projekty oraz prototypy",
+    description: "skrypty, projekty w google sheets",
+    Icon: Puzzle,
     links: [
+      {
+        title: "Aplikuj się - prototyp aplikacji do rekrutacji",
+        href: "https://docs.google.com/spreadsheets/d/1Z28TDWUQ4-QV6ro51syTBrBJ3l5cVZPzCwMEkdtSap4/edit?usp=sharing",
+        Icon: ClipboardList,
+      },
       {
         title: "Thunderbird Email Extractor (GitHub)",
         href: "https://github.com/adamzagorski92/thunderbird-email-extractor",
-        Icon: Puzzle,
+        Icon: Mail,
       },
     ],
   },
