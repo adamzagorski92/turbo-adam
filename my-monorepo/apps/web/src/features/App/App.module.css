@@ -2,6 +2,34 @@
 .topBar {
   padding-top: var(--spacing-6);
   padding-bottom: var(--spacing-6);
+  gap: var(--spacing-3);
+}
+
+.coffeeLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  height: calc(2.25rem + var(--spacing-3) * 2 + 2px);
+  padding: 0 var(--spacing-4);
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-fg-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition: var(--transition-colors);
+}
+
+.coffeeLink:hover {
+  color: var(--color-fg-primary);
+  border-color: var(--color-accent);
+  text-decoration: none;
+}
+
+.coffeeLinkIcon {
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 /* Header section */
@@ -177,5 +205,59 @@
 
   .paragraph {
     font-size: var(--font-size-base);
+  }
+}
+
+/* Coffee section */
+.coffeeSection {
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+  position: relative;
+}
+
+.coffeeLabel {
+  position: absolute;
+  top: -0.7em;
+  left: var(--spacing-4);
+  background-color: var(--color-bg-canvas);
+  padding: 0 var(--spacing-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-accent);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-sm);
+  z-index: 1;
+}
+
+.coffeeContent {
+  text-align: left;
+}
+
+.coffeeQrWrap {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.coffeeQr {
+  width: 360px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  transition: var(--transition-transform);
+}
+
+.coffeeQr:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .coffeeContent {
+    text-align: center;
+  }
+
+  .coffeeQrWrap {
+    justify-content: center;
   }
 }
