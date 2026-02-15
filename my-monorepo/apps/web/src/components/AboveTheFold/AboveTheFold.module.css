@@ -1,0 +1,21 @@
+.wrapper {
+  & header {
+    & p {
+      font-size: var(--font-size-lg);
+      color: var(--color-fg-secondary);
+      line-height: var(--line-height-relaxed);
+
+      & strong {
+        color: var(--color-fg-primary);
+        font-weight: var(--font-weight-semibold);
+      }
+    }
+
+    & .subtitle {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-fg-secondary);
+      text-align: left;
+    }
+  }
+}

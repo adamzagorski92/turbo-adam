@@ -1,6 +1,6 @@
 import Card from "../../components/Card/Card";
 import ProjectLink from "../../components/ProjectLink/ProjectLink";
-import { projectGroups, quickLinks } from "../../constans/links";
+import { projectGroups } from "../../constans/links";
 import styles from "./App.module.css";
 
 import {
@@ -11,6 +11,7 @@ import {
   SectionContainer,
 } from "@my-monorepo/components";
 import Navbar from "../../components/Navbar/Navbar";
+import HomePageAboveTheFold from "../HomePage/sections/HomePageAboveTheFold/HomePageAboveTheFold";
 
 function App() {
   return (
@@ -23,54 +24,8 @@ function App() {
       >
         <Navbar />
       </SectionContainer>
-      <PageBody>
-        <SectionContainer>
-          <ColumnSection
-            ratio="2:1"
-            gapX="gx-32"
-            gapY="gy-32"
-            align="start"
-            justify="between"
-            stackAt="tablet"
-          >
-            <InnerColumnSection direction="column">
-              <header className={styles.header}>
-                <p className={styles.kicker}>Cześć, tu Adam</p>
-                <h1 className={styles.title}>Frontend Developer</h1>
-                <p className={styles.subtitle}>
-                  Buduję nowoczesne aplikacje w React + TypeScript.
-                </p>
-              </header>
-
-              <section className={styles.content}>
-                <p className={styles.paragraph}>
-                  W tym miejscu planuję zebrać moje projekty i pomysły, aby
-                  prezentować umiejętności i kompetencje.
-                </p>
-                <p className={styles.paragraph}>
-                  Do tej pory zebrałem{" "}
-                  <strong>6 miesięcy komercyjnego doświadczenia</strong> na AGH.
-                </p>
-              </section>
-            </InnerColumnSection>
-
-            <InnerColumnSection direction="column" selector="nav">
-              <Card title="Szybkie linki">
-                <nav className={styles.links}>
-                  {quickLinks.map((l) => (
-                    <ProjectLink
-                      key={l.href}
-                      href={l.href}
-                      title={l.title}
-                      Icon={l.Icon}
-                    />
-                  ))}
-                </nav>
-              </Card>
-            </InnerColumnSection>
-          </ColumnSection>
-        </SectionContainer>
-
+      <PageBody selector="main">
+        <HomePageAboveTheFold />
         <SectionContainer>
           <header className={styles.projectsHeader}>
             <h2 className={styles.projectsTitle}>Projekty</h2>
@@ -99,16 +54,14 @@ function App() {
                     </div>
                   </div>
 
-                  <nav className={styles.links}>
-                    {group.links.map((l) => (
-                      <ProjectLink
-                        key={l.href}
-                        href={l.href}
-                        title={l.title}
-                        Icon={l.Icon}
-                      />
-                    ))}
-                  </nav>
+                  {group.links.map((l) => (
+                    <ProjectLink
+                      key={l.href}
+                      href={l.href}
+                      title={l.title}
+                      Icon={l.Icon}
+                    />
+                  ))}
                 </Card>
               </div>
             ))}
