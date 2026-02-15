@@ -1,3 +1,4 @@
+import { SelectorElement } from "../types/selectorElement";
 import {
   buildAlignMaps,
   type Direction,
@@ -16,8 +17,10 @@ export function InnerColumnSection({
   boxed = false,
   backgroundColor,
   className = "",
+  selector = "div",
 }: {
   children: React.ReactNode;
+  selector?: SelectorElement;
   horizontalAlign?: HorizontalAlign;
   verticalAlign?: VerticalAlign;
   direction?: Direction;
@@ -53,11 +56,13 @@ export function InnerColumnSection({
   const boxedClass = boxed ? styles.boxed : "";
   const bgClass = backgroundColor ? BG[backgroundColor] : "";
 
+  const Tag = selector;
+
   return (
-    <div
+    <Tag
       className={`${styles.wrapper} ${dirClass} ${hClass} ${vClass} ${gapClass} ${boxedClass} ${bgClass} ${className}`}
     >
       {children}
-    </div>
+    </Tag>
   );
 }

@@ -1,6 +1,7 @@
 import { Children, type CSSProperties, type ReactNode } from "react";
 import clsx from "clsx";
 
+import { type SelectorElement } from "../types/selectorElement";
 import styles from "./ColumnSection.module.css";
 
 export type ContentSectionJustify =
@@ -31,6 +32,8 @@ type Props = {
   ratio?: ContentSectionRatio;
   stackAt?: StackAt;
   reverseOnStack?: boolean;
+  selector?: SelectorElement;
+  selectors?: SelectorElement[];
 };
 
 function parseRatio(ratio?: string): number[] {
@@ -47,6 +50,8 @@ export function ColumnSection({
   ratio,
   stackAt,
   reverseOnStack,
+  selector = "div",
+  selectors,
   className,
 }: Props) {
   const weights = parseRatio(ratio);
@@ -64,16 +69,19 @@ export function ColumnSection({
     className,
   );
 
+  const Wrapper = selector;
+
   if (!hasRatio) {
-    return <div className={cls}>{children}</div>;
+    return <Wrapper className={cls}>{children}</Wrapper>;
   }
 
   const childArray = Children.toArray(children);
   const appliedChildren = childArray.map((child, idx) => {
     const weight = weights[idx] ?? 1;
+    const Tag = selectors?.[idx] || "div";
     const key = idx;
     return (
-      <div
+      <Tag
         key={String(key)}
         className={styles.item}
         style={
@@ -82,9 +90,9 @@ export function ColumnSection({
         }
       >
         {child}
-      </div>
+      </Tag>
     );
   });
 
-  return <div className={cls}>{appliedChildren}</div>;
+  return <Wrapper className={cls}>{appliedChildren}</Wrapper>;
 }

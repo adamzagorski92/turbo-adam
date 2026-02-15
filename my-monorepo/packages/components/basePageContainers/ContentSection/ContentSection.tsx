@@ -7,9 +7,11 @@ import {
 } from "../utils/align";
 
 import styles from "./ContentSection.module.css";
+import { SelectorElement } from "../types/selectorElement";
 
 export function ContentSection({
   children,
+  selector = "div",
   horizontalAlign = "left",
   verticalAlign = "top",
   direction = "row",
@@ -22,6 +24,7 @@ export function ContentSection({
   ...rest
 }: {
   children: React.ReactNode;
+  selector?: SelectorElement;
   horizontalAlign?: HorizontalAlign;
   verticalAlign?: VerticalAlign;
   direction?: Direction;
@@ -57,12 +60,14 @@ export function ContentSection({
   const highlightedClass = highlighted ? styles.highlighted : "";
   const unlightedClass = unlighted ? styles.unlighted : "";
 
+  const Tag = selector;
+
   return (
-    <div
+    <Tag
       className={`${styles.wrapper} ${dirClass} ${hClass} ${vClass} ${stretchClass} ${boxedClass} ${gapClass} ${highlightedClass} ${unlightedClass} ${className}`}
       {...rest}
     >
       {children}
-    </div>
+    </Tag>
   );
 }

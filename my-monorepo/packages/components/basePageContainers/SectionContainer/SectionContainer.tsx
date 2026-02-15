@@ -1,3 +1,4 @@
+import { SelectorElement } from "../types/selectorElement";
 import {
   type BackgroundColor,
   buildPaddingStyle,
@@ -7,6 +8,7 @@ import {
 
 type SectionContainerProps = {
   children: React.ReactNode;
+  selector?: SelectorElement;
   fullBleed?: boolean;
   noPadding?: boolean;
   noTopPadding?: boolean;
@@ -23,6 +25,7 @@ type SectionContainerProps = {
 
 export function SectionContainer({
   children,
+  selector = "section",
   fullBleed = false,
   noPadding = false,
   noTopPadding = false,
@@ -60,9 +63,11 @@ export function SectionContainer({
     .filter(Boolean)
     .join(" ");
 
+  const Tag = selector;
+
   return (
-    <section className={classes} style={{ ...(bgStyle || {}), ...padStyle }}>
+    <Tag className={classes} style={{ ...(bgStyle || {}), ...padStyle }}>
       {children}
-    </section>
+    </Tag>
   );
 }

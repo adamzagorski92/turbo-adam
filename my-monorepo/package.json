@@ -10,6 +10,7 @@
     "docker:cleanup:sudo": "sudo node scripts/docker-check.mjs cleanup",
     "compose": "node scripts/compose.mjs --help",
     "compose:dev": "node scripts/compose.mjs dev",
+    "compose:dev:reload": "pnpm compose:dev down && pnpm compose:dev up",
     "compose:prod": "node scripts/compose.mjs prod",
     "dev": "turbo run dev",
     "build": "turbo run build",

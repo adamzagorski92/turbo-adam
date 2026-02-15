@@ -1,4 +1,3 @@
-import { Coffee } from "lucide-react";
 import Card from "../../components/Card/Card";
 import ProjectLink from "../../components/ProjectLink/ProjectLink";
 import { projectGroups, quickLinks } from "../../constans/links";
@@ -6,37 +5,26 @@ import styles from "./App.module.css";
 
 import {
   ColumnSection,
-  ContentSection,
   InnerColumnSection,
   PageBody,
   PageContainer,
   SectionContainer,
-  ThemeSwitcher,
 } from "@my-monorepo/components";
+import Navbar from "../../components/Navbar/Navbar";
 
 function App() {
   return (
     <PageContainer>
+      <SectionContainer
+        backgroundColor="brandSubtle"
+        noTopPadding
+        noBottomPadding
+        selector="nav"
+      >
+        <Navbar />
+      </SectionContainer>
       <PageBody>
-        <SectionContainer backgroundColor="brandSubtle" noTopPadding>
-          <ContentSection
-            direction="row"
-            horizontalAlign="right"
-            verticalAlign="top"
-            className={styles.topBar}
-          >
-            <a
-              href="https://buycoffee.to/zagorski"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.coffeeLink}
-            >
-              <Coffee className={styles.coffeeLinkIcon} aria-hidden="true" />
-              <span>Postaw Kawę</span>
-            </a>
-            <ThemeSwitcher />
-          </ContentSection>
-
+        <SectionContainer>
           <ColumnSection
             ratio="2:1"
             gapX="gx-32"
@@ -45,7 +33,7 @@ function App() {
             justify="between"
             stackAt="tablet"
           >
-            <div>
+            <InnerColumnSection direction="column">
               <header className={styles.header}>
                 <p className={styles.kicker}>Cześć, tu Adam</p>
                 <h1 className={styles.title}>Frontend Developer</h1>
@@ -64,24 +52,26 @@ function App() {
                   <strong>6 miesięcy komercyjnego doświadczenia</strong> na AGH.
                 </p>
               </section>
-            </div>
+            </InnerColumnSection>
 
-            <Card title="Szybkie linki">
-              <nav className={styles.links}>
-                {quickLinks.map((l) => (
-                  <ProjectLink
-                    key={l.href}
-                    href={l.href}
-                    title={l.title}
-                    Icon={l.Icon}
-                  />
-                ))}
-              </nav>
-            </Card>
+            <InnerColumnSection direction="column" selector="nav">
+              <Card title="Szybkie linki">
+                <nav className={styles.links}>
+                  {quickLinks.map((l) => (
+                    <ProjectLink
+                      key={l.href}
+                      href={l.href}
+                      title={l.title}
+                      Icon={l.Icon}
+                    />
+                  ))}
+                </nav>
+              </Card>
+            </InnerColumnSection>
           </ColumnSection>
         </SectionContainer>
 
-        <SectionContainer backgroundColor="surface">
+        <SectionContainer>
           <header className={styles.projectsHeader}>
             <h2 className={styles.projectsTitle}>Projekty</h2>
             <p className={styles.projectsSubtitle}>
@@ -125,7 +115,7 @@ function App() {
           </div>
         </SectionContainer>
 
-        <SectionContainer backgroundColor="brandSubtle">
+        <SectionContainer backgroundColor="brandSubtle" fullBleed>
           <div className={styles.coffeeSection}>
             <span className={styles.coffeeLabel}>Autoreklama</span>
             <ColumnSection
@@ -194,24 +184,23 @@ function App() {
             </ColumnSection>
           </div>
         </SectionContainer>
-
-        <SectionContainer backgroundColor="surface">
-          <footer className={styles.footer}>
-            <p>
-              Stronę zbudowałem przy użyciu React, TypeScript i Turborepo na
-              serwerze deweloperskim{" "}
-              <a
-                href="https://mikr.us/?r=adamzagorski"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Mikrus
-              </a>
-              . Więcej informacji w kodzie źródłowym.
-            </p>
-          </footer>
-        </SectionContainer>
       </PageBody>
+      <SectionContainer>
+        <footer className={styles.footer}>
+          <p>
+            Stronę zbudowałem przy użyciu React, TypeScript i Turborepo na
+            serwerze deweloperskim{" "}
+            <a
+              href="https://mikr.us/?r=adamzagorski"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mikrus
+            </a>
+            . Więcej informacji w kodzie źródłowym.
+          </p>
+        </footer>
+      </SectionContainer>
     </PageContainer>
   );
 }

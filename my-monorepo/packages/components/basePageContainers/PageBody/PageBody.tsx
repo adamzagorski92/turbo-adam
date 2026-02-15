@@ -1,9 +1,11 @@
 import { type ReactNode } from "react";
 import { BG_CLASS, buildPaddingStyle } from "../utils/styles";
+import { SelectorPageBody } from "../types/selectorElement";
 
 type PageBg = keyof typeof BG_CLASS;
 
 export function PageBody({
+  selector = "div",
   backgroundColor,
   paddingTop,
   paddingRight,
@@ -13,6 +15,7 @@ export function PageBody({
   children,
 }: {
   children: ReactNode;
+  selector?: SelectorPageBody;
   backgroundColor?: PageBg;
   paddingTop?: number;
   paddingRight?: number;
@@ -30,9 +33,11 @@ export function PageBody({
   const resetClass = resetHorizontalPaddingOnMobile
     ? "reset-horizontal-padding-mobile"
     : "";
+
+  const Tag = selector;
   return (
-    <div className={`page-body ${bgClass} ${resetClass}`} style={style}>
+    <Tag className={`page-body ${bgClass} ${resetClass}`} style={style}>
       {children}
-    </div>
+    </Tag>
   );
 }
