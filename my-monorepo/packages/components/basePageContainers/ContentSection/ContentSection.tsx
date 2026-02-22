@@ -7,7 +7,7 @@ import {
 } from "../utils/align";
 
 import styles from "./ContentSection.module.css";
-import { SelectorElement } from "../types/selectorElement";
+import type { SelectorElement } from "../types/selectorElement";
 
 export function ContentSection({
   children,

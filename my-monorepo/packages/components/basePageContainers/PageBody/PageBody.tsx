@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { BG_CLASS, buildPaddingStyle } from "../utils/styles";
-import { SelectorPageBody } from "../types/selectorElement";
+import type { SelectorPageBody } from "../types/selectorElement";
 
 type PageBg = keyof typeof BG_CLASS;
 

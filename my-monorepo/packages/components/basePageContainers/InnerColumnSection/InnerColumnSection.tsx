@@ -1,4 +1,4 @@
-import { SelectorElement } from "../types/selectorElement";
+import type { SelectorElement } from "../types/selectorElement";
 import {
   buildAlignMaps,
   type Direction,
