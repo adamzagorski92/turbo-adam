@@ -2,6 +2,7 @@ import Card from "../../components/Card/Card";
 import ProjectLink from "../../components/ProjectLink/ProjectLink";
 import { projectGroups } from "../../constans/links";
 import styles from "./App.module.css";
+import buyCoffeeQrUrl from "../../assets/QR_buycoffee@2x.webp";
 
 import {
   ColumnSection,
@@ -128,7 +129,7 @@ function App() {
                   rel="noopener noreferrer"
                 >
                   <img
-                    src="/QR_buycoffee.png"
+                    src={buyCoffeeQrUrl}
                     alt="QR kod do buycoffee.to/zagorski"
                     className={styles.coffeeQr}
                   />
