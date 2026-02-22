@@ -27,14 +27,14 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^11.0.1",
-    "@nestjs/core": "^11.0.1",
-    "@nestjs/platform-express": "^11.0.1",
-    "@prisma/adapter-pg": "^7.2.0",
-    "@prisma/client": "^7.3.0",
+    "@nestjs/common": "^11.1.14",
+    "@nestjs/core": "^11.1.14",
+    "@nestjs/platform-express": "^11.1.14",
+    "@prisma/adapter-pg": "^7.4.1",
+    "@prisma/client": "^7.4.1",
     "dotenv": "^16.6.1",
-    "pg": "^8.17.1",
-    "redis": "^5.10.0",
+    "pg": "^8.18.0",
+    "redis": "^5.11.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -43,7 +43,7 @@
     "@eslint/js": "^9.39.1",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
-    "@nestjs/testing": "^11.0.1",
+    "@nestjs/testing": "^11.1.14",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.19.7",
@@ -54,8 +54,8 @@
     "eslint-plugin-prettier": "^5.2.2",
     "globals": "^16.5.0",
     "jest": "^30.2.0",
-    "prettier": "^3.4.2",
-    "prisma": "^7.3.0",
+    "prettier": "^3.8.1",
+    "prisma": "^7.4.1",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
@@ -63,7 +63,7 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.46.4"
+    "typescript-eslint": "^8.56.0"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -82,6 +82,7 @@
       ]
     },
     "moduleNameMapper": {
+      "(.*)generated/prisma/client(\\.js)?$": "<rootDir>/src/__mocks__/generated/prisma/client.ts",
       "^(\\.{1,2}\\/.*)\\.js$": "$1"
     },
     "collectCoverageFrom": [

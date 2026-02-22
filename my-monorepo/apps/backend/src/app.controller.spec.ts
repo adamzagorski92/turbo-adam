@@ -3,7 +3,7 @@ import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { RedisService } from './redis.service.js';
 import { DatabaseService } from './database.service.js';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from './generated/prisma/client.js';
 
 describe('AppController', () => {
   let appController: AppController;
