@@ -5,6 +5,7 @@ This repo uses "Option A": Nginx runs in Docker and is the only public entrypoin
 ## Prerequisites
 
 - A Linux VPS ("mikrus") with Docker Engine and Docker Compose v2 plugin.
+- **python3** installed on the server (used by the deploy workflow to safely build `DATABASE_URL`).
 - A domain managed in Cloudflare.
 - Cloudflare **SSL/TLS mode: Full (strict)** (orange cloud enabled).
 
@@ -202,7 +203,7 @@ After adding or rotating certs, restart nginx:
 
 ```bash
 cd /var/lib/turbo-adam
-docker compose -f infrastructure/compose/production.server.yml up -d nginx
+docker compose --env-file .env -f infrastructure/compose/production.server.yml up -d nginx
 ```
 
 ### Key gotcha
@@ -284,7 +285,8 @@ App secrets (example, adjust to your needs):
 - `POSTGRES_USER`
 - `POSTGRES_PASSWORD`
 - `POSTGRES_DB`
-- `DATABASE_URL`
+
+> **Note:** `DATABASE_URL` is **not** a secret. The deploy workflow constructs it automatically on the server from the three secrets above (using `python3` to URL-encode credentials). You do not need to set it manually.
 
 Optional (only if GHCR packages are private):
 
@@ -301,11 +303,13 @@ Why:
 
 In practice, the workflow does:
 
-- `docker compose pull`
-- `docker compose up -d postgres`
-- wait for Postgres readiness
-- `docker compose run --rm migrate` (runs `prisma migrate deploy`)
-- `docker compose up -d --remove-orphans`
+1. **Disk cleanup** — runs `docker system prune -af` and `docker builder prune -af` to free space on the VPS before pulling new images. This removes all unused images and build cache (named volumes with DB data are **not** affected).
+2. Generate `.env` at `$APP_DIR/.env` with `IMAGE_TAG`, `POSTGRES_*`, and the computed `DATABASE_URL`.
+3. `docker compose --env-file .env pull`
+4. `docker compose --env-file .env up -d postgres`
+5. Wait for Postgres readiness (up to 60 s).
+6. `docker compose --env-file .env run --rm migrate` (runs `prisma migrate deploy`)
+7. `docker compose --env-file .env up -d --remove-orphans`
 
 ## 10) First deploy (server)
 
@@ -317,24 +321,45 @@ Before the first deploy, ensure:
 
 Trigger the GitHub Actions workflow (recommended):
 
-- Push to `main` or run the workflow manually (workflow_dispatch).
+- Push to `master` or run the workflow manually (workflow_dispatch).
 
-If you want to do a manual first start on the server (after copying the files):
+If you want to do a manual first start on the server (after copying the files), first create an `.env` file:
 
 ```bash
 cd /var/lib/turbo-adam
-docker compose -f infrastructure/compose/production.server.yml pull
-docker compose -f infrastructure/compose/production.server.yml up -d postgres
-docker compose -f infrastructure/compose/production.server.yml run --rm migrate
-docker compose -f infrastructure/compose/production.server.yml up -d --remove-orphans
+cat > .env <<'EOF'
+IMAGE_TAG=latest
+POSTGRES_USER=<your_user>
+POSTGRES_PASSWORD=<your_password>
+POSTGRES_DB=<your_db>
+DATABASE_URL=postgresql://<your_user>:<your_password>@postgres:5432/<your_db>?schema=public
+EOF
+```
+
+Then run:
+
+```bash
+docker compose --env-file .env -f infrastructure/compose/production.server.yml pull
+docker compose --env-file .env -f infrastructure/compose/production.server.yml up -d postgres
+# Wait for Postgres to be ready
+docker compose --env-file .env -f infrastructure/compose/production.server.yml run --rm migrate
+docker compose --env-file .env -f infrastructure/compose/production.server.yml up -d --remove-orphans
 ```
 
 ## 11) CI/CD
 
 Workflow: `.github/workflows/deploy-production.yml`
 
-- On push to `main`, it builds images and pushes them to GHCR.
-- Then it SSHes into the server, runs migrations, and updates containers.
+Trigger: push to `master` or manual `workflow_dispatch`.
+
+The pipeline has two jobs:
+
+1. **build-and-push** — builds four Docker images (`backend`, `migrate`, `web`, `nginx`) and pushes them to GHCR tagged with the commit SHA and `latest`.
+2. **deploy** — SSHes into the server and:
+   - uploads `production.server.yml`, `redis.conf`, and `postgres/init/` to `$APP_DIR`,
+   - runs aggressive disk cleanup (`docker system prune -af`, `docker builder prune -af`) to free space on the VPS,
+   - generates `.env` at `$APP_DIR/.env` (with `IMAGE_TAG`, `POSTGRES_*`, computed `DATABASE_URL`),
+   - pulls images, starts Postgres, runs migrations, then brings up all services.
 
 ## 12) Verify after deploy
 
@@ -344,11 +369,11 @@ On the server:
 cd /var/lib/turbo-adam
 
 # Container status
-docker compose -f infrastructure/compose/production.server.yml ps
+docker compose --env-file .env -f infrastructure/compose/production.server.yml ps
 
 # Tail logs (nginx + backend are usually most important)
-docker compose -f infrastructure/compose/production.server.yml logs -n 200 --no-color nginx
-docker compose -f infrastructure/compose/production.server.yml logs -n 200 --no-color backend
+docker compose --env-file .env -f infrastructure/compose/production.server.yml logs -n 200 --no-color nginx
+docker compose --env-file .env -f infrastructure/compose/production.server.yml logs -n 200 --no-color backend
 
 # Check local ports on the server
 curl -I http://localhost/
@@ -374,9 +399,16 @@ If HTTPS returns errors:
 
 Troubleshooting quick commands (server):
 
-- Show containers: `docker ps`
-- Show compose status: `docker compose -f infrastructure/compose/production.server.yml ps`
-- Logs: `docker compose -f infrastructure/compose/production.server.yml logs -n 200 --no-color`
-- Migrations logs (last run): `docker compose -f infrastructure/compose/production.server.yml logs -n 200 --no-color migrate`
+```bash
+cd /var/lib/turbo-adam
+COMPOSE="docker compose --env-file .env -f infrastructure/compose/production.server.yml"
+```
 
-Note: on the server we use `infrastructure/compose/production.server.yml`.
+- Show containers: `docker ps`
+- Show compose status: `$COMPOSE ps`
+- Logs: `$COMPOSE logs -n 200 --no-color`
+- Nginx logs: `$COMPOSE logs -n 200 --no-color nginx`
+- Backend logs: `$COMPOSE logs -n 200 --no-color backend`
+- Migration logs (last run): `$COMPOSE logs -n 200 --no-color migrate`
+
+Note: on the server we use `infrastructure/compose/production.server.yml` with `--env-file .env`.

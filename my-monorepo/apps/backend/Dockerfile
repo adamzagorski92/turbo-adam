@@ -33,19 +33,11 @@ RUN pnpm --filter backend build
 # Create a minimal production directory (legacy mode avoids requiring inject-workspace-packages).
 RUN pnpm --filter backend deploy --prod --legacy /out
 
-# Prisma Client generation writes artifacts to a `.prisma` directory.
-# Under pnpm, this lives inside the virtual store (`node_modules/.pnpm/.../node_modules/.prisma`).
-# pnpm deploy recreates node_modules and may not recreate the `node_modules/.prisma` link,
-# so we copy the generated artifacts explicitly into the deployed runtime folder.
-RUN set -e; \
-    PRISMA_DIR="$(find /repo/node_modules/.pnpm -type d -path '*/@prisma+client@*/node_modules/.prisma' | head -n 1)"; \
-    if [ -n "$PRISMA_DIR" ] && [ -d "$PRISMA_DIR" ]; then \
-      mkdir -p /out/node_modules; \
-      cp -R "$PRISMA_DIR" /out/node_modules/.prisma; \
-    else \
-      echo "Prisma artifacts directory not found" >&2; \
-      exit 1; \
-    fi
+# Copy compiled output into the deployed directory.
+# `pnpm deploy` copies package.json + production node_modules but not dist/.
+# In Prisma v7 the generated client lives inside src/generated/prisma/ and is
+# compiled by `nest build` into dist/, so we just need the build artifacts.
+RUN cp -R /repo/apps/backend/dist /out/dist
 
 
 # One-off migrations image.

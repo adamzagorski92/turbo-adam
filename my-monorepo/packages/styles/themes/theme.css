@@ -2,6 +2,13 @@
   color-scheme: light dark;
 }
 
+html[data-theme-switching] *,
+html[data-theme-switching] *::before,
+html[data-theme-switching] *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
 html[data-theme="light"] {
   color-scheme: light;
 }

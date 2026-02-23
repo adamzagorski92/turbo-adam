@@ -1,0 +1,13 @@
+:root {
+  --layout-max-width: 1920px;
+  --page-body-padding-x: clamp(0px, 4vw, var(--spacing-12));
+  --section-padding-x: clamp(var(--spacing-md), 3vw, var(--spacing-12));
+  --section-padding-y: clamp(var(--spacing-2xl), 4vw, var(--spacing-12));
+  --scrollbar-width: calc(100vw - 100%);
+}
+
+@supports (width: 100dvw) {
+  :root {
+    --scrollbar-width: calc(100dvw - 100%);
+  }
+}
