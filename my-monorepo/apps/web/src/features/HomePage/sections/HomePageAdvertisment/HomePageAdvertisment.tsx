@@ -72,6 +72,9 @@ const HomePageAdvertisment = () => {
                 src={buyCoffeeQrUrl}
                 alt="QR kod do buycoffee.to/zagorski"
                 className={styles.coffeeQr}
+                width={430}
+                height={548}
+                loading="lazy"
               />
             </a>
           </div>

@@ -12,6 +12,12 @@
   object-fit: contain;
 }
 
+@media (max-width: 480px) {
+  .logo img {
+    height: 1.75rem;
+  }
+}
+
 .lightVariant {
   display: var(--display-light-only);
 }

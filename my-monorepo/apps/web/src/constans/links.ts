@@ -38,31 +38,31 @@ export const projectGroups: LinkGroup[] = [
   {
     title: "Strony low-code",
     description:
-      "WordPress + Elementor — realizacje dla firm i osób prywatnych.",
+      "WordPress + Elementor - realizacje dla firm i osób prywatnych.",
     Icon: LayoutTemplate,
     links: [
       {
-        title: "Willa Saga — pensjonat nad morzem",
+        title: "Willa Saga - pensjonat nad morzem",
         href: "https://www.willasaga.pl/",
         Icon: Home,
       },
       {
-        title: "Hanya — strona wokalistki",
+        title: "Hanya - strona wokalistki",
         href: "https://hanya.pl/",
         Icon: Mic,
       },
       {
-        title: "NinjaKids — usługi i zajęcia dla dzieci",
+        title: "NinjaKids - usługi i zajęcia dla dzieci",
         href: "https://www.ninjakids.pl/",
         Icon: Users,
       },
       {
-        title: "SportPlay — sklep odzieżowy",
+        title: "SportPlay - sklep odzieżowy",
         href: "https://www.sportplay.pl/",
         Icon: Shirt,
       },
       {
-        title: "Adam Zagórski — strona wizytówka",
+        title: "Adam Zagórski - strona wizytówka",
         href: "https://www.adamzagorski.pl/",
         Icon: Globe,
       },
@@ -86,12 +86,12 @@ export const projectGroups: LinkGroup[] = [
     Icon: Bot,
     links: [
       {
-        title: "AI CV Agent — symulacja rozmowy z rekruterem",
+        title: "AI CV Agent - symulacja rozmowy z rekruterem",
         href: "https://github.com/adamzagorski92/ai-cvAgent",
         Icon: GitBranch,
       },
       {
-        title: "Hawai Pizza Agent — żartobliwy agent kuchenny",
+        title: "Hawai Pizza Agent - żartobliwy agent kuchenny",
         href: "https://github.com/adamzagorski92/hawai-pizza-agentAI",
         Icon: GitBranch,
       },
@@ -104,7 +104,7 @@ export const projectGroups: LinkGroup[] = [
     links: [
       {
         title: "Aplikuj się - prototyp aplikacji do rekrutacji",
-        href: "https://docs.google.com/spreadsheets/d/1Z28TDWUQ4-QV6ro51syTBrBJ3l5cVZPzCwMEkdtSap4/edit?usp=sharing",
+        href: "https://bit.ly/aplikuj-sie-v1-01",
         Icon: ClipboardList,
       },
       {

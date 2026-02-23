@@ -9,15 +9,17 @@ function Logo() {
         src={lightLogoUrl}
         alt="Adam Zagórski – logo"
         className={styles.lightVariant}
-        width={120}
-        height={40}
+        width={174}
+        height={44}
+        fetchPriority="high"
       />
       <img
         src={darkLogoUrl}
         alt="Adam Zagórski – logo"
         className={styles.darkVariant}
-        width={120}
-        height={40}
+        width={174}
+        height={44}
+        fetchPriority="high"
       />
     </a>
   );
