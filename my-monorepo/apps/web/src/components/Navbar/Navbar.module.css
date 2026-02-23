@@ -3,6 +3,8 @@
   padding-top: var(--spacing-6);
   padding-bottom: var(--spacing-6);
   gap: var(--spacing-3);
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .coffeeLink {

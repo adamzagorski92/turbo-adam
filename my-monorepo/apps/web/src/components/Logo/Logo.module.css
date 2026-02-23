@@ -1,0 +1,21 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: auto;
+  text-decoration: none;
+}
+
+.logo img {
+  width: auto;
+  height: 2.25rem;
+  object-fit: contain;
+}
+
+.lightVariant {
+  display: var(--display-light-only);
+}
+
+.darkVariant {
+  display: var(--display-dark-only);
+}

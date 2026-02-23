@@ -1,15 +1,17 @@
 import { ContentSection, ThemeSwitcher } from "@my-monorepo/components";
 import { Coffee } from "lucide-react";
+import Logo from "../Logo/Logo";
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {
   return (
     <ContentSection
       direction="row"
-      horizontalAlign="right"
-      verticalAlign="top"
+      horizontalAlign="left"
+      verticalAlign="middle"
       className={styles.topBar}
     >
+      <Logo />
       <a
         href="https://buycoffee.to/zagorski"
         target="_blank"
