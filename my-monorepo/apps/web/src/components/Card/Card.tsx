@@ -23,7 +23,7 @@ function Card({ children, title, className = "", variant = "default" }: Props) {
       boxed
       className={`${styles.card} ${variantClass} ${className}`.trim()}
     >
-      {title ? <h3 className={styles.title}>{title}</h3> : null}
+      {title ? <h2 className={styles.title}>{title}</h2> : null}
       {children}
     </ContentSection>
   );

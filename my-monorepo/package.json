@@ -1,7 +1,7 @@
 {
   "name": "my-monorepo",
   "private": true,
-  "packageManager": "pnpm@10.28.1",
+  "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a",
   "scripts": {
     "preinstall": "node -e \"const ua=process.env.npm_config_user_agent||''; if(!ua.includes('pnpm')){console.error('❌ This repo uses pnpm. Please run: pnpm install'); process.exit(1)}\"",
     "docker:check": "node scripts/docker-check.mjs strict",
@@ -10,7 +10,9 @@
     "docker:cleanup:sudo": "sudo node scripts/docker-check.mjs cleanup",
     "compose": "node scripts/compose.mjs --help",
     "compose:dev": "node scripts/compose.mjs dev",
+    "compose:dev:reload": "pnpm compose:dev down && pnpm compose:dev up",
     "compose:prod": "node scripts/compose.mjs prod",
+    "favicons:web": "node scripts/generate-web-favicons.mjs",
     "dev": "turbo run dev",
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
@@ -32,8 +34,10 @@
     ]
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "png-to-ico": "^3.0.1",
     "postcss": "^8.5.6",
     "postcss-nesting": "^14.0.0",
-    "turbo": "^2.8.3"
+    "turbo": "^2.8.10"
   }
 }

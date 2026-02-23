@@ -1,0 +1,14 @@
+# robots.txt
+#
+# Notes:
+# - This file is a standard signal for well-behaved crawlers.
+# - It is NOT a security mechanism; malicious scrapers may ignore it.
+#
+# Goal:
+# - Keep the site indexable/visible for search engines.
+# - Keep it accessible to AI/search bots as well.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://app.adamzagorski.pl/sitemap.xml

@@ -23,4 +23,8 @@
   --color-bg-strong: var(--palette-neutral-950);
   --color-bg-scrim: var(--palette-neutral-1000);
   --color-bg-brand-subtle: var(--palette-brand-100);
+
+  /* Theme-aware visibility */
+  --display-light-only: block;
+  --display-dark-only: none;
 }

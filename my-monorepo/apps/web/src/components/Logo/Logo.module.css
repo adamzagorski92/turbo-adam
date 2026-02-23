@@ -1,0 +1,27 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: auto;
+  text-decoration: none;
+}
+
+.logo img {
+  width: auto;
+  height: 2.25rem;
+  object-fit: contain;
+}
+
+@media (max-width: 480px) {
+  .logo img {
+    height: 1.75rem;
+  }
+}
+
+.lightVariant {
+  display: var(--display-light-only);
+}
+
+.darkVariant {
+  display: var(--display-dark-only);
+}
