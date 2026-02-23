@@ -152,10 +152,15 @@
   background-color: var(--color-bg-canvas);
   padding: 0 var(--spacing-2);
   font-size: var(--font-size-sm);
-  color: var(--color-accent);
+  color: var(--color-fg-primary);
   font-weight: var(--font-weight-medium);
   border-radius: var(--radius-sm);
   z-index: 1;
+}
+
+.paragraph a {
+  text-underline-offset: 0.15em;
+  text-decoration-skip-ink: auto;
 }
 
 .coffeeContent {

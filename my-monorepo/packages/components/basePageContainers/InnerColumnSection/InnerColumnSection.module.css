@@ -55,6 +55,8 @@
 
 .bgBrandSubtle {
   background: var(--color-bg-brand-subtle);
+  --color-accent: var(--color-fg-primary);
+  --color-accent-hover: var(--color-fg-primary);
 }
 
 @media (max-width: 768px) {
