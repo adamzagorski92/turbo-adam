@@ -1,35 +1,3 @@
-/* Header section */
-.header {
-  text-align: left;
-}
-
-/* Content section */
-.content {
-  max-width: 800px;
-  text-align: left;
-}
-
-/* Footer */
-.footer {
-  font-size: var(--font-size-sm);
-  color: var(--color-fg-tertiary);
-  line-height: var(--line-height-relaxed);
-  text-align: left;
-}
-
-.footer a {
-  color: var(--color-accent);
-  text-decoration: underline;
-  transition: var(--transition-colors);
-}
-
-.footer a:hover {
-  color: var(--color-accent-hover);
-}
-
-/* Card */
-
-/* Projects */
 .projectsHeader {
   padding-top: var(--spacing-10);
   padding-bottom: var(--spacing-6);
@@ -122,7 +90,6 @@
   overflow-wrap: anywhere;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .title {
     font-size: var(--font-size-3xl);
@@ -134,64 +101,5 @@
 
   .paragraph {
     font-size: var(--font-size-base);
-  }
-}
-
-/* Coffee section */
-.coffeeSection {
-  border: 2px solid var(--color-accent);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-6);
-  position: relative;
-}
-
-.coffeeLabel {
-  position: absolute;
-  top: -0.7em;
-  left: var(--spacing-4);
-  background-color: var(--color-bg-canvas);
-  padding: 0 var(--spacing-2);
-  font-size: var(--font-size-sm);
-  color: var(--color-fg-primary);
-  font-weight: var(--font-weight-medium);
-  border-radius: var(--radius-sm);
-  z-index: 1;
-}
-
-.paragraph a {
-  text-underline-offset: 0.15em;
-  text-decoration-skip-ink: auto;
-}
-
-.coffeeContent {
-  text-align: left;
-}
-
-.coffeeQrWrap {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.coffeeQr {
-  width: 360px;
-  height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-  border-radius: var(--radius-md);
-  transition: var(--transition-transform);
-}
-
-.coffeeQr:hover {
-  transform: scale(1.05);
-}
-
-@media (max-width: 768px) {
-  .coffeeContent {
-    text-align: center;
-  }
-
-  .coffeeQrWrap {
-    justify-content: center;
   }
 }
