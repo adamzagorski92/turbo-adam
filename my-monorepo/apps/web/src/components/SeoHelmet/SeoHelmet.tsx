@@ -57,7 +57,7 @@ const SeoHelmet = ({
 }: SeoHelmetProps) => {
   const { i18n } = useTranslation();
 
-  const siteUrl = import.meta.env.DEFAULT_SITE_URL;
+  const siteUrl = import.meta.env.DEFAULT_SITE_URL || window.location.origin;
   const runtimePath = window.location.pathname;
   const resolvedLang = i18n.resolvedLanguage ?? i18n.language;
   const resolvedOgLocale = ogLocale ?? toOgLocale(resolvedLang);

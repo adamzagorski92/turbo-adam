@@ -3,9 +3,26 @@ import SeoHelmet from "@components/SeoHelmet/SeoHelmet";
 import HomePageAboveTheFold from "@features/HomePage/sections/HomePageAboveTheFold/HomePageAboveTheFold";
 import HomePageProjects from "@features/HomePage/sections/HomePageProjects/HomePageProjects";
 import HomePageAdvertisment from "@features/HomePage/sections/HomePageAdvertisment/HomePageAdvertisment";
-import { HOME_PAGE_META } from "./HomePageMeta";
+import { useTranslation } from "react-i18next";
+
+type HomePageMeta = {
+  siteName: string;
+  title: string;
+  description: string;
+  keywords?: string;
+  robots?: string;
+  ogType?: "website" | "article" | "profile";
+  twitterCard?: "summary" | "summary_large_image";
+  ogImagePath?: string;
+  personJsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
+};
 
 const HomePage = () => {
+  const { t } = useTranslation("HomePage");
+  const meta = t("meta", {
+    returnObjects: true,
+  }) as unknown as HomePageMeta;
+
   const {
     siteName,
     title,
@@ -16,7 +33,8 @@ const HomePage = () => {
     twitterCard,
     ogImagePath,
     personJsonLd,
-  } = HOME_PAGE_META;
+  } = meta;
+
   return (
     <>
       <SeoHelmet

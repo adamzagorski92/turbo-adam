@@ -3,21 +3,23 @@ import { projectGroups } from "@constans/links";
 import Card from "@components/Card/Card";
 import ProjectLink from "@components/ProjectLink/ProjectLink";
 import styles from "./HomePageProjects.module.css";
+import { useTranslation } from "react-i18next";
 
 const HomePageProjects = () => {
+  const { t } = useTranslation("HomePage");
+
   return (
     <SectionContainer>
       <header className={styles.projectsHeader}>
-        <h2 className={styles.projectsTitle}>Projekty</h2>
+        <h2 className={styles.projectsTitle}>{t("content.projects.title")}</h2>
         <p className={styles.projectsSubtitle}>
-          Wybrane realizacje: strony low-code, aplikacje w React, agenty AI i
-          narzędzia.
+          {t("content.projects.subtitle")}
         </p>
       </header>
 
       <div className={styles.projectGrid}>
         {projectGroups.map((group) => (
-          <div key={group.title} className={styles.projectGridItem}>
+          <div key={group.titleKey} className={styles.projectGridItem}>
             <Card variant="project">
               <div className={styles.projectCardHeader}>
                 <span className={styles.projectCardIconWrap}>
@@ -27,8 +29,12 @@ const HomePageProjects = () => {
                   />
                 </span>
                 <div className={styles.projectCardHeaderText}>
-                  <h3 className={styles.projectCardTitle}>{group.title}</h3>
-                  <p className={styles.projectCardDesc}>{group.description}</p>
+                  <h3 className={styles.projectCardTitle}>
+                    {t(group.titleKey)}
+                  </h3>
+                  <p className={styles.projectCardDesc}>
+                    {t(group.descriptionKey)}
+                  </p>
                 </div>
               </div>
 
@@ -36,7 +42,7 @@ const HomePageProjects = () => {
                 <ProjectLink
                   key={l.href}
                   href={l.href}
-                  title={l.title}
+                  title={t(l.titleKey)}
                   Icon={l.Icon}
                 />
               ))}

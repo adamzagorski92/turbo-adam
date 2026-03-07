@@ -1,0 +1,14 @@
+{
+  "navbar": {
+    "buyCoffeeCta": "Postaw kawę"
+  },
+  "logo": {
+    "homeAriaLabel": "Strona główna",
+    "alt": "Adam Zagórski – logo"
+  },
+  "footer": {
+    "descriptionPrefix": "Stronę zbudowałem przy użyciu React, TypeScript i Turborepo na serwerze deweloperskim ",
+    "mikrusLinkText": "Mikrus",
+    "descriptionSuffix": ". Więcej informacji w kodzie źródłowym."
+  }
+}

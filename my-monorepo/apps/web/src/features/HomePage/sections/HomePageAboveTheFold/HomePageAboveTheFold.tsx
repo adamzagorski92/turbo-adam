@@ -3,35 +3,41 @@ import AboveTheFold from "@components/AboveTheFold/AboveTheFold";
 import Card from "@components/Card/Card";
 import { quickLinks } from "@constans/links";
 import ProjectLink from "@components/ProjectLink/ProjectLink";
+import { useTranslation } from "react-i18next";
+
+type AboveTheFoldHeading = {
+  kicker: string;
+  title: string;
+  subtitle: string;
+};
 
 const HomePageAboveTheFold = () => {
+  const { t } = useTranslation("HomePage");
+  const heading = t("content.aboveTheFold.heading", {
+    returnObjects: true,
+  }) as unknown as AboveTheFoldHeading;
+
   return (
     <AboveTheFold
-      heading={{
-        kicker: "Cześć, tu Adam",
-        title: "Frontend Developer",
-        subtitle: "Buduję nowoczesne aplikacje w React + TypeScript.",
-      }}
+      heading={heading}
       header={
         <InnerColumnSection direction="column">
+          <p>{t("content.aboveTheFold.intro")}</p>
           <p>
-            W tym miejscu planuję zebrać moje projekty i pomysły, aby
-            prezentować umiejętności i kompetencje.
-          </p>
-          <p>
-            Do tej pory zebrałem{" "}
-            <strong>6 miesięcy komercyjnego doświadczenia</strong> na AGH.
+            {t("content.aboveTheFold.experiencePrefix")}
+            <strong>{t("content.aboveTheFold.experienceStrong")}</strong>
+            {t("content.aboveTheFold.experienceSuffix")}
           </p>
         </InnerColumnSection>
       }
       aside={
         <InnerColumnSection direction="column" selector="nav">
-          <Card title="Szybkie linki">
+          <Card title={t("content.aboveTheFold.quickLinksTitle")}>
             {quickLinks.map((l) => (
               <ProjectLink
                 key={l.href}
                 href={l.href}
-                title={l.title}
+                title={t(l.titleKey)}
                 Icon={l.Icon}
               />
             ))}

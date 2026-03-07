@@ -1,6 +1,11 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
+import plUI from "./pl/UI.json";
+import enUI from "./en/UI.json";
+import plHomePage from "./pl/HomePage.json";
+import enHomePage from "./en/HomePage.json";
+
 export const LANGUAGE_STORAGE_KEY = "language";
 export const SUPPORTED_LANGUAGES = ["pl", "en"] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
@@ -18,8 +23,8 @@ function cacheLanguage(language: string) {
 }
 
 const resources = {
-  pl: { common: {} },
-  en: { common: {} },
+  pl: { UI: plUI, HomePage: plHomePage },
+  en: { UI: enUI, HomePage: enHomePage },
 } as const;
 
 const initialLanguage =
@@ -36,9 +41,13 @@ void i18n
     fallbackLng: FALLBACK_LANGUAGE,
     supportedLngs: SUPPORTED_LANGUAGES,
     nonExplicitSupportedLngs: true,
-    defaultNS: "common",
+    ns: ["UI", "HomePage"],
+    defaultNS: "UI",
     interpolation: {
       escapeValue: false,
+    },
+    react: {
+      useSuspense: false,
     },
   })
   .then(() => {

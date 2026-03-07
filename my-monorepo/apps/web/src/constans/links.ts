@@ -14,101 +14,122 @@ import {
   UserRound,
   ClipboardList,
 } from "lucide-react";
-import type { LinkGroup, LinkItem } from "@app-types/linkType";
 
-export const quickLinks: LinkItem[] = [
+import type { LucideIcon } from "lucide-react";
+
+type I18nKey = string;
+
+export type QuickLinkItem = {
+  titleKey: I18nKey;
+  href: string;
+  Icon: LucideIcon;
+};
+
+export type ProjectLinkItem = {
+  titleKey: I18nKey;
+  href: string;
+  Icon: LucideIcon;
+};
+
+export type ProjectLinkGroup = {
+  titleKey: I18nKey;
+  descriptionKey: I18nKey;
+  Icon: LucideIcon;
+  links: ProjectLinkItem[];
+};
+
+export const quickLinks: QuickLinkItem[] = [
   {
-    title: "Kod źródłowy tej strony",
+    titleKey: "content.links.quick.sourceCode",
     href: "https://github.com/adamzagorski92/turbo-adam",
     Icon: GitBranch,
   },
   {
-    title: "Mój LinkedIn",
+    titleKey: "content.links.quick.linkedIn",
     href: "https://www.linkedin.com/in/adazag/",
     Icon: BriefcaseBusiness,
   },
   {
-    title: "Strona wizytówka (więcej o mnie)",
+    titleKey: "content.links.quick.aboutMe",
     href: "https://www.adamzagorski.pl/",
     Icon: UserRound,
   },
 ];
 
-export const projectGroups: LinkGroup[] = [
+export const projectGroups: ProjectLinkGroup[] = [
   {
-    title: "Strony low-code",
-    description:
-      "WordPress + Elementor - realizacje dla firm i osób prywatnych.",
+    titleKey: "content.projectGroups.lowCode.title",
+    descriptionKey: "content.projectGroups.lowCode.description",
     Icon: LayoutTemplate,
     links: [
       {
-        title: "Willa Saga - pensjonat nad morzem",
+        titleKey: "content.projectGroups.lowCode.links.willaSaga",
         href: "https://www.willasaga.pl/",
         Icon: Home,
       },
       {
-        title: "Hanya - strona wokalistki",
+        titleKey: "content.projectGroups.lowCode.links.hanya",
         href: "https://hanya.pl/",
         Icon: Mic,
       },
       {
-        title: "NinjaKids - usługi i zajęcia dla dzieci",
+        titleKey: "content.projectGroups.lowCode.links.ninjaKids",
         href: "https://www.ninjakids.pl/",
         Icon: Users,
       },
       {
-        title: "SportPlay - sklep odzieżowy",
+        titleKey: "content.projectGroups.lowCode.links.sportPlay",
         href: "https://www.sportplay.pl/",
         Icon: Shirt,
       },
       {
-        title: "Adam Zagórski - strona wizytówka",
+        titleKey: "content.projectGroups.lowCode.links.adamZagorski",
         href: "https://www.adamzagorski.pl/",
         Icon: Globe,
       },
     ],
   },
   {
-    title: "Aplikacje w React",
-    description: "Zbiór aplikacji w React + TypeScript.",
+    titleKey: "content.projectGroups.reactApps.title",
+    descriptionKey: "content.projectGroups.reactApps.description",
     Icon: Code2,
     links: [
       {
-        title: "Portfolio projektów (Netlify)",
+        titleKey: "content.projectGroups.reactApps.links.portfolioNetlify",
         href: "https://adam-zag-portfolio-projects.netlify.app/",
         Icon: Globe,
       },
     ],
   },
   {
-    title: "AI agenty",
-    description: "Repozytoria z agentami AI i automatyzacjami.",
+    titleKey: "content.projectGroups.aiAgents.title",
+    descriptionKey: "content.projectGroups.aiAgents.description",
     Icon: Bot,
     links: [
       {
-        title: "AI CV Agent - symulacja rozmowy z rekruterem",
+        titleKey: "content.projectGroups.aiAgents.links.aiCvAgent",
         href: "https://github.com/adamzagorski92/ai-cvAgent",
         Icon: GitBranch,
       },
       {
-        title: "Hawai Pizza Agent - żartobliwy agent kuchenny",
+        titleKey: "content.projectGroups.aiAgents.links.hawaiPizzaAgent",
         href: "https://github.com/adamzagorski92/hawai-pizza-agentAI",
         Icon: GitBranch,
       },
     ],
   },
   {
-    title: "Inne projekty oraz prototypy",
-    description: "skrypty, projekty w google sheets",
+    titleKey: "content.projectGroups.other.title",
+    descriptionKey: "content.projectGroups.other.description",
     Icon: Puzzle,
     links: [
       {
-        title: "Aplikuj się - prototyp aplikacji do rekrutacji",
+        titleKey: "content.projectGroups.other.links.aplikujSie",
         href: "https://bit.ly/aplikuj-sie-v1-01",
         Icon: ClipboardList,
       },
       {
-        title: "Thunderbird Email Extractor (GitHub)",
+        titleKey: "content.projectGroups.other.links.thunderbirdExtractor",
         href: "https://github.com/adamzagorski92/thunderbird-email-extractor",
         Icon: Mail,
       },
