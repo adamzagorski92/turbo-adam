@@ -59,6 +59,8 @@ services:
     build:
       context: ../..
       dockerfile: apps/web/Dockerfile
+      args:
+        DEFAULT_SITE_URL: ${DEFAULT_SITE_URL:?DEFAULT_SITE_URL is required}
     container_name: my-web
     environment:
       NODE_ENV: production

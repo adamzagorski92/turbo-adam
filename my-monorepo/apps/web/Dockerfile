@@ -9,6 +9,9 @@ RUN apt-get update \
 WORKDIR /repo
 RUN corepack enable
 
+ARG DEFAULT_SITE_URL
+ENV DEFAULT_SITE_URL=$DEFAULT_SITE_URL
+
 # Copy workspace manifests first to maximize Docker layer caching.
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
 COPY .npmrc ./

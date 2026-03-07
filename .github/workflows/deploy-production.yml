@@ -62,6 +62,8 @@ jobs:
         with:
           context: my-monorepo
           file: my-monorepo/apps/web/Dockerfile
+          build-args: |
+            DEFAULT_SITE_URL=${{ secrets.DEFAULT_SITE_URL }}
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.OWNER }}/turbo-adam-web:${{ env.IMAGE_TAG }}

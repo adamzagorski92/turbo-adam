@@ -23,6 +23,26 @@ function getInitialTheme(): Theme {
   return isTheme(saved) ? saved : getSystemTheme();
 }
 
+function syncThemeColorMeta() {
+  const content = getComputedStyle(document.documentElement)
+    .getPropertyValue("--color-bg-canvas")
+    .trim();
+
+  if (!content) return;
+
+  let meta = document.querySelector<HTMLMetaElement>(
+    'meta[name="theme-color"]',
+  );
+
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "theme-color");
+    document.head.appendChild(meta);
+  }
+
+  meta.setAttribute("content", content);
+}
+
 export function ThemeSwitcher() {
   const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
 
@@ -35,6 +55,7 @@ export function ThemeSwitcher() {
 
   useLayoutEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+    syncThemeColorMeta();
 
     const root = document.documentElement;
     if (!root.hasAttribute(THEME_SWITCHING_ATTR)) return;
