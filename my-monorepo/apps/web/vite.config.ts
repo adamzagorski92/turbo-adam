@@ -6,7 +6,6 @@ import { resolve } from "node:path";
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    preserveSymlinks: true,
     dedupe: ["react", "react-dom"],
   },
   server: {

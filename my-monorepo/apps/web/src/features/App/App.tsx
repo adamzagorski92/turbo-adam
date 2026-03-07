@@ -1,12 +1,8 @@
-import HomePage from "../HomePage/HomePage";
-import MainLayout from "../../leyouts/MainLayout/MainLayout";
+import { RouterProvider } from "react-router";
+import { router } from "./router";
 
 function App() {
-  return (
-    <MainLayout>
-      <HomePage />
-    </MainLayout>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
