@@ -1,5 +1,6 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
+  "globalEnv": ["DEFAULT_SITE_URL"],
   "tasks": {
     "typecheck": {
       "dependsOn": ["^typecheck"]

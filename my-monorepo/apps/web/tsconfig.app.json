@@ -10,11 +10,22 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
+    "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@packages/*": ["../../packages/*"],
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@constans/*": ["src/constans/*"],
+      "@features/*": ["src/features/*"],
+      "@leyouts/*": ["src/leyouts/*"],
+      "@app-types/*": ["src/types/*"]
+    },
 
     /* Linting */
     "strict": true,

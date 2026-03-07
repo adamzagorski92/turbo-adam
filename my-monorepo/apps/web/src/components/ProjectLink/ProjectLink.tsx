@@ -1,4 +1,4 @@
-import type { LinkItem } from "../../types/linkType";
+import type { LinkItem } from "@app-types/linkType";
 import styles from "./ProjectLink.module.css";
 
 function ProjectLink({ href, title, Icon }: LinkItem) {

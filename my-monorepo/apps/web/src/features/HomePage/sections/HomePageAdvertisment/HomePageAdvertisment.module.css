@@ -19,11 +19,6 @@
   z-index: 1;
 }
 
-.paragraph a {
-  text-underline-offset: 0.15em;
-  text-decoration-skip-ink: auto;
-}
-
 .coffeeContent {
   text-align: left;
 }

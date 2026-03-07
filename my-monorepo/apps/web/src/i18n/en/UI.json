@@ -1,0 +1,17 @@
+{
+  "navbar": {
+    "buyCoffeeCta": "Buy a coffee"
+  },
+  "languageSwitcher": {
+    "ariaLabel": "Change language"
+  },
+  "logo": {
+    "homeAriaLabel": "Home page",
+    "alt": "Adam Zagorski – logo"
+  },
+  "footer": {
+    "descriptionPrefix": "I built this site using React, TypeScript, and Turborepo on a development server hosted on ",
+    "mikrusLinkText": "Mikrus",
+    "descriptionSuffix": ". More details are available in the source code."
+  }
+}

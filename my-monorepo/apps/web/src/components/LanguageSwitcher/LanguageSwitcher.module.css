@@ -30,22 +30,29 @@
   outline-offset: 2px;
 }
 
-.icon {
+.label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 1.125rem;
   height: 1.125rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  user-select: none;
+  letter-spacing: 0.02em;
 }
-@media (max-width: 480px) {
-  .switcher {
-    display: inline-flex;
-  }
 
+@media (max-width: 480px) {
   .switcher button {
     width: 1.75rem;
     height: 1.75rem;
   }
 
-  .icon {
+  .label {
     width: 0.875rem;
     height: 0.875rem;
+    font-size: 0.75rem;
   }
 }

@@ -1,11 +1,5 @@
 import { ColumnSection, SectionContainer } from "@my-monorepo/components";
-import {
-  Children,
-  cloneElement,
-  isValidElement,
-  type ReactElement,
-  type ReactNode,
-} from "react";
+import type { ReactNode } from "react";
 
 import styles from "./AboveTheFold.module.css";
 
@@ -16,11 +10,13 @@ type AboveTheFoldHeading = {
 };
 
 const AboveTheFold = ({
-  children,
+  header,
+  aside,
   heading,
   className,
 }: {
-  children: ReactNode;
+  header?: ReactNode;
+  aside?: ReactNode;
   heading?: AboveTheFoldHeading;
   className?: string;
 }) => {
@@ -38,38 +34,13 @@ const AboveTheFold = ({
     </>
   ) : null;
 
-  const childArray = Children.toArray(children);
-  const headerChild = childArray[0];
-  const asideChild = childArray[1];
-
-  let headerContent = headerChild ?? headingMarkup;
-
-  if (headingMarkup) {
-    if (isValidElement(headerChild)) {
-      const headerElement = headerChild as ReactElement<{
-        children?: ReactNode;
-      }>;
-      const existingChildren = headerElement.props.children;
-      headerContent = cloneElement(headerElement, {
-        children: (
-          <>
-            {headingMarkup}
-            {existingChildren}
-          </>
-        ),
-      });
-    } else {
-      headerContent = (
-        <>
-          {headingMarkup}
-          {headerChild}
-        </>
-      );
-    }
-  }
-
   return (
-    <SectionContainer selector="section" className={wrapperClassName}>
+    <SectionContainer
+      paddingRight={0}
+      paddingLeft={0}
+      selector="section"
+      className={wrapperClassName}
+    >
       <ColumnSection
         ratio="2:1"
         gapX="gx-32"
@@ -80,8 +51,11 @@ const AboveTheFold = ({
         selector="section"
         selectors={["header", "aside"]}
       >
-        {headerContent}
-        {asideChild}
+        <>
+          {headingMarkup}
+          {header}
+        </>
+        {aside}
       </ColumnSection>
     </SectionContainer>
   );

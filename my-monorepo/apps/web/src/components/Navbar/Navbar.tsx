@@ -1,9 +1,13 @@
 import { ContentSection, ThemeSwitcher } from "@my-monorepo/components";
 import { Coffee } from "lucide-react";
-import Logo from "../Logo/Logo";
+import Logo from "@components/Logo/Logo";
+import LanguageSwitcher from "@components/LanguageSwitcher/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {
+  const { t } = useTranslation("UI");
+
   return (
     <ContentSection
       direction="row"
@@ -19,8 +23,9 @@ const Navbar = () => {
         className={styles.coffeeLink}
       >
         <Coffee className={styles.coffeeLinkIcon} aria-hidden="true" />
-        <span>Postaw Kawę</span>
+        <span>{t("navbar.buyCoffeeCta")}</span>
       </a>
+      <LanguageSwitcher />
       <ThemeSwitcher />
     </ContentSection>
   );
