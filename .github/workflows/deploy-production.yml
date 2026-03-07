@@ -124,6 +124,9 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          PGADMIN_DEFAULT_EMAIL: ${{ secrets.PGADMIN_DEFAULT_EMAIL }}
+          PGADMIN_DEFAULT_PASSWORD: ${{ secrets.PGADMIN_DEFAULT_PASSWORD }}
+          PGADMIN_PORT: ${{ secrets.PGADMIN_PORT }}
           GHCR_OWNER: ${{ env.OWNER }}
           GHCR_PAT: ${{ secrets.GHCR_PAT }}
         with:
@@ -131,7 +134,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           port: ${{ secrets.DEPLOY_PORT }}
-          envs: IMAGE_TAG,APP_DIR,POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,GHCR_OWNER,GHCR_PAT
+          envs: IMAGE_TAG,APP_DIR,POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,PGADMIN_DEFAULT_EMAIL,PGADMIN_DEFAULT_PASSWORD,PGADMIN_PORT,GHCR_OWNER,GHCR_PAT
           script_stop: true
           script: |
             set -euo pipefail
@@ -167,11 +170,14 @@ jobs:
             DATABASE_URL="$(python3 -c 'import os,urllib.parse as u; user=u.quote(os.environ["POSTGRES_USER"],safe=""); pw=u.quote(os.environ["POSTGRES_PASSWORD"],safe=""); db=u.quote(os.environ["POSTGRES_DB"],safe=""); print(f"postgresql://{user}:{pw}@postgres:5432/{db}?schema=public")')"
 
             # Compose interpolation vars (used by infrastructure/compose/production.server.yml)
-            printf "IMAGE_TAG=%s\nPOSTGRES_USER=%s\nPOSTGRES_PASSWORD=%s\nPOSTGRES_DB=%s\nDATABASE_URL=%s\n" \
+            printf "IMAGE_TAG=%s\nPOSTGRES_USER=%s\nPOSTGRES_PASSWORD=%s\nPOSTGRES_DB=%s\nPGADMIN_DEFAULT_EMAIL=%s\nPGADMIN_DEFAULT_PASSWORD=%s\nPGADMIN_PORT=%s\nDATABASE_URL=%s\n" \
               "$IMAGE_TAG" \
               "$POSTGRES_USER" \
               "$POSTGRES_PASSWORD" \
               "$POSTGRES_DB" \
+              "$PGADMIN_DEFAULT_EMAIL" \
+              "$PGADMIN_DEFAULT_PASSWORD" \
+              "${PGADMIN_PORT:-5050}" \
               "$DATABASE_URL" \
               > .env
 
