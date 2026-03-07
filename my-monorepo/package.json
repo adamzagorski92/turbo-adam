@@ -20,7 +20,7 @@
     "test": "turbo run test",
     "test:cov": "turbo run test:cov",
     "test:e2e": "turbo run test:e2e",
-    "pgadmin": "ssh -N -L 5050:127.0.0.1:5050 mikrus-deploy"
+    "pgadmin": "ssh -N -L 5051:127.0.0.1:5050 -o ExitOnForwardFailure=yes -o ServerAliveInterval=30 mikrus-deploy"
   },
   "pnpm": {
     "overrides": {
