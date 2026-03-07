@@ -16,7 +16,7 @@
   transition:
     var(--transition-colors),
     opacity var(--duration-base) var(--ease-in-out);
-  opacity: 0.75;
+  opacity: 1;
   color: var(--color-fg-secondary);
 }
 

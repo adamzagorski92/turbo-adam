@@ -36,12 +36,18 @@ p {
 
 a {
   color: var(--color-accent);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.28em;
+  text-decoration-skip-ink: auto;
   transition: var(--transition-colors);
 }
 
-a:hover {
+a:hover,
+a:focus-visible {
   color: var(--color-accent-hover);
+  text-decoration-color: var(--color-accent-hover);
   text-decoration: underline;
 }
 
