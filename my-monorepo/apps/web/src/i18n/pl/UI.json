@@ -2,6 +2,9 @@
   "navbar": {
     "buyCoffeeCta": "Postaw kawę"
   },
+  "languageSwitcher": {
+    "ariaLabel": "Zmień język"
+  },
   "logo": {
     "homeAriaLabel": "Strona główna",
     "alt": "Adam Zagórski – logo"
