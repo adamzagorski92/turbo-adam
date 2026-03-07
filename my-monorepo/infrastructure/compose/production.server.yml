@@ -85,9 +85,29 @@ services:
       - private
     restart: unless-stopped
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: my-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_LISTEN_PORT: "80"
+    # Bind only on loopback: access through SSH tunnel, not public internet.
+    ports:
+      - "127.0.0.1:${PGADMIN_PORT:-5050}:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - private
+      - public
+    restart: unless-stopped
+
 volumes:
   redis_data:
   postgres_data:
+  pgadmin_data:
 
 networks:
   public:
