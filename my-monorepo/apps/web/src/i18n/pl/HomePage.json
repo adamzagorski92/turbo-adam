@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "siteName": "Adam Zagorski",
+    "title": "Adam Zagorski | Frontend Developer React + TypeScript",
+    "description": "Portfolio Adama Zagorskiego: frontend w React i TypeScript, projekty webowe, narzedzia AI i aplikacje produktowe.",
+    "keywords": "frontend developer, react developer, typescript, portfolio, ai, aplikacje webowe",
+    "robots": "index, follow",
+    "ogType": "website",
+    "twitterCard": "summary_large_image",
+    "ogImagePath": "/icon-512.png",
+    "personJsonLd": {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Adam Zagorski",
+      "jobTitle": "Frontend Developer",
+      "sameAs": ["https://github.com/adamzagorski92"]
+    }
+  },
+  "content": {
+    "aboveTheFold": {
+      "heading": {
+        "kicker": "Cześć, tu Adam",
+        "title": "Frontend Developer",
+        "subtitle": "Buduję nowoczesne aplikacje w React + TypeScript."
+      },
+      "intro": "W tym miejscu planuję zebrać moje projekty i pomysły, aby prezentować umiejętności i kompetencje.",
+      "experiencePrefix": "Do tej pory zebrałem ",
+      "experienceStrong": "6 miesięcy komercyjnego doświadczenia",
+      "experienceSuffix": " na AGH.",
+      "quickLinksTitle": "Szybkie linki"
+    },
+    "projects": {
+      "title": "Projekty",
+      "subtitle": "Wybrane realizacje: strony low-code, aplikacje w React, agenty AI i narzędzia."
+    },
+    "advertisement": {
+      "label": "Autoreklama",
+      "title": "Postaw mi kawę",
+      "intro": "Jeśli podoba Ci się to, co robię, możesz wesprzeć mnie kawą. Każda kawa to motywacja do dalszego rozwoju i tworzenia nowych projektów.",
+      "appTitle": "Aplikacja: \"Aplikuj Się\"",
+      "appDescriptionLinkText": "Aplikuj Się",
+      "appDescriptionMiddle": " to prototyp aplikacji do ułatwienia poszukiwania wymarzonej pracy. Co prawda portali pracy jest bardzo dużo, ale sam proces poszukiwania wymaga stworzenia jednego silosu danych. ",
+      "appDescriptionStrong": "W pierwszej fazie stworzyłem prototyp w Google Sheets",
+      "appDescriptionSuffix": ", aby oddać do testów znajomym i otrzymać informacje zwrotne co do funkcjonalności.",
+      "buyCoffeeCta": "Wesprzyj mnie kawą",
+      "qrAlt": "QR kod do buycoffee.to/zagorski"
+    }
+  }
+}

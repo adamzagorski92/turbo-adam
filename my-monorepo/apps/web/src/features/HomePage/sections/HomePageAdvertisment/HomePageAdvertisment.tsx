@@ -1,17 +1,27 @@
-import buyCoffeeQrUrl from "../../../../assets/QR_buycoffee@2x.webp";
+import buyCoffeeQrPlUrl from "@assets/QR_buycoffee@2x.webp";
+import buyCoffeeQrEnUrl from "@assets/QR_buycoffee_en.webp";
 import {
   ColumnSection,
   InnerColumnSection,
   SectionContainer,
 } from "@my-monorepo/components";
+import { useTranslation } from "react-i18next";
 
 import styles from "./HomePageAdvertisment.module.css";
 
 const HomePageAdvertisment = () => {
+  const { t, i18n } = useTranslation("HomePage");
+  const language = i18n.resolvedLanguage ?? i18n.language;
+  const buyCoffeeQrUrl = language.startsWith("en")
+    ? buyCoffeeQrEnUrl
+    : buyCoffeeQrPlUrl;
+
   return (
     <SectionContainer backgroundColor="brandSubtle" fullBleed>
       <div className={styles.coffeeSection}>
-        <span className={styles.coffeeLabel}>Autoreklama</span>
+        <span className={styles.coffeeLabel}>
+          {t("content.advertisement.label")}
+        </span>
         <ColumnSection
           ratio="1:1"
           gapX="gx-32"
@@ -21,44 +31,35 @@ const HomePageAdvertisment = () => {
           stackAt="tablet"
         >
           <div className={styles.coffeeContent}>
-            <h2>Postaw mi kawę</h2>
-            <p>
-              Jeśli podoba Ci się to, co robię, możesz wesprzeć mnie kawą. Każda
-              kawa to motywacja do dalszego rozwoju i tworzenia nowych
-              projektów.
-            </p>
+            <h2>{t("content.advertisement.title")}</h2>
+            <p>{t("content.advertisement.intro")}</p>
 
             <InnerColumnSection
               direction="column"
               boxed
               backgroundColor="brandSubtle"
             >
-              <h3>Aplikacja: "Aplikuj Się"</h3>
+              <h3>{t("content.advertisement.appTitle")}</h3>
               <p className={styles.paragraph}>
-                <span>
-                  <a
-                    href="https://docs.google.com/spreadsheets/d/1Z28TDWUQ4-QV6ro51syTBrBJ3l5cVZPzCwMEkdtSap4/edit?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Aplikuj Się
-                  </a>
-                </span>{" "}
-                to prototyp aplikacji do ułatwienia poszukiwania wymarzonej
-                pracy. Co prawda portali pracy jest bardzo dużo, ale sam proces
-                poszukiwania wymaga stworzenia jednego silosu danych.{" "}
+                <a
+                  href="https://docs.google.com/spreadsheets/d/1Z28TDWUQ4-QV6ro51syTBrBJ3l5cVZPzCwMEkdtSap4/edit?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t("content.advertisement.appDescriptionLinkText")}
+                </a>
+                {t("content.advertisement.appDescriptionMiddle")}
                 <strong>
-                  W pierwszej fazie stworzyłem prototyp w Google Sheets
+                  {t("content.advertisement.appDescriptionStrong")}
                 </strong>
-                , aby oddać do testów znajomym i otrzymać informacje zwrotne co
-                do funkcjonalności.
+                {t("content.advertisement.appDescriptionSuffix")}
               </p>
               <a
                 href="https://buycoffee.to/zagorski"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Postaw kawę
+                {t("content.advertisement.buyCoffeeCta")}
               </a>
             </InnerColumnSection>
           </div>
@@ -70,7 +71,7 @@ const HomePageAdvertisment = () => {
             >
               <img
                 src={buyCoffeeQrUrl}
-                alt="QR kod do buycoffee.to/zagorski"
+                alt={t("content.advertisement.qrAlt")}
                 className={styles.coffeeQr}
                 width={430}
                 height={548}

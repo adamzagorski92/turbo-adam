@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "siteName": "Adam Zagorski",
+    "title": "Adam Zagorski | Frontend Developer React + TypeScript",
+    "description": "Adam Zagorski's portfolio: frontend in React and TypeScript, web projects, AI tools, and product apps.",
+    "keywords": "frontend developer, react developer, typescript, portfolio, ai, web applications",
+    "robots": "index, follow",
+    "ogType": "website",
+    "twitterCard": "summary_large_image",
+    "ogImagePath": "/icon-512.png",
+    "personJsonLd": {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Adam Zagorski",
+      "jobTitle": "Frontend Developer",
+      "sameAs": ["https://github.com/adamzagorski92"]
+    }
+  },
+  "content": {
+    "aboveTheFold": {
+      "heading": {
+        "kicker": "Hi, I'm Adam",
+        "title": "Frontend Developer",
+        "subtitle": "I build modern apps with React + TypeScript."
+      },
+      "intro": "Here I collect my projects and ideas to showcase my skills and experience.",
+      "experiencePrefix": "So far, I've gained ",
+      "experienceStrong": "6 months of commercial experience",
+      "experienceSuffix": " at AGH.",
+      "quickLinksTitle": "Quick links"
+    },
+    "projects": {
+      "title": "Projects",
+      "subtitle": "Selected work: low-code sites, React apps, AI agents, and tools."
+    },
+    "advertisement": {
+      "label": "Promo",
+      "title": "Buy me a coffee",
+      "intro": "If you like what I do, you can support me with a coffee. Every coffee is motivation to keep growing and building new projects.",
+      "appTitle": "App: \"Aplikuj Się\"",
+      "appDescriptionLinkText": "Aplikuj Się",
+      "appDescriptionMiddle": " is a prototype app to make job searching easier. There are plenty of job boards, but the process still needs a single data silo. ",
+      "appDescriptionStrong": "In the first phase, I built a prototype in Google Sheets",
+      "appDescriptionSuffix": " to share with friends for testing and feedback.",
+      "buyCoffeeCta": "Support me with a coffee",
+      "qrAlt": "QR code for buycoffee.to/zagorski"
+    }
+  }
+}

@@ -23,6 +23,26 @@ function getInitialTheme(): Theme {
   return isTheme(saved) ? saved : getSystemTheme();
 }
 
+function syncThemeColorMeta() {
+  const content = getComputedStyle(document.documentElement)
+    .getPropertyValue("--color-bg-canvas")
+    .trim();
+
+  if (!content) return;
+
+  let meta = document.querySelector<HTMLMetaElement>(
+    'meta[name="theme-color"]',
+  );
+
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "theme-color");
+    document.head.appendChild(meta);
+  }
+
+  meta.setAttribute("content", content);
+}
+
 export function ThemeSwitcher() {
   const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
 
@@ -35,6 +55,7 @@ export function ThemeSwitcher() {
 
   useLayoutEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+    syncThemeColorMeta();
 
     const root = document.documentElement;
     if (!root.hasAttribute(THEME_SWITCHING_ATTR)) return;
@@ -59,25 +80,23 @@ export function ThemeSwitcher() {
     localStorage.setItem("theme", newTheme);
   };
 
+  const nextTheme: Theme = theme === "light" ? "dark" : "light";
+  const label =
+    theme === "light" ? "Switch to dark theme" : "Switch to light theme";
+
   return (
     <div className={styles.switcher}>
       <button
-        className={theme === "light" ? styles.active : undefined}
-        onClick={() => handleThemeChange("light")}
-        aria-label="Light theme"
-        aria-pressed={theme === "light"}
-        type="button"
-      >
-        <Sun className={styles.icon} aria-hidden="true" />
-      </button>
-      <button
-        className={theme === "dark" ? styles.active : undefined}
-        onClick={() => handleThemeChange("dark")}
-        aria-label="Dark theme"
+        onClick={() => handleThemeChange(nextTheme)}
+        aria-label={label}
         aria-pressed={theme === "dark"}
         type="button"
       >
-        <Moon className={styles.icon} aria-hidden="true" />
+        {theme === "light" ? (
+          <Sun className={styles.icon} aria-hidden="true" />
+        ) : (
+          <Moon className={styles.icon} aria-hidden="true" />
+        )}
       </button>
     </div>
   );

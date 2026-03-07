@@ -1,8 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import App from "./App";
-
 vi.mock("@my-monorepo/components", async () => {
   const actual = await vi.importActual<
     typeof import("@my-monorepo/components")
@@ -15,7 +13,10 @@ vi.mock("@my-monorepo/components", async () => {
 });
 
 describe("App", () => {
-  it("renders main heading", () => {
+  it("renders main heading", async () => {
+    window.localStorage.setItem("language", "pl");
+
+    const { default: App } = await import("./App");
     render(<App />);
 
     expect(

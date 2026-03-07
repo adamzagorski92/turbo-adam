@@ -1,0 +1,43 @@
+{
+  "quick": {
+    "sourceCode": "Source code for this site",
+    "linkedIn": "My LinkedIn",
+    "aboutMe": "About me (personal website)"
+  },
+  "projectGroups": {
+    "lowCode": {
+      "title": "Low-code sites",
+      "description": "WordPress + Elementor projects for companies and individuals.",
+      "links": {
+        "willaSaga": "Willa Saga - seaside guesthouse",
+        "hanya": "Hanya - singer website",
+        "ninjaKids": "NinjaKids - kids activities and services",
+        "sportPlay": "SportPlay - clothing store",
+        "adamZagorski": "Adam Zagórski - personal website"
+      }
+    },
+    "reactApps": {
+      "title": "React apps",
+      "description": "A collection of React + TypeScript apps.",
+      "links": {
+        "portfolioNetlify": "Projects portfolio (Netlify)"
+      }
+    },
+    "aiAgents": {
+      "title": "AI agents",
+      "description": "Repositories with AI agents and automations.",
+      "links": {
+        "aiCvAgent": "AI CV Agent - recruiter interview simulation",
+        "hawaiPizzaAgent": "Hawai Pizza Agent - a playful kitchen agent"
+      }
+    },
+    "other": {
+      "title": "Other projects & prototypes",
+      "description": "scripts, Google Sheets projects",
+      "links": {
+        "aplikujSie": "Aplikuj Się - recruitment app prototype",
+        "thunderbirdExtractor": "Thunderbird Email Extractor (GitHub)"
+      }
+    }
+  }
+}

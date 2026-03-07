@@ -1,21 +1,23 @@
 import { SectionContainer } from "@my-monorepo/components";
 import styles from "./Footer.module.css";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation("UI");
+
   return (
     <SectionContainer>
       <footer className={styles.footer}>
         <p>
-          Stronę zbudowałem przy użyciu React, TypeScript i Turborepo na
-          serwerze deweloperskim{" "}
+          {t("footer.descriptionPrefix")}
           <a
             href="https://mikr.us/?r=adamzagorski"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Mikrus
+            {t("footer.mikrusLinkText")}
           </a>
-          . Więcej informacji w kodzie źródłowym.
+          {t("footer.descriptionSuffix")}
         </p>
       </footer>
     </SectionContainer>
