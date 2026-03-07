@@ -1,4 +1,4 @@
-import buyCoffeeQrUrl from "../../../../assets/QR_buycoffee@2x.webp";
+import buyCoffeeQrUrl from "@assets/QR_buycoffee@2x.webp";
 import {
   ColumnSection,
   InnerColumnSection,

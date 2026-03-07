@@ -1,7 +1,7 @@
 import { SectionContainer } from "@my-monorepo/components";
-import { projectGroups } from "../../../../constans/links";
-import Card from "../../../../components/Card/Card";
-import ProjectLink from "../../../../components/ProjectLink/ProjectLink";
+import { projectGroups } from "@constans/links";
+import Card from "@components/Card/Card";
+import ProjectLink from "@components/ProjectLink/ProjectLink";
 import styles from "./HomePageProjects.module.css";
 
 const HomePageProjects = () => {

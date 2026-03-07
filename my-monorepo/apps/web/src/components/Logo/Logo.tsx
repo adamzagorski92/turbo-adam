@@ -1,5 +1,5 @@
-import lightLogoUrl from "../../assets/light_logo.webp";
-import darkLogoUrl from "../../assets/dark_logo.webp";
+import lightLogoUrl from "@assets/light_logo.webp";
+import darkLogoUrl from "@assets/dark_logo.webp";
 import styles from "./Logo.module.css";
 
 function Logo() {

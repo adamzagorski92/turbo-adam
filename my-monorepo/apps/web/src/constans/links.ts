@@ -14,7 +14,7 @@ import {
   UserRound,
   ClipboardList,
 } from "lucide-react";
-import type { LinkGroup, LinkItem } from "../types/linkType";
+import type { LinkGroup, LinkItem } from "@app-types/linkType";
 
 export const quickLinks: LinkItem[] = [
   {

@@ -1,6 +1,6 @@
 import { ContentSection, ThemeSwitcher } from "@my-monorepo/components";
 import { Coffee } from "lucide-react";
-import Logo from "../Logo/Logo";
+import Logo from "@components/Logo/Logo";
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {

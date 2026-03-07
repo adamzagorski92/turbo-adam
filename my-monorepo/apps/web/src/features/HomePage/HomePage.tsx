@@ -1,7 +1,7 @@
 import { PageBody } from "@my-monorepo/components";
-import HomePageAboveTheFold from "./sections/HomePageAboveTheFold/HomePageAboveTheFold";
-import HomePageProjects from "./sections/HomePageProjects/HomePageProjects";
-import HomePageAdvertisment from "./sections/HomePageAdvertisment/HomePageAdvertisment";
+import HomePageAboveTheFold from "@features/HomePage/sections/HomePageAboveTheFold/HomePageAboveTheFold";
+import HomePageProjects from "@features/HomePage/sections/HomePageProjects/HomePageProjects";
+import HomePageAdvertisment from "@features/HomePage/sections/HomePageAdvertisment/HomePageAdvertisment";
 
 const HomePage = () => {
   return (
