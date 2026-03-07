@@ -9,7 +9,7 @@ const HomePageProjects = () => {
   const { t } = useTranslation("HomePage");
 
   return (
-    <SectionContainer>
+    <SectionContainer paddingRight={0} paddingLeft={0}>
       <header className={styles.projectsHeader}>
         <h2 className={styles.projectsTitle}>{t("content.projects.title")}</h2>
         <p className={styles.projectsSubtitle}>

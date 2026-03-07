@@ -35,7 +35,12 @@ const AboveTheFold = ({
   ) : null;
 
   return (
-    <SectionContainer selector="section" className={wrapperClassName}>
+    <SectionContainer
+      paddingRight={0}
+      paddingLeft={0}
+      selector="section"
+      className={wrapperClassName}
+    >
       <ColumnSection
         ratio="2:1"
         gapX="gx-32"

@@ -5,6 +5,8 @@ import plUI from "./pl/UI.json";
 import enUI from "./en/UI.json";
 import plHomePage from "./pl/HomePage.json";
 import enHomePage from "./en/HomePage.json";
+import plLinks from "./pl/Links.json";
+import enLinks from "./en/Links.json";
 
 export const LANGUAGE_STORAGE_KEY = "language";
 export const SUPPORTED_LANGUAGES = ["pl", "en"] as const;
@@ -23,8 +25,8 @@ function cacheLanguage(language: string) {
 }
 
 const resources = {
-  pl: { UI: plUI, HomePage: plHomePage },
-  en: { UI: enUI, HomePage: enHomePage },
+  pl: { UI: plUI, HomePage: plHomePage, Links: plLinks },
+  en: { UI: enUI, HomePage: enHomePage, Links: enLinks },
 } as const;
 
 const initialLanguage =
@@ -41,7 +43,7 @@ void i18n
     fallbackLng: FALLBACK_LANGUAGE,
     supportedLngs: SUPPORTED_LANGUAGES,
     nonExplicitSupportedLngs: true,
-    ns: ["UI", "HomePage"],
+    ns: ["UI", "HomePage", "Links"],
     defaultNS: "UI",
     interpolation: {
       escapeValue: false,
