@@ -63,10 +63,16 @@
   min-width: 0;
 }
 
-.contentSection:global(.has-ratio) > .item {
+:where(.contentSection:global(.has-ratio)) > .item {
   flex-basis: 0;
   min-width: 0;
   flex-grow: var(--col-grow, 1);
+}
+
+:where(.contentSection:global(.has-ratio)) > .fixedItem {
+  flex: 0 0 var(--col-basis);
+  width: var(--col-basis);
+  min-width: 0;
 }
 
 @media (max-width: 768px) {
