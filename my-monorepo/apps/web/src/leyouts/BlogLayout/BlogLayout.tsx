@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { Outlet } from "react-router";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
 import Footer from "@features/Footer/Footer";
@@ -9,8 +10,15 @@ import {
 import AsideData from "@components/AsideData/AsideData";
 import styles from "./BlogLayout.module.css";
 import SidebarMenuLayout from "@leyouts/SidebarMenuLayout/SidebarMenuLayout";
+import SideTreeNavigation from "@features/SideTreeNavigation/SideTreeNavigation";
+import { blogFilterTree } from "@constans/blogMenuItems";
 
 const BlogLayout = () => {
+  // TODO: replace with Zustand action / API call
+  const handleSearch = useCallback((selectedIds: string[]) => {
+    console.log("Blog filters:", selectedIds);
+  }, []);
+
   return (
     <PageContainer>
       <PageBody
@@ -29,13 +37,7 @@ const BlogLayout = () => {
             direction="column"
             sidebarPosition="left"
           >
-            <ul>
-              <li>Kategorie</li>
-              <li>Tagi</li>
-              <li>Popularne</li>
-              <li>Najnowsze</li>
-              <li>Reklamy</li>
-            </ul>
+            <SideTreeNavigation tree={blogFilterTree} onSearch={handleSearch} />
           </SidebarMenuLayout>
           <InnerColumnSection selector="section" direction="column">
             <div>Search</div>

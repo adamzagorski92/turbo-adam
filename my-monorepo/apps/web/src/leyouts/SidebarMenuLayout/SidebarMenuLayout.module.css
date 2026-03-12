@@ -4,6 +4,7 @@
   overflow-y: auto;
   position: sticky;
   top: 0;
+  min-height: auto;
 }
 
 .borderRight {
