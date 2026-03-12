@@ -6,9 +6,9 @@ import {
   InnerColumnSection,
   PageBody,
 } from "@packages/components";
-import Logo from "@components/Logo/Logo";
-import BlogSidebar from "@components/BlogSidebar/BlogSidebar";
+import AsideData from "@components/AsideData/AsideData";
 import styles from "./BlogLayout.module.css";
+import SidebarMenuLayout from "@leyouts/SidebarMenuLayout/SidebarMenuLayout";
 
 const BlogLayout = () => {
   return (
@@ -24,12 +24,11 @@ const BlogLayout = () => {
           gapX="gx-16"
           className={styles.outerGrid}
         >
-          <InnerColumnSection
+          <SidebarMenuLayout
             selector="nav"
             direction="column"
-            className={`${styles.stickyPanel} ${styles.borderRight}`}
+            sidebarPosition="left"
           >
-            <Logo />
             <ul>
               <li>Kategorie</li>
               <li>Tagi</li>
@@ -37,7 +36,7 @@ const BlogLayout = () => {
               <li>Najnowsze</li>
               <li>Reklamy</li>
             </ul>
-          </InnerColumnSection>
+          </SidebarMenuLayout>
           <InnerColumnSection selector="section" direction="column">
             <div>Search</div>
 
@@ -50,13 +49,13 @@ const BlogLayout = () => {
                 <h2 id="blog-heading">Wpisy blogowe</h2>
                 <Outlet />
               </InnerColumnSection>
-              <InnerColumnSection
+              <SidebarMenuLayout
                 selector="aside"
                 direction="column"
-                className={`${styles.stickyPanel} ${styles.borderLeft}`}
+                sidebarPosition="right"
               >
-                <BlogSidebar />
-              </InnerColumnSection>
+                <AsideData />
+              </SidebarMenuLayout>
             </ColumnSection>
             <Footer />
           </InnerColumnSection>

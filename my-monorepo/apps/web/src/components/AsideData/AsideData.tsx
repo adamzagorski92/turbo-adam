@@ -1,4 +1,4 @@
-const BlogSidebar = () => {
+const AsideData = () => {
   return (
     <>
       <h3>Popularne tagi</h3>
@@ -44,4 +44,4 @@ const BlogSidebar = () => {
   );
 };
 
-export default BlogSidebar;
+export default AsideData;
