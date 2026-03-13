@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router";
 import MainLayout from "@leyouts/MainLayout/MainLayout";
 import BlogLayout from "@leyouts/BlogLayout/BlogLayout";
 import HomePage from "@features/HomePage/HomePage";
-import BlogCard from "@components/BlogCard/BlogCard";
+import BlogCard from "@features/BlogCard/BlogCard";
 
 export const router = createBrowserRouter([
   {

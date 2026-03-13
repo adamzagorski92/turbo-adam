@@ -15,6 +15,7 @@ export { SectionContainer } from "./basePageContainers/SectionContainer/SectionC
 
 // UI components
 export { default as Button } from "./Button/Button";
+export { default as Thumbnail } from "./Thumbnail/Thumbnail";
 export { default as Form } from "./Form/Form";
 export { default as Label } from "./Label/Label";
 export { default as Option } from "./Option/Option";
