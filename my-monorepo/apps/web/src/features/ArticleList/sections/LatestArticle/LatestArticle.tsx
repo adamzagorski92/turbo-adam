@@ -4,25 +4,21 @@ import {
   SectionContainer,
   Thumbnail,
 } from "@packages/components";
+import styles from "./LatestArticle.module.css";
+import type { ArticleCard } from "@constans/articlesCardMock";
 
-import styles from "./LatestPost.module.css";
-
-interface Post {
-  id: number;
-  title: string;
-  excerpt: string;
-  date: string;
-  author: string;
-  tags: string[];
+interface LatestArticleProps {
+  article: ArticleCard;
 }
 
-interface LatestPostProps {
-  post: Post;
-}
-
-const LatestPost = ({ post }: LatestPostProps) => {
+const LatestArticle = ({ article }: LatestArticleProps) => {
   return (
-    <SectionContainer noBottomPadding paddingLeft={0} paddingRight={0}>
+    <SectionContainer
+      selector="article"
+      noBottomPadding
+      paddingLeft={0}
+      paddingRight={0}
+    >
       <div className={styles.wrapper}>
         <span className={styles.label}>Najnowszy wpis</span>
         <ColumnSection
@@ -36,13 +32,13 @@ const LatestPost = ({ post }: LatestPostProps) => {
           </InnerColumnSection>
           <InnerColumnSection direction="column" gap={16}>
             <div className={styles.meta}>
-              <time dateTime={post.date}>{post.date}</time>
-              <span>{post.author}</span>
+              <time dateTime={article.date}>{article.date}</time>
+              <span>{article.author}</span>
             </div>
-            <h2 className={styles.title}>{post.title}</h2>
-            <p className={styles.excerpt}>{post.excerpt}</p>
+            <h2 className={styles.title}>{article.title}</h2>
+            <p className={styles.excerpt}>{article.excerpt}</p>
             <div className={styles.tags}>
-              {post.tags.map((tag) => (
+              {article.tags.map((tag) => (
                 <span key={tag} className={styles.tag}>
                   {tag}
                 </span>
@@ -55,4 +51,4 @@ const LatestPost = ({ post }: LatestPostProps) => {
   );
 };
 
-export default LatestPost;
+export default LatestArticle;

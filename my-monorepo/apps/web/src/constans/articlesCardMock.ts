@@ -1,11 +1,13 @@
-import { useSearchParams } from "react-router";
-import { Thumbnail } from "@packages/components";
-import styles from "./BlogCard.module.css";
-import LatestPost from "@features/LatestPost/LatestPost";
+export interface ArticleCard {
+  id: number;
+  title: string;
+  excerpt: string;
+  date: string;
+  author: string;
+  tags: string[];
+}
 
-const POSTS_PER_PAGE = 10;
-
-const MOCK_POSTS = [
+export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   {
     id: 1,
     title: "Jak zbudować monorepo z Turborepo i pnpm",
@@ -142,85 +144,3 @@ const MOCK_POSTS = [
     tags: ["React", "Frontend", "SSR"],
   },
 ];
-
-const BlogCard = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = Number(searchParams.get("page") || "1");
-
-  const sortedPosts = [...MOCK_POSTS].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
-  const latestPost = sortedPosts[0];
-  const remainingPosts = sortedPosts.slice(1);
-
-  const totalPages = Math.ceil(remainingPosts.length / POSTS_PER_PAGE);
-  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const paginatedPosts = remainingPosts.slice(
-    startIndex,
-    startIndex + POSTS_PER_PAGE,
-  );
-
-  const goToPage = (page: number) => {
-    setSearchParams({ page: String(page) });
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  return (
-    <div className={styles.list}>
-      <LatestPost post={latestPost} />
-      {paginatedPosts.map((post) => (
-        <article key={post.id} className={styles.card}>
-          <Thumbnail size="sm" />
-          <div className={styles.cardBody}>
-            <div className={styles.meta}>
-              <time dateTime={post.date}>{post.date}</time>
-              <span>{post.author}</span>
-            </div>
-            <h3 className={styles.title}>{post.title}</h3>
-            <p className={styles.excerpt}>{post.excerpt}</p>
-            <div className={styles.tags}>
-              {post.tags.map((tag) => (
-                <span key={tag} className={styles.tag}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        </article>
-      ))}
-
-      {totalPages > 1 && (
-        <nav className={styles.pagination} aria-label="Paginacja wpisów">
-          <button
-            className={styles.pageButton}
-            onClick={() => goToPage(currentPage - 1)}
-            disabled={currentPage <= 1}
-          >
-            ← Poprzednia
-          </button>
-          <div className={styles.pageNumbers}>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                className={`${styles.pageNumber} ${page === currentPage ? styles.pageNumberActive : ""}`}
-                onClick={() => goToPage(page)}
-                aria-current={page === currentPage ? "page" : undefined}
-              >
-                {page}
-              </button>
-            ))}
-          </div>
-          <button
-            className={styles.pageButton}
-            onClick={() => goToPage(currentPage + 1)}
-            disabled={currentPage >= totalPages}
-          >
-            Następna →
-          </button>
-        </nav>
-      )}
-    </div>
-  );
-};
-
-export default BlogCard;
