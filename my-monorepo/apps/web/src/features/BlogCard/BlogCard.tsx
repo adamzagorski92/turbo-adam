@@ -1,5 +1,7 @@
 import { useSearchParams } from "react-router";
+import { Thumbnail } from "@packages/components";
 import styles from "./BlogCard.module.css";
+import LatestPost from "@features/LatestPost/LatestPost";
 
 const POSTS_PER_PAGE = 10;
 
@@ -144,10 +146,16 @@ const MOCK_POSTS = [
 const BlogCard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get("page") || "1");
-  const totalPages = Math.ceil(MOCK_POSTS.length / POSTS_PER_PAGE);
 
+  const sortedPosts = [...MOCK_POSTS].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+  const latestPost = sortedPosts[0];
+  const remainingPosts = sortedPosts.slice(1);
+
+  const totalPages = Math.ceil(remainingPosts.length / POSTS_PER_PAGE);
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const paginatedPosts = MOCK_POSTS.slice(
+  const paginatedPosts = remainingPosts.slice(
     startIndex,
     startIndex + POSTS_PER_PAGE,
   );
@@ -159,24 +167,10 @@ const BlogCard = () => {
 
   return (
     <div className={styles.list}>
+      <LatestPost post={latestPost} />
       {paginatedPosts.map((post) => (
         <article key={post.id} className={styles.card}>
-          <div className={styles.thumbnail}>
-            <svg
-              className={styles.thumbnailSvg}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <circle cx="9" cy="9" r="2" />
-              <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-            </svg>
-          </div>
+          <Thumbnail size="sm" />
           <div className={styles.cardBody}>
             <div className={styles.meta}>
               <time dateTime={post.date}>{post.date}</time>

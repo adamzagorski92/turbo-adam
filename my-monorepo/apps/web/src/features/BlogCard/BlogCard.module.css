@@ -19,24 +19,6 @@
   border-color: var(--color-border-accent);
 }
 
-.thumbnail {
-  flex: 0 0 6rem;
-  width: 6rem;
-  height: 6rem;
-  border-radius: var(--radius-md);
-  background: var(--color-bg-surface-hover);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.thumbnailSvg {
-  width: 2.5rem;
-  height: 2.5rem;
-  color: var(--color-fg-tertiary);
-}
-
 .cardBody {
   flex: 1 1 0;
   min-width: 0;
