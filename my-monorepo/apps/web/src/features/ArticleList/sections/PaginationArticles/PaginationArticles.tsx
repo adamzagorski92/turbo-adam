@@ -12,8 +12,15 @@ const PaginationArticles = ({
   setSearchParams,
 }: PaginationArticlesProps) => {
   const goToPage = (page: number) => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
     setSearchParams({ page: String(page) });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   };
   return (
     <>
