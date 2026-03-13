@@ -8,6 +8,7 @@ import styles from "./BlogLayout.module.css";
 import SidebarMenuLayout from "@leyouts/SidebarMenuLayout/SidebarMenuLayout";
 import SideTreeNavigation from "@features/SideTreeNavigation/SideTreeNavigation";
 import { blogFilterTree } from "@constans/blogMenuItems";
+import Breadcrumbs from "@components/Breadcrumbs/Breadcrumbs";
 
 const BlogLayout = () => {
   // TODO: replace with Zustand action / API call
@@ -35,6 +36,7 @@ const BlogLayout = () => {
           >
             <InnerColumnSection selector="main" direction="column">
               <h1 id="blog-heading">Wpisy blogowe</h1>
+              <Breadcrumbs />
               <Outlet />
             </InnerColumnSection>
             <SidebarMenuLayout
