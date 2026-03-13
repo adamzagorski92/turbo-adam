@@ -29,38 +29,3 @@
     flex-direction: column;
   }
 }
-
-.meta {
-  display: flex;
-  gap: var(--spacing-4);
-  font-size: var(--font-size-sm);
-  color: var(--color-fg-tertiary);
-}
-
-.title {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-fg-primary);
-}
-
-.excerpt {
-  font-size: var(--font-size-base);
-  color: var(--color-fg-secondary);
-  line-height: var(--line-height-relaxed);
-}
-
-.tags {
-  display: flex;
-  gap: var(--spacing-2);
-  flex-wrap: wrap;
-}
-
-.tag {
-  display: inline-block;
-  padding: var(--spacing-1) var(--spacing-2);
-  background: var(--color-bg-brand-subtle);
-  color: var(--color-accent);
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-}

@@ -6,6 +6,7 @@ import {
 } from "@packages/components";
 import styles from "./LatestArticle.module.css";
 import type { ArticleCard } from "@constans/articlesCardMock";
+import ArticleContent from "../ArticleContent/ArticleContent";
 
 interface LatestArticleProps {
   article: ArticleCard;
@@ -22,7 +23,7 @@ const LatestArticle = ({ article }: LatestArticleProps) => {
       <div className={styles.wrapper}>
         <span className={styles.label}>Najnowszy wpis</span>
         <ColumnSection
-          ratio="2:1"
+          ratio="3:2"
           stackAt="tablet"
           gapX="gx-16"
           className={styles.columns}
@@ -31,19 +32,7 @@ const LatestArticle = ({ article }: LatestArticleProps) => {
             <Thumbnail size="lg" />
           </InnerColumnSection>
           <InnerColumnSection direction="column" gap={16}>
-            <div className={styles.meta}>
-              <time dateTime={article.date}>{article.date}</time>
-              <span>{article.author}</span>
-            </div>
-            <h2 className={styles.title}>{article.title}</h2>
-            <p className={styles.excerpt}>{article.excerpt}</p>
-            <div className={styles.tags}>
-              {article.tags.map((tag) => (
-                <span key={tag} className={styles.tag}>
-                  {tag}
-                </span>
-              ))}
-            </div>
+            <ArticleContent article={article} variant="latest" />
           </InnerColumnSection>
         </ColumnSection>
       </div>
