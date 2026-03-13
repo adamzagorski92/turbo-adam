@@ -7,8 +7,6 @@ interface ArticleContentProps {
 }
 
 const ArticleContent = ({ article, variant }: ArticleContentProps) => {
-  const Heading = variant === "latest" ? "h2" : "h3";
-
   return (
     <>
       <div
@@ -17,11 +15,11 @@ const ArticleContent = ({ article, variant }: ArticleContentProps) => {
         <time dateTime={article.date}>{article.date}</time>
         <span>{article.author}</span>
       </div>
-      <Heading
+      <h2
         className={`${styles.title} ${variant === "latest" ? styles.titleLatest : styles.titleCard}`}
       >
         {article.title}
-      </Heading>
+      </h2>
       <p
         className={`${styles.excerpt} ${variant === "card" ? styles.excerptCard : ""}`}
       >

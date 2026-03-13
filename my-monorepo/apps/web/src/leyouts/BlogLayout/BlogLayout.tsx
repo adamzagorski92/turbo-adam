@@ -34,7 +34,7 @@ const BlogLayout = () => {
             className={styles.contentGrid}
           >
             <InnerColumnSection selector="main" direction="column">
-              <h2 id="blog-heading">Wpisy blogowe</h2>
+              <h1 id="blog-heading">Wpisy blogowe</h1>
               <Outlet />
             </InnerColumnSection>
             <SidebarMenuLayout
