@@ -1,0 +1,133 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  width: calc(100% + var(--spacing-4));
+  margin-left: calc(-1 * var(--spacing-4));
+  padding-left: var(--spacing-4);
+  height: 2.25rem;
+  border-bottom: 1px solid var(--color-border-default);
+  padding-bottom: var(--spacing-3);
+  padding-top: var(--spacing-3);
+}
+
+.searchWrapper {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  height: 1.75rem;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-input);
+  transition: var(--transition-interactive);
+}
+
+.searchWrapper:focus-within {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -1px;
+  border-color: var(--color-accent);
+}
+
+.searchInput {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  padding: 0 var(--spacing-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-fg-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: var(--color-fg-tertiary);
+}
+
+.searchButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 100%;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-left: 1px solid var(--color-border-default);
+  border-radius: 0 var(--radius-input) var(--radius-input) 0;
+  cursor: pointer;
+  color: var(--color-fg-tertiary);
+  transition: var(--transition-colors);
+}
+
+.searchButton:hover {
+  color: var(--color-fg-primary);
+  background: var(--color-bg-surface-hover);
+}
+
+.searchButtonIcon {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  color: var(--color-fg-secondary);
+  transition: var(--transition-colors);
+}
+
+.iconButton:hover {
+  color: var(--color-fg-primary);
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.iconSize {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.desktopOnly {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.coffeeLink {
+  font-size: var(--font-size-xs);
+  height: 1.75rem;
+  padding: 0 var(--spacing-2);
+}
+
+.coffeeLinkIcon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.mobileOnly {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktopOnly {
+    display: none;
+  }
+
+  .mobileOnly {
+    display: inline-flex;
+  }
+}
