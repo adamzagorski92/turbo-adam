@@ -15,11 +15,15 @@
 
   .contentGrid > * {
     width: 100%;
+    padding-right: var(--spacing-4);
   }
 }
 
 @media (max-width: 768px) {
   .outerGrid > *:first-child {
     display: none;
+  }
+  .contentGrid > * {
+    padding-left: var(--spacing-4);
   }
 }
