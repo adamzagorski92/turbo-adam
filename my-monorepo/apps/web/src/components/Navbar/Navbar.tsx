@@ -20,7 +20,7 @@ const Navbar = () => {
         href="https://buycoffee.to/zagorski"
         target="_blank"
         rel="noopener noreferrer"
-        className={styles.coffeeLink}
+        className={`btn-action ${styles.coffeeLink}`}
       >
         <Coffee className={styles.coffeeLinkIcon} aria-hidden="true" />
         <span>{t("navbar.buyCoffeeCta")}</span>
