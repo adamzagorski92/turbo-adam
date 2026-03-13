@@ -1,0 +1,31 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.wrapper {
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  top: -0.7em;
+  left: var(--spacing-4);
+  background-color: var(--color-bg-canvas);
+  padding: 0 var(--spacing-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-fg-primary);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-sm);
+  z-index: 1;
+}
+
+@media (max-width: 1024px) {
+  .columns {
+    flex-direction: column;
+  }
+}
