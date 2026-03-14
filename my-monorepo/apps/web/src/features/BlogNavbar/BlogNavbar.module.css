@@ -82,7 +82,7 @@
   padding: 0;
   background: transparent;
   border: none;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-input);
   cursor: pointer;
   color: var(--color-fg-secondary);
   transition: var(--transition-colors);

@@ -9,7 +9,7 @@ import SidebarMenuLayout from "@leyouts/SidebarMenuLayout/SidebarMenuLayout";
 import SideTreeNavigation from "@features/SideTreeNavigation/SideTreeNavigation";
 import { blogFilterTree } from "@constans/blogMenuItems";
 import Breadcrumbs from "@components/Breadcrumbs/Breadcrumbs";
-import BlogNavbar from "@components/BlogNavbar/BlogNavbar";
+import BlogNavbar from "@features/BlogNavbar/BlogNavbar";
 
 const BlogLayout = () => {
   // TODO: replace with Zustand action / API call
