@@ -1,5 +1,5 @@
 import { SectionContainer } from "@my-monorepo/components";
-import Navbar from "@components/Navbar/Navbar";
+import Navbar from "@features/Navbar/Navbar";
 
 const TopNavigation = () => {
   return (

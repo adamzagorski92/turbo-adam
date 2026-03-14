@@ -13,5 +13,9 @@
     "descriptionPrefix": "I built this site using React, TypeScript, and Turborepo on a development server hosted on ",
     "mikrusLinkText": "Mikrus",
     "descriptionSuffix": ". More details are available in the source code."
+  },
+  "blog": {
+    "searchPlaceholder": "Search posts…",
+    "settings": "Settings"
   }
 }

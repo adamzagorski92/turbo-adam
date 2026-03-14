@@ -9,6 +9,7 @@ import SidebarMenuLayout from "@leyouts/SidebarMenuLayout/SidebarMenuLayout";
 import SideTreeNavigation from "@features/SideTreeNavigation/SideTreeNavigation";
 import { blogFilterTree } from "@constans/blogMenuItems";
 import Breadcrumbs from "@components/Breadcrumbs/Breadcrumbs";
+import BlogNavbar from "@features/BlogNavbar/BlogNavbar";
 
 const BlogLayout = () => {
   // TODO: replace with Zustand action / API call
@@ -27,8 +28,7 @@ const BlogLayout = () => {
           <SideTreeNavigation tree={blogFilterTree} onSearch={handleSearch} />
         </SidebarMenuLayout>
         <InnerColumnSection selector="section" direction="column">
-          <div>Search</div>
-
+          <BlogNavbar />
           <ColumnSection
             ratio="1:15rem"
             gapX="gx-16"
