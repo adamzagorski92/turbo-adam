@@ -16,6 +16,8 @@
   },
   "blog": {
     "searchPlaceholder": "Search posts…",
-    "settings": "Settings"
+    "settings": "Settings",
+    "language": "Language",
+    "theme": "Theme"
   }
 }
