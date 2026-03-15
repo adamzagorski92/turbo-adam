@@ -1,7 +1,6 @@
 .navbar {
   display: flex;
   align-items: center;
-  gap: var(--spacing-2);
   width: calc(100% + var(--spacing-4));
   margin-left: calc(-1 * var(--spacing-4));
   padding-left: var(--spacing-4);
@@ -107,6 +106,13 @@
   flex-shrink: 0;
 }
 
+.desktopActions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  margin-left: var(--spacing-4);
+}
+
 .coffeeLink {
   font-size: var(--font-size-xs);
   height: 1.75rem;
@@ -122,6 +128,34 @@
   display: none;
 }
 
+.settingsDrawerContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.settingsCoffeeLink {
+  font-size: var(--font-size-sm);
+}
+
+.settingsDivider {
+  border: none;
+  border-top: 1px solid var(--color-border-default);
+  margin: var(--spacing-1) 0;
+}
+
+.settingsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-1) 0;
+}
+
+.settingsLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-fg-secondary);
+}
+
 @media (max-width: 768px) {
   .desktopOnly {
     display: none;
@@ -129,5 +163,15 @@
 
   .mobileOnly {
     display: inline-flex;
+  }
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    padding-left: var(--spacing-2);
+  }
+
+  .searchWrapper {
+    max-width: calc(100% - 15rem - var(--spacing-4));
   }
 }

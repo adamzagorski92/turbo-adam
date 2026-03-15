@@ -22,7 +22,7 @@ const SidebarMenuLayout = ({
       gap={16}
       selector={selector}
       direction={direction}
-      className={`${styles.stickyPanel} ${sidebarPosition === "left" ? styles.borderRight : styles.borderLeft}`}
+      className={`${styles.stickyPanel} ${sidebarPosition === "left" ? styles.leftPanel : styles.rightPanel}`}
     >
       {sidebarPosition === "left" && <Logo />}
       {children}

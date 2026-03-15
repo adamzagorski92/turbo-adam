@@ -24,6 +24,11 @@
   --color-bg-scrim: var(--palette-neutral-1000);
   --color-bg-brand-subtle: var(--palette-brand-100);
 
+  /* Scrollbar */
+  --color-scrollbar-thumb: rgba(0, 0, 0, 0.15);
+  --color-scrollbar-thumb-hover: rgba(0, 0, 0, 0.3);
+  --color-scrollbar-track: transparent;
+
   /* Theme-aware visibility */
   --display-light-only: block;
   --display-dark-only: none;

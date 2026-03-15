@@ -1,21 +1,34 @@
 import { Coffee, Menu, Search, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { InputText, ThemeSwitcher } from "@packages/components";
+import { Button, Drawer, InputText, ThemeSwitcher } from "@packages/components";
 import LanguageSwitcher from "@components/LanguageSwitcher/LanguageSwitcher";
 import styles from "./BlogNavbar.module.css";
 
-const BlogNavbar = () => {
+interface BlogNavbarProps {
+  onMenuOpen: () => void;
+  settingsOpen: boolean;
+  onSettingsOpen: () => void;
+  onSettingsClose: () => void;
+}
+
+const BlogNavbar = ({
+  onMenuOpen,
+  settingsOpen,
+  onSettingsOpen,
+  onSettingsClose,
+}: BlogNavbarProps) => {
   const { t } = useTranslation("UI");
 
   return (
     <div className={styles.navbar}>
-      <button
-        type="button"
+      <Button
+        id="blog-menu-toggle"
         className={`${styles.iconButton} ${styles.mobileOnly}`}
-        aria-label="Menu"
+        ariaAttributes={{ ariaLabel: "Menu" }}
+        onClick={onMenuOpen}
       >
         <Menu className={styles.iconSize} aria-hidden="true" />
-      </button>
+      </Button>
 
       <div className={styles.searchWrapper}>
         <InputText
@@ -46,30 +59,58 @@ const BlogNavbar = () => {
         </button>
       </div>
 
-      <button
-        type="button"
+      <Button
+        id="blog-settings-toggle"
         className={`${styles.iconButton} ${styles.mobileOnly}`}
-        aria-label={t("blog.settings")}
+        ariaAttributes={{ ariaLabel: t("blog.settings") }}
+        onClick={onSettingsOpen}
       >
         <Settings className={styles.iconSize} aria-hidden="true" />
-      </button>
+      </Button>
 
-      <a
-        href="https://buycoffee.to/zagorski"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`btn-action ${styles.coffeeLink} ${styles.desktopOnly}`}
-      >
-        <Coffee className={styles.coffeeLinkIcon} aria-hidden="true" />
-        <span>{t("navbar.buyCoffeeCta")}</span>
-      </a>
-
-      <span className={styles.desktopOnly}>
+      <div className={`${styles.desktopActions} ${styles.desktopOnly}`}>
+        <a
+          href="https://buycoffee.to/zagorski"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`btn-action ${styles.coffeeLink}`}
+        >
+          <Coffee className={styles.coffeeLinkIcon} aria-hidden="true" />
+          <span>{t("navbar.buyCoffeeCta")}</span>
+        </a>
         <LanguageSwitcher />
-      </span>
-      <span className={styles.desktopOnly}>
         <ThemeSwitcher />
-      </span>
+      </div>
+
+      <Drawer
+        open={settingsOpen}
+        onClose={onSettingsClose}
+        side="right"
+        ariaLabel={t("blog.settings")}
+      >
+        <nav className={styles.settingsDrawerContent}>
+          <a
+            href="https://buycoffee.to/zagorski"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`btn-action btn-action-block ${styles.settingsCoffeeLink}`}
+          >
+            <Coffee className={styles.coffeeLinkIcon} aria-hidden="true" />
+            <span>{t("navbar.buyCoffeeCta")}</span>
+          </a>
+
+          <hr className={styles.settingsDivider} />
+
+          <div className={styles.settingsRow}>
+            <span className={styles.settingsLabel}>{t("blog.language")}</span>
+            <LanguageSwitcher />
+          </div>
+          <div className={styles.settingsRow}>
+            <span className={styles.settingsLabel}>{t("blog.theme")}</span>
+            <ThemeSwitcher />
+          </div>
+        </nav>
+      </Drawer>
     </div>
   );
 };

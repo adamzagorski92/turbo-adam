@@ -16,6 +16,8 @@
   },
   "blog": {
     "searchPlaceholder": "Szukaj wpisów…",
-    "settings": "Ustawienia"
+    "settings": "Ustawienia",
+    "language": "Język",
+    "theme": "Motyw"
   }
 }

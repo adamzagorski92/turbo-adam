@@ -7,20 +7,35 @@
   top: 0;
 }
 
-.borderRight {
+.leftPanel {
   border-right: 1px solid var(--color-border-default);
 }
 
-.borderLeft {
+.rightPanel {
   border-left: 1px solid var(--color-border-default);
   padding-top: 1rem;
+  mask-image:
+    linear-gradient(black, black),
+    linear-gradient(
+      to bottom,
+      transparent,
+      black 2rem,
+      black calc(100% - 2rem),
+      transparent
+    );
+  mask-size:
+    1px 100%,
+    calc(100% - 1px) 100%;
+  mask-position:
+    left top,
+    right top;
+  mask-repeat: no-repeat;
 }
 
 @media (max-width: 992px) {
-  .borderLeft {
+  .rightPanel {
     border-left: none;
     min-height: 60vh;
     max-height: 60vh;
-    padding-top: 0;
   }
 }

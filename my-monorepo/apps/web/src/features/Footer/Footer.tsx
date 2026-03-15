@@ -2,11 +2,15 @@ import { SectionContainer } from "@my-monorepo/components";
 import styles from "./Footer.module.css";
 import { useTranslation } from "react-i18next";
 
-const Footer = () => {
+interface FooterProps {
+  borderTop?: boolean;
+}
+
+const Footer = ({ borderTop = false }: FooterProps) => {
   const { t } = useTranslation("UI");
 
   return (
-    <SectionContainer>
+    <SectionContainer borderTop={borderTop}>
       <footer className={styles.footer}>
         <p>
           {t("footer.descriptionPrefix")}
