@@ -13,6 +13,7 @@ type SectionContainerProps = {
   noPadding?: boolean;
   noTopPadding?: boolean;
   noBottomPadding?: boolean;
+  borderTop?: boolean;
   backgroundColor?: BackgroundColor;
   backgroundOpacity?: number;
   paddingTop?: PaddingProps["paddingTop"];
@@ -30,6 +31,7 @@ export function SectionContainer({
   noPadding = false,
   noTopPadding = false,
   noBottomPadding = false,
+  borderTop = false,
   className = "",
   backgroundColor,
   backgroundOpacity,
@@ -56,6 +58,7 @@ export function SectionContainer({
     noPadding && "no-padding",
     !noPadding && noTopPadding && "no-top-padding",
     !noPadding && noBottomPadding && "no-bottom-padding",
+    borderTop && "border-top",
     bgClass,
     resetHorizontalPaddingOnMobile && "reset-horizontal-padding-mobile",
     className,

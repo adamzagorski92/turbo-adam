@@ -70,7 +70,7 @@ const BlogLayout = () => {
               <AsideData />
             </SidebarMenuLayout>
           </ColumnSection>
-          <Footer />
+          <Footer borderTop />
         </InnerColumnSection>
       </ColumnSection>
 
