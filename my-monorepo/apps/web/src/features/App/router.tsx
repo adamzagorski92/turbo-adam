@@ -3,6 +3,7 @@ import MainLayout from "@leyouts/MainLayout/MainLayout";
 import BlogLayout from "@leyouts/BlogLayout/BlogLayout";
 import HomePage from "@features/HomePage/HomePage";
 import ArticleList from "@features/ArticleList/ArticleList";
+import Article from "@features/Article/Article";
 
 export const router = createBrowserRouter([
   {
@@ -12,6 +13,9 @@ export const router = createBrowserRouter([
   {
     path: "/blog",
     Component: BlogLayout,
-    children: [{ index: true, Component: ArticleList }],
+    children: [
+      { index: true, Component: ArticleList },
+      { path: ":slug", Component: Article },
+    ],
   },
 ]);

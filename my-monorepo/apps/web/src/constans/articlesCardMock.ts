@@ -1,5 +1,6 @@
 export interface ArticleCard {
   id: number;
+  slug: string;
   title: string;
   excerpt: string;
   date: string;
@@ -10,6 +11,7 @@ export interface ArticleCard {
 export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   {
     id: 1,
+    slug: "jak-zbudowac-monorepo-z-turborepo-i-pnpm",
     title: "Jak zbudować monorepo z Turborepo i pnpm",
     excerpt:
       "Praktyczny przewodnik po konfiguracji monorepo z użyciem Turborepo, pnpm workspaces i TypeScript. Dowiedz się, jak efektywnie zarządzać wieloma pakietami w jednym repozytorium.",
@@ -19,6 +21,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 2,
+    slug: "css-design-system-od-zera-tokeny-motywy-layout",
     title: "CSS Design System od zera — tokeny, motywy, layout",
     excerpt:
       "Tworzenie skalowalnego systemu designu opartego na CSS custom properties. Od tokenów kolorów i typografii po ciemny motyw i responsywne layouty.",
@@ -28,6 +31,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 3,
+    slug: "nestjs-prisma-driver-adapter-pattern",
     title: "NestJS + Prisma — driver adapter pattern",
     excerpt:
       "Jak połączyć NestJS z Prisma 7 używając @prisma/adapter-pg i surowego pg.Pool. Konfiguracja, migracje i best practices dla produkcyjnego API.",
@@ -37,6 +41,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 4,
+    slug: "docker-compose-dla-full-stack-developera",
     title: "Docker Compose dla full-stack developera",
     excerpt:
       "Konfiguracja środowisk dev i produkcyjnych z Docker Compose. Nginx jako reverse proxy, hot-reload w kontenerach i multi-stage builds.",
@@ -46,6 +51,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 5,
+    slug: "testowanie-komponentow-react-z-vitest-i-testing-library",
     title: "Testowanie komponentów React z Vitest i Testing Library",
     excerpt:
       "Strategia testowania w monorepo — unit testy, snapshot testy i coverage. Konfiguracja Vitest z jsdom dla shared component library.",
@@ -55,6 +61,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 6,
+    slug: "esm-w-nodejs-kompletny-przewodnik",
     title: "ESM w Node.js — kompletny przewodnik",
     excerpt:
       "Migracja z CommonJS do ES Modules w Node.js. Rozszerzenia .js w importach, package.json type module i kompatybilność z ekosystemem.",
@@ -64,6 +71,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 7,
+    slug: "github-actions-cicd-od-podstaw",
     title: "GitHub Actions — CI/CD od podstaw",
     excerpt:
       "Budowanie pipeline CI/CD z GitHub Actions. Automatyczne testy, build, push do GHCR i deployment na VPS.",
@@ -73,6 +81,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 8,
+    slug: "nginx-jako-reverse-proxy-konfiguracja-produkcyjna",
     title: "Nginx jako reverse proxy — konfiguracja produkcyjna",
     excerpt:
       "Konfiguracja Nginx dla aplikacji full-stack. TLS termination, upstream balancing, cache headers i security headers.",
@@ -82,6 +91,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 9,
+    slug: "postgresql-17-nowosci-i-optymalizacja",
     title: "PostgreSQL 17 — nowości i optymalizacja",
     excerpt:
       "Przegląd nowych funkcji PostgreSQL 17. Incremental backup, JSON improvements i performance tuning dla aplikacji webowych.",
@@ -91,6 +101,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 10,
+    slug: "redis-7-cache-i-sesje-w-praktyce",
     title: "Redis 7 — cache i sesje w praktyce",
     excerpt:
       "Implementacja cache'owania i zarządzania sesjami z Redis 7. AOF persistence, eviction policies i integracja z NestJS.",
@@ -100,6 +111,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 11,
+    slug: "accessibility-w-react-praktyczny-poradnik",
     title: "Accessibility w React — praktyczny poradnik",
     excerpt:
       "Tworzenie dostępnych komponentów React. ARIA attributes, focus management, screen reader testing i WCAG 2.1 compliance.",
@@ -109,6 +121,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 12,
+    slug: "vite-7-co-nowego-w-bundlerze",
     title: "Vite 7 — co nowego w bundlerze",
     excerpt:
       "Przegląd zmian w Vite 7. Environment API, nowy dev server, HMR improvements i migracja z poprzednich wersji.",
@@ -118,6 +131,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 13,
+    slug: "css-modules-vs-styled-components-porownanie",
     title: "CSS Modules vs styled-components — porównanie",
     excerpt:
       "Szczegółowe porównanie podejść do stylowania w React. Performance, DX, bundle size i kiedy wybrać które rozwiązanie.",
@@ -127,6 +141,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 14,
+    slug: "prisma-7-migracje-i-seeding",
     title: "Prisma 7 — migracje i seeding",
     excerpt:
       "Zarządzanie schematem bazy danych z Prisma. Migration workflow, seeding, reset i best practices dla zespołów.",
@@ -136,6 +151,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
   },
   {
     id: 15,
+    slug: "react-19-server-components-i-nowe-api",
     title: "React 19 — Server Components i nowe API",
     excerpt:
       "Przegląd React 19. use() hook, Server Components, Actions, useOptimistic i strategie migracji z React 18.",
