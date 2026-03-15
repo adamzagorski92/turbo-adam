@@ -29,6 +29,11 @@
       transparent
     );
 
+    /* Scrollbar */
+    --color-scrollbar-thumb: rgba(255, 255, 255, 0.15);
+    --color-scrollbar-thumb-hover: rgba(255, 255, 255, 0.3);
+    --color-scrollbar-track: transparent;
+
     /* Theme-aware visibility */
     --display-light-only: none;
     --display-dark-only: block;
@@ -64,6 +69,11 @@ html[data-theme="dark"] {
     var(--palette-brand-400) 12%,
     transparent
   );
+
+  /* Scrollbar */
+  --color-scrollbar-thumb: rgba(255, 255, 255, 0.15);
+  --color-scrollbar-thumb-hover: rgba(255, 255, 255, 0.3);
+  --color-scrollbar-track: transparent;
 
   /* Theme-aware visibility */
   --display-light-only: none;
