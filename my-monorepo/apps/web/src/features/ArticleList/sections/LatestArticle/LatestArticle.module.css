@@ -4,11 +4,30 @@
   gap: var(--spacing-6);
 }
 
+.link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  display: block;
+}
+
+.link:hover,
+.link:focus-visible {
+  text-decoration: none;
+  color: inherit;
+}
+
 .wrapper {
   border: 2px solid var(--color-accent);
   border-radius: var(--radius-lg);
   padding: var(--spacing-6);
   position: relative;
+  transition: var(--transition-interactive);
+}
+
+.link:hover .wrapper {
+  border-color: var(--color-border-accent);
+  background: var(--color-bg-surface-hover);
 }
 
 .label {

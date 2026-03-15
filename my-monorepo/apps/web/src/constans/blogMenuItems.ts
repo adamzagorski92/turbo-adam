@@ -130,4 +130,29 @@ export const blogFilterTree: FilterNode[] = [
       { id: "sale", label: "Wyprzedaż" },
     ],
   },
+  {
+    id: "authors",
+    label: "Autorzy",
+    children: [
+      { id: "adam", label: "Adam Zagórski" },
+      { id: "jan", label: "Jan Kowalski" },
+    ],
+  },
+  {
+    id: "dates",
+    label: "Daty publikacji",
+    children: [
+      { id: "sty-2026", label: "Styczeń 2026" },
+      { id: "lut-2026", label: "Luty 2026" },
+      { id: "mar-2026", label: "Marzec 2026" },
+    ],
+  },
+  {
+    id: "types",
+    label: "Typy wpisów",
+    children: [
+      { id: "sponsored", label: "Sponsorowane" },
+      { id: "non-sponsored", label: "Nie sponsorowane" },
+    ],
+  },
 ];

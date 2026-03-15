@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useState } from "react";
-import { Outlet } from "react-router";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Outlet, useParams } from "react-router";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
 import Footer from "@features/Footer/Footer";
 import {
@@ -15,11 +15,22 @@ import { blogFilterTree } from "@constans/blogMenuItems";
 import Breadcrumbs from "@components/Breadcrumbs/Breadcrumbs";
 import BlogNavbar from "@features/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
+import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
 const BlogLayout = () => {
+  const { slug } = useParams<{ slug: string }>();
   const [activeDrawer, setActiveDrawer] = useState<ActiveDrawer>(null);
+
+  const article = slug
+    ? ARTICLES_CARD_MOCK.find((a) => a.slug === slug)
+    : undefined;
+  const heading = article ? article.title : "Wpisy blogowe";
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [slug]);
 
   const drawerActions = useMemo(
     () => ({
@@ -59,7 +70,7 @@ const BlogLayout = () => {
           >
             <InnerColumnSection selector="main" direction="column">
               <h1 className={styles.blogHeading} id="blog-heading">
-                Wpisy blogowe
+                {heading}
               </h1>
               <Breadcrumbs />
               <Outlet />

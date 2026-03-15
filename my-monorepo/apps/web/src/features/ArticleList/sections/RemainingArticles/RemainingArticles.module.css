@@ -1,3 +1,15 @@
+.link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.link:hover,
+.link:focus-visible {
+  text-decoration: none;
+  color: inherit;
+}
+
 .card {
   display: flex;
   width: 100%;
@@ -9,7 +21,8 @@
   transition: var(--transition-interactive);
 }
 
-.card:hover {
+.card:hover,
+.link:hover .card {
   background: var(--color-bg-surface-hover);
   border-color: var(--color-border-accent);
 }
