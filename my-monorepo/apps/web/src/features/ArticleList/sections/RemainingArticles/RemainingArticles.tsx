@@ -1,4 +1,5 @@
 import type { ArticleCard } from "@constans/articlesCardMock";
+import { Link } from "react-router";
 import { Thumbnail } from "@packages/components";
 import styles from "./RemainingArticles.module.css";
 import ArticleContent from "../ArticleContent/ArticleContent";
@@ -11,12 +12,18 @@ const RemainingArticles = ({ paginatedArticles }: RemainingArticlesProps) => {
   return (
     <>
       {paginatedArticles.map((article: ArticleCard) => (
-        <article key={article.id} className={styles.card}>
-          <Thumbnail size="sm" />
-          <div className={styles.cardBody}>
-            <ArticleContent article={article} variant="card" />
-          </div>
-        </article>
+        <Link
+          key={article.id}
+          to={`/blog/${article.slug}`}
+          className={styles.link}
+        >
+          <article className={styles.card}>
+            <Thumbnail size="sm" />
+            <div className={styles.cardBody}>
+              <ArticleContent article={article} variant="card" />
+            </div>
+          </article>
+        </Link>
       ))}
     </>
   );
