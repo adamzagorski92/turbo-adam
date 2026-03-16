@@ -7,13 +7,13 @@ import {
   Drawer,
   InnerColumnSection,
 } from "@packages/components";
-import AsideData from "@components/AsideData/AsideData";
+import AsideData from "@features/blog/AsideData/AsideData";
 import styles from "./BlogLayout.module.css";
-import SidebarMenuLayout from "@leyouts/SidebarMenuLayout/SidebarMenuLayout";
-import SideTreeNavigation from "@features/SideTreeNavigation/SideTreeNavigation";
+import SidebarMenuLayout from "@features/blog/SidebarMenuLayout/SidebarMenuLayout";
+import SideTreeNavigation from "@features/blog/SideTreeNavigation/SideTreeNavigation";
 import { blogFilterTree } from "@constans/blogMenuItems";
-import Breadcrumbs from "@components/Breadcrumbs/Breadcrumbs";
-import BlogNavbar from "@features/BlogNavbar/BlogNavbar";
+import Breadcrumbs from "@features/blog/Breadcrumbs/Breadcrumbs";
+import BlogNavbar from "@features/blog/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 

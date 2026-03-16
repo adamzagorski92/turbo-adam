@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import MainLayout from "@leyouts/MainLayout/MainLayout";
-import BlogLayout from "@leyouts/BlogLayout/BlogLayout";
+import BlogLayout from "@features/blog/BlogLayout/BlogLayout";
 import HomePage from "@features/HomePage/HomePage";
 import ArticleList from "@features/ArticleList/ArticleList";
 import Article from "@features/Article/Article";
