@@ -4,18 +4,24 @@ import BlogLayout from "@features/blog/BlogLayout/BlogLayout";
 import HomePage from "@features/HomePage/HomePage";
 import Article from "@features/blog/Article/Article";
 import ArticleList from "@features/blog/ArticleList/ArticleList";
+import RootSeoLayout from "@features/RootSeoLayout/RootSeoLayout";
 
 export const router = createBrowserRouter([
   {
-    Component: MainLayout,
-    children: [{ index: true, Component: HomePage }],
-  },
-  {
-    path: "/blog",
-    Component: BlogLayout,
+    Component: RootSeoLayout,
     children: [
-      { index: true, Component: ArticleList },
-      { path: ":slug", Component: Article },
+      {
+        Component: MainLayout,
+        children: [{ index: true, Component: HomePage }],
+      },
+      {
+        path: "/blog",
+        Component: BlogLayout,
+        children: [
+          { index: true, Component: ArticleList },
+          { path: ":slug", Component: Article },
+        ],
+      },
     ],
   },
 ]);

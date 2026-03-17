@@ -18,7 +18,7 @@ const ArticleContent = ({ article, variant }: ArticleContentProps) => {
       <h2
         className={`${styles.title} ${variant === "latest" ? styles.titleLatest : styles.titleCard}`}
       >
-        {article.title}
+        {article.subtitle}
       </h2>
       <p
         className={`${styles.excerpt} ${variant === "card" ? styles.excerptCard : ""}`}
