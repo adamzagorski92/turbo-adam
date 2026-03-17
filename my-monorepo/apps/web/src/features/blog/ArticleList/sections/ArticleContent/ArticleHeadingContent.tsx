@@ -1,16 +1,20 @@
 import type { ArticleCard } from "@constans/articlesCardMock";
-import styles from "./ArticleContent.module.css";
+import styles from "./ArticleHeadingContent.module.css";
 
-interface ArticleContentProps {
+interface ArticleHeadingContentProps {
   article: ArticleCard;
   variant: "latest" | "card";
 }
 
-const ArticleContent = ({ article, variant }: ArticleContentProps) => {
+const ArticleHeadingContent = ({
+  article,
+  variant,
+}: ArticleHeadingContentProps) => {
   return (
     <>
       <div
         className={`${styles.meta} ${variant === "card" ? styles.metaCard : ""}`}
+        aria-label={`${article.date}, autor: ${article.author}`}
       >
         <time dateTime={article.date}>{article.date}</time>
         <span>{article.author}</span>
@@ -25,15 +29,15 @@ const ArticleContent = ({ article, variant }: ArticleContentProps) => {
       >
         {article.excerpt}
       </p>
-      <div className={styles.tags}>
+      <ul className={styles.tags} aria-label="Tagi">
         {article.tags.map((tag) => (
-          <span key={tag} className={styles.tag}>
+          <li key={tag} className={styles.tag}>
             {tag}
-          </span>
+          </li>
         ))}
-      </div>
+      </ul>
     </>
   );
 };
 
-export default ArticleContent;
+export default ArticleHeadingContent;

@@ -2,12 +2,11 @@ import { useParams } from "react-router";
 import {
   ColumnSection,
   InnerColumnSection,
-  SectionContainer,
   Thumbnail,
 } from "@packages/components";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { ARTICLES_CONTENT_MOCK } from "@constans/articlesContentMock";
-import ArticleContent from "../ArticleList/sections/ArticleContent/ArticleContent";
+import ArticleHeadingContent from "../ArticleList/sections/ArticleContent/ArticleHeadingContent";
 import styles from "./Article.module.css";
 
 const Article = () => {
@@ -23,25 +22,26 @@ const Article = () => {
   }
 
   return (
-    <SectionContainer selector="article" noBottomPadding>
+    <>
       <ColumnSection
+        selector="header"
         ratio="3:2"
         stackAt="tablet"
         gapX="gx-16"
         className={styles.columns}
       >
         <InnerColumnSection>
-          <Thumbnail size="lg" />
+          <Thumbnail size="lg" aria-hidden />
         </InnerColumnSection>
         <InnerColumnSection direction="column" gap={16}>
-          <ArticleContent article={card} variant="latest" />
+          <ArticleHeadingContent article={card} variant="latest" />
         </InnerColumnSection>
       </ColumnSection>
 
-      <div className={styles.content}>
+      <section className={styles.content}>
         <p>{content.content}</p>
-      </div>
-    </SectionContainer>
+      </section>
+    </>
   );
 };
 

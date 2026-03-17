@@ -64,11 +64,13 @@ const BlogLayout = () => {
             onSettingsClose={drawerActions.close}
           />
           <ColumnSection
+            selector="section"
+            selectors={slug ? ["article", "aside"] : ["main", "aside"]}
             ratio="1:15rem"
             gapX="gx-16"
             className={styles.contentGrid}
           >
-            <InnerColumnSection selector="main" direction="column">
+            <InnerColumnSection gap={16} direction="column">
               <h1 className={styles.blogHeading} id="blog-heading">
                 {heading}
               </h1>
@@ -76,7 +78,7 @@ const BlogLayout = () => {
               <Outlet />
             </InnerColumnSection>
             <SidebarMenuLayout
-              selector="aside"
+              selector="section"
               direction="column"
               sidebarPosition="right"
             >
