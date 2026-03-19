@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+import Markdown from "react-markdown";
 import {
   ColumnSection,
   InnerColumnSection,
@@ -39,7 +40,7 @@ const Article = () => {
       </ColumnSection>
 
       <section className={styles.content}>
-        <p>{content.content}</p>
+        <Markdown>{content.content}</Markdown>
       </section>
     </>
   );
