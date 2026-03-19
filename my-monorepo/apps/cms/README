@@ -15,3 +15,9 @@ I will prepare cms based on markdown, and using shared components from `packages
 5. Markdown components displaying Article on client-side
 
 You need all components for blog in `packages/`
+
+## REMEMBER:
+
+Remember DOMPurify sanitizes HTML and prevents XSS attacks.
+Add to dependencies:
+[DOMPurify]('https://github.com/cure53/DOMPurify)
