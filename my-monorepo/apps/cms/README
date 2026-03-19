@@ -1,0 +1,15 @@
+# Here I was prepared placeholder for CMS app. I will add more details later.
+
+## My approach:
+
+I will prepare cms based on markdown, and using shared components from `packages/ui`.
+
+## Flow:
+
+1. Create Article draft -> save in DB
+2. Publish Article -> change flag in DB from `draft` to `published`
+3. Tanstack Start create server-side entry and next hydrate aricles on client
+4. Backend save uplouded data on redis to faster http comunication,
+5. Markdown components displaying Article on client-side
+
+You need all components for blog in `packages/`
