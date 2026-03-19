@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Outlet, useParams } from "react-router";
+import { CircleHelp } from "lucide-react";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
 import Footer from "@features/Footer/Footer";
 import {
@@ -74,7 +75,15 @@ const BlogLayout = () => {
               <h1 className={styles.blogHeading} id="blog-heading">
                 {heading}
               </h1>
-              <Breadcrumbs />
+              <div className={styles.breadcrumbRow}>
+                <Breadcrumbs />
+                {slug && (
+                  <a href="#faq-heading" className={styles.faqLink}>
+                    <CircleHelp size={14} aria-hidden />
+                    FAQ
+                  </a>
+                )}
+              </div>
               <Outlet />
             </InnerColumnSection>
             <SidebarMenuLayout

@@ -12,6 +12,40 @@
   margin-top: var(--spacing-4);
 }
 
+.breadcrumbRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.faqLink {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  gap: var(--spacing-1);
+  margin-left: auto;
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  color: var(--color-accent);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  transition: var(--transition-colors);
+}
+
+.faqLink:hover {
+  background: var(--color-bg-surface-hover);
+  color: var(--color-accent-hover);
+  text-decoration: none;
+}
+
+.faqLink:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 @media (max-width: 992px) {
   .contentGrid {
     flex-direction: column;
