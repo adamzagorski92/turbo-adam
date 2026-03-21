@@ -1,23 +1,32 @@
-`TODO`
+# CMS (placeholder)
 
-# Here I was prepared placeholder for CMS app. I will add more details later.
+Future CMS app for managing blog content. Currently a placeholder — all blog logic (article data, FAQ, meta) lives as local mocks in `apps/web/src/constans/`.
 
-## My approach:
+## Planned approach
 
-I will prepare cms based on markdown, and using shared components from `packages/ui`.
+A Markdown-based CMS using shared components from `@my-monorepo/components`.
 
-## Flow:
+## Planned flow
 
-1. Create Article draft -> save in DB
-2. Publish Article -> change flag in DB from `draft` to `published`
-3. Tanstack Start create server-side entry and next hydrate aricles on client
-4. Backend save uplouded data on redis to faster http comunication,
-5. Markdown components displaying Article on client-side
+1. Create an article draft (Markdown) → save to PostgreSQL (via backend API)
+2. Publish article → change flag in the database from `draft` to `published`
+3. Backend caches published articles in Redis for faster HTTP responses
+4. Frontend (`apps/web`) fetches articles from the API and renders them via `react-markdown`
 
-You need all components for blog in `packages/`
+## Dependencies on existing elements
 
-## REMEMBER:
+| Element                                      | Package/App                    | Status                                   |
+| -------------------------------------------- | ------------------------------ | ---------------------------------------- |
+| UI components (Button, Form, TextArea, etc.) | `@my-monorepo/components`      | ready                                    |
+| Design tokens + themes                       | `@my-monorepo/styles`          | ready                                    |
+| Markdown rendering                           | `react-markdown` in `apps/web` | ready                                    |
+| Blog layout + routing                        | `apps/web/src/features/blog/`  | ready (with mocks)                       |
+| API (NestJS)                                 | `apps/backend`                 | base setup ready                         |
+| Database (Prisma)                            | `apps/backend`                 | adapter-pg ready, schema needs expansion |
+| Cache (Redis)                                | `apps/backend`                 | get/set service ready                    |
 
-Remember DOMPurify sanitizes HTML and prevents XSS attacks.
-Add to dependencies:
-[DOMPurify]('https://github.com/cure53/DOMPurify)
+## Security
+
+When implementing the CMS, remember to sanitize HTML on the client side — `DOMPurify` prevents XSS attacks.
+
+Dependency to add: [DOMPurify](https://github.com/cure53/DOMPurify)
