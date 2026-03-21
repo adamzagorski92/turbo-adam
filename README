@@ -2,40 +2,87 @@
 
 Turborepo monorepo: React 19 SPA + NestJS 11 API + Prisma 7 + PostgreSQL 17 + Redis 7.
 
-## Po co to?
+## Why?
 
-Hub na moje projekty i portfolio w jednym repozytorium. Turborepo orkiestruje buildy, cache'uje zadania i pozwala trzymać frontend, backend, współdzielone paczki i infrastrukturę w jednym miejscu — bez żonglowania wieloma repozytoriami.
+A hub for my projects and portfolio in a single repository. Turborepo orchestrates builds, caches tasks, and keeps frontend, backend, shared packages, and infrastructure in one place — no juggling multiple repos.
 
-Jeśli szukasz sposobu na rozwijanie swojego portfolio developerskiego w uporządkowany sposób, ten setup może być dobrym punktem startowym.
+If you're looking for a structured way to grow your developer portfolio, this setup can be a good starting point.
 
-## Stack technologiczny
+## Tech stack
 
-| Warstwa | Technologia | Wersja |
-|---------|-------------|--------|
-| **Monorepo** | Turborepo + pnpm workspaces | 2.8 / 10.28 |
-| **Frontend** | React + Vite | 19.2 / 7.2 |
-| **Styling** | CSS Modules + PostCSS Nesting + design tokens | — |
-| **Ikony** | lucide-react | 0.575 |
-| **Komponenty** | `@my-monorepo/components` (wspólna biblioteka) + clsx | — |
-| **Backend** | NestJS | 11 |
-| **ORM** | Prisma (driver adapter: `@prisma/adapter-pg`) | 7 |
-| **Baza danych** | PostgreSQL | 17 |
-| **Cache** | Redis | 7 |
-| **Testy (web)** | Vitest + Testing Library | 4.0 |
-| **Testy (backend)** | Jest | 30 |
-| **Linting** | ESLint (flat config) | 10 |
-| **Język** | TypeScript (strict, ESM) | 5.9 |
-| **Runtime** | Node.js | 22 |
-| **Reverse proxy** | nginx | 1.27 |
-| **Konteneryzacja** | Docker + Docker Compose v2 | — |
-| **CI/CD** | GitHub Actions → GHCR | — |
-| **Hosting** | Mikrus VPS + Cloudflare Full (strict) | — |
+| Layer               | Technology                                        | Version     |
+| ------------------- | ------------------------------------------------- | ----------- |
+| **Monorepo**        | Turborepo + pnpm workspaces                       | 2.8 / 10.30 |
+| **Frontend**        | React + Vite                                      | 19.2 / 7.2  |
+| **Routing**         | React Router (data mode)                          | 7.13        |
+| **Styling**         | CSS Modules + PostCSS Nesting + design tokens     | —           |
+| **Icons**           | lucide-react                                      | 0.575       |
+| **Components**      | `@my-monorepo/components` (shared library) + clsx | —           |
+| **i18n**            | i18next + react-i18next (PL / EN)                 | 25 / 16     |
+| **SEO**             | react-helmet-async                                | 3.0         |
+| **Markdown**        | react-markdown                                    | 10.1        |
+| **Backend**         | NestJS                                            | 11          |
+| **ORM**             | Prisma (driver adapter: `@prisma/adapter-pg`)     | 7           |
+| **Database**        | PostgreSQL                                        | 17          |
+| **Cache**           | Redis                                             | 7           |
+| **Tests (web)**     | Vitest + Testing Library                          | 4.0         |
+| **Tests (backend)** | Jest                                              | 30          |
+| **Linting**         | ESLint (flat config)                              | 10          |
+| **Language**        | TypeScript (strict, ESM)                          | 5.9         |
+| **Runtime**         | Node.js                                           | 22          |
+| **Reverse proxy**   | nginx                                             | 1.27        |
+| **Containers**      | Docker + Docker Compose v2                        | —           |
+| **CI/CD**           | GitHub Actions → GHCR                             | —           |
+| **Hosting**         | Mikrus VPS + Cloudflare Full (strict)             | —           |
 
-## Wymagania
+## Monorepo structure
+
+```
+my-monorepo/
+├── apps/
+│   ├── web/          # React 19 SPA (Vite) — home page + blog
+│   ├── backend/      # NestJS 11 API — Prisma + PostgreSQL + Redis
+│   └── cms/          # (placeholder) future Markdown-based CMS
+├── packages/
+│   ├── components/   # @my-monorepo/components — shared UI components
+│   └── styles/       # @my-monorepo/styles — design tokens, themes, base CSS
+├── infrastructure/
+│   ├── compose/      # Docker Compose: dev, prod-local, prod-server
+│   ├── nginx/        # Reverse proxy (Dockerfile + configs)
+│   ├── postgres/     # Init scripts for PostgreSQL
+│   └── redis/        # Redis configuration
+└── scripts/          # Helpers: compose orchestration, docker-check, favicon generator
+```
+
+## Application features
+
+### Web (frontend)
+
+| Feature            | Description                                                             |
+| ------------------ | ----------------------------------------------------------------------- |
+| **Home page**      | Hero section, projects section, promotional section                     |
+| **Blog**           | Paginated article list, single article view (Markdown), per-article FAQ |
+| **i18n**           | Full bilingual support (PL / EN), persisted in `localStorage`           |
+| **SEO**            | Dynamic meta tags per route (`react-helmet-async`)                      |
+| **Design system**  | CSS Modules + semantic tokens from `@my-monorepo/styles`                |
+| **Navigation**     | Navbar, blog sidebar with category tree, breadcrumbs                    |
+| **Responsiveness** | Mobile drawer on blog, layout stacking at breakpoints                   |
+
+### Backend (API)
+
+| Endpoint             | Description                  |
+| -------------------- | ---------------------------- |
+| `GET /`              | Health check                 |
+| `GET /redis-test`    | Redis connectivity test      |
+| `GET /postgres-test` | PostgreSQL connectivity test |
+
+The backend is in its base phase — `DatabaseService` (Prisma + pg pool) and `RedisService` are ready for expansion.
+
+## Requirements
 
 - Node 22, pnpm 10, Docker + Compose v2
 
-## 1. Lokalnie (dev)
+## 1. Local (dev)
 
 ```bash
 git clone git@github.com:adamzagorski92/turbo-adam.git
@@ -44,158 +91,71 @@ pnpm install
 pnpm compose:dev up            # nginx :8080, web :5173, backend :3000, postgres, redis
 ```
 
-Otwórz `http://localhost:8080`.
+Open `http://localhost:8080`.
 
 Stop: `pnpm compose:dev down`
 
-Opcjonalnie — expose portów DB/Redis na host:
+Optionally — expose DB/Redis ports to host:
 
 ```bash
 pnpm compose:dev up --expose   # postgres :5432, redis :6379
 ```
 
-## 2. Lokalnie (prod-like)
+## 2. Local (prod-like)
 
 ```bash
-cp .env.prod.local.example .env.prod.local   # ustaw POSTGRES_USER/PASSWORD/DB + DATABASE_URL
+cp .env.prod.local.example .env.prod.local   # set POSTGRES_USER/PASSWORD/DB + DATABASE_URL
 pnpm compose:prod up                          # http://localhost:8080
 ```
 
-## 3. Deploy na Mikrus (produkcja)
+## 3. Deploy to Mikrus (production)
 
-### 3.1 Użytkownicy na serwerze
+Full guide: [DEPLOYMENT.md](my-monorepo/DEPLOYMENT.md)
 
-SSH na Mikrus jako root:
+Summary of steps:
 
-```bash
-# Admin (Twoje konto do zarządzania)
-adduser admin
-usermod -aG sudo admin
-mkdir -p /home/admin/.ssh && chmod 700 /home/admin/.ssh
-# Wklej swój klucz publiczny:
-echo "ssh-ed25519 AAAA... twoj@email" >> /home/admin/.ssh/authorized_keys
-chmod 600 /home/admin/.ssh/authorized_keys
+1. Create a `deploy` user on the server, configure SSH.
+2. Configure Cloudflare (DNS AAAA + Full strict + Origin Certificate).
+3. Upload SSL certificates to the server (`/var/lib/turbo-adam/certs/`).
+4. Set secrets in GitHub Actions (see table below).
+5. Push to `master` → workflow automatically builds images and deploys.
 
-# Deploy (konto dla GitHub Actions)
-adduser deploy
-usermod -aG docker deploy
-mkdir -p /home/deploy/.ssh && chmod 700 /home/deploy/.ssh
-```
+### GitHub secrets
 
-Wygeneruj klucz deploy (na swoim komputerze):
+| Secret                     | Value                                        |
+| -------------------------- | -------------------------------------------- |
+| `DEPLOY_HOST`              | Server IPv6 or hostname                      |
+| `DEPLOY_PORT`              | SSH port (on Mikrus usually 5-digit)         |
+| `DEPLOY_USER`              | `deploy`                                     |
+| `DEPLOY_SSH_KEY`           | Private key for GitHub Actions               |
+| `DEPLOY_APP_DIR`           | `/var/lib/turbo-adam`                        |
+| `POSTGRES_USER`            | e.g. `admin`                                 |
+| `POSTGRES_PASSWORD`        | strong password                              |
+| `POSTGRES_DB`              | e.g. `monorepo_db`                           |
+| `PGADMIN_DEFAULT_EMAIL`    | PgAdmin login e-mail                         |
+| `PGADMIN_DEFAULT_PASSWORD` | PgAdmin password                             |
+| `PGADMIN_PORT`             | _(optional, default 5050)_ PgAdmin host port |
+| `DEFAULT_SITE_URL`         | Site URL for SEO (used at web image build)   |
+| `GHCR_PAT`                 | _(optional)_ GitHub PAT with `read:packages` |
 
-```bash
-ssh-keygen -t ed25519 -C "github-actions-deploy" -f ./turbo-adam-deploy
-```
-
-Wgraj klucz publiczny na serwer:
-
-```bash
-scp -P <PORT> turbo-adam-deploy.pub admin@<HOST>:/tmp/
-# Na serwerze:
-cat /tmp/turbo-adam-deploy.pub >> /home/deploy/.ssh/authorized_keys
-chmod 600 /home/deploy/.ssh/authorized_keys
-chown -R deploy:deploy /home/deploy/.ssh
-```
-
-Hardening SSH — edytuj `/etc/ssh/sshd_config`:
-
-```
-PermitRootLogin no
-PasswordAuthentication no
-PubkeyAuthentication yes
-```
+### Verification
 
 ```bash
-systemctl reload ssh
+curl -I https://app.your-domain/
 ```
 
-### 3.2 Firewall
-
-```bash
-ufw allow <SSH_PORT>/tcp
-ufw allow 80/tcp
-ufw allow 443/tcp
-ufw enable
-```
-
-### 3.3 Katalog aplikacji
-
-```bash
-mkdir -p /var/lib/turbo-adam/certs
-chown -R deploy:deploy /var/lib/turbo-adam
-```
-
-### 3.4 Cloudflare
-
-1. **DNS** — dodaj rekord `AAAA` o nazwie `app` (lub inna subdomena) → IPv6 serwera, Proxy: ON (orange cloud).
-2. **SSL/TLS** → Encryption mode: **Full (strict)**.
-3. **Edge Certificates** → włącz **Always Use HTTPS**.
-4. **Origin Server** → **Create Certificate**:
-   - Hostnames: `app.twoja-domena.pl`
-   - Skopiuj certyfikat i klucz prywatny (**klucz wyświetla się tylko raz!**).
-
-### 3.5 Certyfikaty SSL na serwer
-
-Na swoim komputerze zapisz cert jako `origin.pem` i klucz jako `origin.key`, potem:
-
-```bash
-scp -P <PORT> origin.pem admin@<HOST>:/var/lib/turbo-adam/certs/origin.pem
-scp -P <PORT> origin.key admin@<HOST>:/var/lib/turbo-adam/certs/origin.key
-```
-
-Na serwerze ustaw uprawnienia:
-
-```bash
-sudo chown root:root /var/lib/turbo-adam/certs/*
-sudo chmod 644 /var/lib/turbo-adam/certs/origin.pem
-sudo chmod 600 /var/lib/turbo-adam/certs/origin.key
-```
-
-### 3.6 Sekrety GitHub
-
-W repo → Settings → Secrets and variables → Actions → **New repository secret**:
-
-| Secret              | Wartość                                                                             |
-| ------------------- | ----------------------------------------------------------------------------------- |
-| `DEPLOY_HOST`       | IPv6 lub hostname serwera                                                           |
-| `DEPLOY_PORT`       | Port SSH (na Mikrusie zwykle 5-cyfrowy)                                             |
-| `DEPLOY_USER`       | `deploy`                                                                            |
-| `DEPLOY_SSH_KEY`    | Zawartość pliku `turbo-adam-deploy` (klucz **prywatny**)                            |
-| `DEPLOY_APP_DIR`    | `/var/lib/turbo-adam`                                                               |
-| `POSTGRES_USER`     | np. `admin`                                                                         |
-| `POSTGRES_PASSWORD` | silne hasło                                                                         |
-| `POSTGRES_DB`       | np. `monorepo_db`                                                                   |
-| `GHCR_PAT`          | _(opcjonalnie, tylko jeśli paczki GHCR są prywatne)_ — GitHub PAT z `read:packages` |
-
-### 3.7 Deploy
-
-Push na `master` odpala workflow automatycznie. Można też odpalić ręcznie: Actions → Build & Deploy (Production) → Run workflow.
-
-Workflow:
-
-1. Buduje 4 obrazy Docker (backend, migrate, web, nginx) → GHCR.
-2. SSH na serwer → wgrywa compose + config → czyści dysk → generuje `.env` → pull → migracje → up.
-
-### 3.8 Weryfikacja
-
-```bash
-curl -I https://app.twoja-domena.pl/
-```
-
-Na serwerze:
-
-```bash
-cd /var/lib/turbo-adam
-docker compose --env-file .env -f infrastructure/compose/production.server.yml ps
-docker compose --env-file .env -f infrastructure/compose/production.server.yml logs -n 100 --no-color
-```
-
-## Architektura
+## Architecture
 
 ```
-Client → :443 → nginx ─┬─ /api/* → backend:3000
-                        └─ /*     → web:80 (static)
+Client → :443 → nginx ─┬─ /api/* → backend:3000 (NestJS)
+                        └─ /*     → web:80 (React SPA static)
 ```
 
-Szczegóły: [DEPLOYMENT.md](my-monorepo/DEPLOYMENT.md)
+### Docker networks (dev)
+
+```
+public  (nginx ↔ web ↔ backend)
+private (backend ↔ postgres ↔ redis)   [internal]
+```
+
+Details: [DEPLOYMENT.md](my-monorepo/DEPLOYMENT.md)

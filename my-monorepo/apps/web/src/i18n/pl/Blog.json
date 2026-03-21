@@ -1,0 +1,12 @@
+{
+  "meta": {
+    "siteName": "Adam Zagorski",
+    "title": "Blog — Adam Zagorski",
+    "description": "Artykuły o web development, TypeScript, React, NestJS, DevOps i architekturze aplikacji.",
+    "keywords": "blog, web development, react, typescript, nestjs, devops",
+    "robots": "index, follow",
+    "ogType": "website",
+    "twitterCard": "summary_large_image",
+    "ogImagePath": "/icon-512.png"
+  }
+}

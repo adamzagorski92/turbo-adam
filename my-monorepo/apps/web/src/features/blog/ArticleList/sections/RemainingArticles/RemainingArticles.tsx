@@ -2,7 +2,7 @@ import type { ArticleCard } from "@constans/articlesCardMock";
 import { Link } from "react-router";
 import { Thumbnail } from "@packages/components";
 import styles from "./RemainingArticles.module.css";
-import ArticleContent from "../ArticleContent/ArticleContent";
+import ArticleHeadingContent from "../ArticleContent/ArticleHeadingContent";
 
 interface RemainingArticlesProps {
   paginatedArticles: ArticleCard[];
@@ -20,7 +20,7 @@ const RemainingArticles = ({ paginatedArticles }: RemainingArticlesProps) => {
           <article className={styles.card}>
             <Thumbnail size="sm" />
             <div className={styles.cardBody}>
-              <ArticleContent article={article} variant="card" />
+              <ArticleHeadingContent article={article} variant="card" />
             </div>
           </article>
         </Link>

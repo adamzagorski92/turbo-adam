@@ -1,6 +1,6 @@
 const AsideData = () => {
   return (
-    <div>
+    <>
       <h3>Popularne tagi</h3>
       <ul>
         <li>React</li>
@@ -40,7 +40,7 @@ const AsideData = () => {
         <li>Maj 2025</li>
         <li>Kwiecień 2025</li>
       </ul>
-    </div>
+    </>
   );
 };
 

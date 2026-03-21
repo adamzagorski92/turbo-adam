@@ -1,0 +1,32 @@
+# CMS (placeholder)
+
+Future CMS app for managing blog content. Currently a placeholder — all blog logic (article data, FAQ, meta) lives as local mocks in `apps/web/src/constans/`.
+
+## Planned approach
+
+A Markdown-based CMS using shared components from `@my-monorepo/components`.
+
+## Planned flow
+
+1. Create an article draft (Markdown) → save to PostgreSQL (via backend API)
+2. Publish article → change flag in the database from `draft` to `published`
+3. Backend caches published articles in Redis for faster HTTP responses
+4. Frontend (`apps/web`) fetches articles from the API and renders them via `react-markdown`
+
+## Dependencies on existing elements
+
+| Element                                      | Package/App                    | Status                                   |
+| -------------------------------------------- | ------------------------------ | ---------------------------------------- |
+| UI components (Button, Form, TextArea, etc.) | `@my-monorepo/components`      | ready                                    |
+| Design tokens + themes                       | `@my-monorepo/styles`          | ready                                    |
+| Markdown rendering                           | `react-markdown` in `apps/web` | ready                                    |
+| Blog layout + routing                        | `apps/web/src/features/blog/`  | ready (with mocks)                       |
+| API (NestJS)                                 | `apps/backend`                 | base setup ready                         |
+| Database (Prisma)                            | `apps/backend`                 | adapter-pg ready, schema needs expansion |
+| Cache (Redis)                                | `apps/backend`                 | get/set service ready                    |
+
+## Security
+
+When implementing the CMS, remember to sanitize HTML on the client side — `DOMPurify` prevents XSS attacks.
+
+Dependency to add: [DOMPurify](https://github.com/cure53/DOMPurify)

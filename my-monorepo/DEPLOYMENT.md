@@ -286,6 +286,16 @@ App secrets (example, adjust to your needs):
 - `POSTGRES_PASSWORD`
 - `POSTGRES_DB`
 
+PgAdmin secrets (used by the production compose for the PgAdmin container):
+
+- `PGADMIN_DEFAULT_EMAIL` (login e-mail for PgAdmin web UI)
+- `PGADMIN_DEFAULT_PASSWORD` (password for PgAdmin web UI)
+- `PGADMIN_PORT` (optional; defaults to `5050` if not set)
+
+Build-time secrets:
+
+- `DEFAULT_SITE_URL` (site URL passed to the web image as a build-arg for SEO)
+
 > **Note:** `DATABASE_URL` is **not** a secret. The deploy workflow constructs it automatically on the server from the three secrets above (using `python3` to URL-encode credentials). You do not need to set it manually.
 
 Optional (only if GHCR packages are private):
@@ -304,7 +314,7 @@ Why:
 In practice, the workflow does:
 
 1. **Disk cleanup** — runs `docker system prune -af` and `docker builder prune -af` to free space on the VPS before pulling new images. This removes all unused images and build cache (named volumes with DB data are **not** affected).
-2. Generate `.env` at `$APP_DIR/.env` with `IMAGE_TAG`, `POSTGRES_*`, and the computed `DATABASE_URL`.
+2. Generate `.env` at `$APP_DIR/.env` with `IMAGE_TAG`, `POSTGRES_*`, `PGADMIN_*`, and the computed `DATABASE_URL`.
 3. `docker compose --env-file .env pull`
 4. `docker compose --env-file .env up -d postgres`
 5. Wait for Postgres readiness (up to 60 s).
@@ -332,6 +342,9 @@ IMAGE_TAG=latest
 POSTGRES_USER=<your_user>
 POSTGRES_PASSWORD=<your_password>
 POSTGRES_DB=<your_db>
+PGADMIN_DEFAULT_EMAIL=<your_email>
+PGADMIN_DEFAULT_PASSWORD=<your_pgadmin_password>
+PGADMIN_PORT=5050
 DATABASE_URL=postgresql://<your_user>:<your_password>@postgres:5432/<your_db>?schema=public
 EOF
 ```
@@ -358,7 +371,7 @@ The pipeline has two jobs:
 2. **deploy** — SSHes into the server and:
    - uploads `production.server.yml`, `redis.conf`, and `postgres/init/` to `$APP_DIR`,
    - runs aggressive disk cleanup (`docker system prune -af`, `docker builder prune -af`) to free space on the VPS,
-   - generates `.env` at `$APP_DIR/.env` (with `IMAGE_TAG`, `POSTGRES_*`, computed `DATABASE_URL`),
+   - generates `.env` at `$APP_DIR/.env` (with `IMAGE_TAG`, `POSTGRES_*`, `PGADMIN_*`, computed `DATABASE_URL`),
    - pulls images, starts Postgres, runs migrations, then brings up all services.
 
 ## 12) Verify after deploy

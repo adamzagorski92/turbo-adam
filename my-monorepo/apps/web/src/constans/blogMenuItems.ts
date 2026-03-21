@@ -1,4 +1,4 @@
-import type { FilterNode } from "@features/SideTreeNavigation/types/menu.types";
+import type { FilterNode } from "@features/blog/SideTreeNavigation/types/menu.types";
 
 export const blogFilterTree: FilterNode[] = [
   {

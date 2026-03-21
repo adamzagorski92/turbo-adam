@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Outlet, useParams } from "react-router";
+import { CircleHelp } from "lucide-react";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
 import Footer from "@features/Footer/Footer";
 import {
@@ -7,13 +8,13 @@ import {
   Drawer,
   InnerColumnSection,
 } from "@packages/components";
-import AsideData from "@components/AsideData/AsideData";
+import AsideData from "@features/blog/AsideData/AsideData";
 import styles from "./BlogLayout.module.css";
-import SidebarMenuLayout from "@leyouts/SidebarMenuLayout/SidebarMenuLayout";
-import SideTreeNavigation from "@features/SideTreeNavigation/SideTreeNavigation";
+import SidebarMenuLayout from "@features/blog/SidebarMenuLayout/SidebarMenuLayout";
+import SideTreeNavigation from "@features/blog/SideTreeNavigation/SideTreeNavigation";
 import { blogFilterTree } from "@constans/blogMenuItems";
-import Breadcrumbs from "@components/Breadcrumbs/Breadcrumbs";
-import BlogNavbar from "@features/BlogNavbar/BlogNavbar";
+import Breadcrumbs from "@features/blog/Breadcrumbs/Breadcrumbs";
+import BlogNavbar from "@features/blog/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 
@@ -64,19 +65,29 @@ const BlogLayout = () => {
             onSettingsClose={drawerActions.close}
           />
           <ColumnSection
+            selector="section"
+            selectors={slug ? ["article", "aside"] : ["main", "aside"]}
             ratio="1:15rem"
             gapX="gx-16"
             className={styles.contentGrid}
           >
-            <InnerColumnSection selector="main" direction="column">
+            <InnerColumnSection gap={16} direction="column">
               <h1 className={styles.blogHeading} id="blog-heading">
                 {heading}
               </h1>
-              <Breadcrumbs />
+              <div className={styles.breadcrumbRow}>
+                <Breadcrumbs />
+                {slug && (
+                  <a href="#faq-heading" className={styles.faqLink}>
+                    <CircleHelp size={14} aria-hidden />
+                    FAQ
+                  </a>
+                )}
+              </div>
               <Outlet />
             </InnerColumnSection>
             <SidebarMenuLayout
-              selector="aside"
+              selector="section"
               direction="column"
               sidebarPosition="right"
             >

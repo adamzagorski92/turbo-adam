@@ -7,7 +7,7 @@ import {
 import { Link } from "react-router";
 import styles from "./LatestArticle.module.css";
 import type { ArticleCard } from "@constans/articlesCardMock";
-import ArticleContent from "../ArticleContent/ArticleContent";
+import ArticleHeadingContent from "../ArticleContent/ArticleHeadingContent";
 
 interface LatestArticleProps {
   article: ArticleCard;
@@ -15,12 +15,7 @@ interface LatestArticleProps {
 
 const LatestArticle = ({ article }: LatestArticleProps) => {
   return (
-    <SectionContainer
-      selector="article"
-      noBottomPadding
-      paddingLeft={0}
-      paddingRight={0}
-    >
+    <SectionContainer selector="article" noPadding>
       <Link to={`/blog/${article.slug}`} className={styles.link}>
         <div className={styles.wrapper}>
           <span className={styles.label}>Najnowszy wpis</span>
@@ -34,7 +29,7 @@ const LatestArticle = ({ article }: LatestArticleProps) => {
               <Thumbnail size="lg" />
             </InnerColumnSection>
             <InnerColumnSection direction="column" gap={16}>
-              <ArticleContent article={article} variant="latest" />
+              <ArticleHeadingContent article={article} variant="latest" />
             </InnerColumnSection>
           </ColumnSection>
         </div>

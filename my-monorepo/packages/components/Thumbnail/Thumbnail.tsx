@@ -3,15 +3,16 @@ import styles from "./Thumbnail.module.css";
 interface ThumbnailProps {
   size?: "sm" | "lg";
   className?: string;
+  "aria-hidden"?: boolean;
 }
 
-const Thumbnail = ({ size = "sm", className }: ThumbnailProps) => {
+const Thumbnail = ({ size = "sm", className, ...rest }: ThumbnailProps) => {
   const classes = [styles.thumbnail, styles[size], className]
     .filter(Boolean)
     .join(" ");
 
   return (
-    <div className={classes}>
+    <div className={classes} {...rest}>
       <svg
         className={styles.icon}
         xmlns="http://www.w3.org/2000/svg"
@@ -21,6 +22,8 @@ const Thumbnail = ({ size = "sm", className }: ThumbnailProps) => {
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+        aria-hidden="true"
+        focusable="false"
       >
         <rect x="3" y="3" width="18" height="18" rx="2" />
         <circle cx="9" cy="9" r="2" />

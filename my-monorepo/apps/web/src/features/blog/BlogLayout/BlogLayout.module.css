@@ -1,0 +1,67 @@
+.section {
+  min-width: 0;
+  padding: 0 var(--spacing-4) 0 0;
+}
+
+.contentGrid {
+  flex: 1 1 0;
+  width: 100%;
+}
+
+.blogHeading {
+  margin-top: var(--spacing-4);
+}
+
+.breadcrumbRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.faqLink {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  gap: var(--spacing-1);
+  margin-left: auto;
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  color: var(--color-accent);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  transition: var(--transition-colors);
+}
+
+.faqLink:hover {
+  background: var(--color-bg-surface-hover);
+  color: var(--color-accent-hover);
+  text-decoration: none;
+}
+
+.faqLink:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 992px) {
+  .contentGrid {
+    flex-direction: column;
+  }
+
+  .contentGrid > * {
+    width: 100%;
+    padding-right: var(--spacing-4);
+  }
+}
+
+@media (max-width: 768px) {
+  .outerGrid > *:first-child {
+    display: none;
+  }
+  .contentGrid > * {
+    padding-left: var(--spacing-4);
+  }
+}

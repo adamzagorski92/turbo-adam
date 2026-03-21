@@ -1,10 +1,10 @@
 import { useSearchParams } from "react-router";
-import LatestArticle from "@features/ArticleList/sections/LatestArticle/LatestArticle";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import RemainingArticles from "./sections/RemainingArticles/RemainingArticles";
 
 import PaginationArticles from "./sections/PaginationArticles/PaginationArticles";
 import { ContentSection } from "@packages/components";
+import LatestArticle from "./sections/LatestArticle/LatestArticle";
 
 const ARTICLES_CARD_PER_PAGE = 10;
 
