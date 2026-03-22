@@ -91,7 +91,7 @@ const BlogLayout = () => {
               direction="column"
               sidebarPosition="right"
             >
-              <ArchiveIndex />
+              <ArchiveIndex sidebar />
             </SidebarMenuLayout>
           </ColumnSection>
           <Footer borderTop />
