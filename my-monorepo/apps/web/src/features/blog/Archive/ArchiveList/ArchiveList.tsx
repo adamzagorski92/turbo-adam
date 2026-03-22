@@ -8,7 +8,7 @@ const ArchiveList = ({
   heading: string;
   children: ReactNode;
 }) => (
-  <section className={styles.archive} aria-label={heading}>
+  <section aria-label={heading}>
     <h2 className={styles.heading}>{heading}</h2>
     <ul className={styles.list}>{children}</ul>
   </section>

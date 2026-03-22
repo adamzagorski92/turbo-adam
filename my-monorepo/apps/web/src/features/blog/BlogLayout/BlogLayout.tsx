@@ -8,7 +8,6 @@ import {
   Drawer,
   InnerColumnSection,
 } from "@packages/components";
-import AsideData from "@features/blog/AsideData/AsideData";
 import styles from "./BlogLayout.module.css";
 import SidebarMenuLayout from "@features/blog/SidebarMenuLayout/SidebarMenuLayout";
 import SideTreeNavigation from "@features/blog/SideTreeNavigation/SideTreeNavigation";
@@ -17,6 +16,7 @@ import BlogNavbar from "@features/blog/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { blogFilterTree } from "@utils/blogMenuItems";
+import { ArchiveIndex } from "../Archive/ArchiveIndex/ArchiveIndex";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
@@ -91,7 +91,7 @@ const BlogLayout = () => {
               direction="column"
               sidebarPosition="right"
             >
-              <AsideData />
+              <ArchiveIndex />
             </SidebarMenuLayout>
           </ColumnSection>
           <Footer borderTop />
