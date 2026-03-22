@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { blogFilterTree } from "src/utils/blogMenuItems";
+import { blogFilterTree } from "@utils/blogMenuItems";
 import {
   TAGS,
   CATEGORIES,

@@ -1,18 +1,9 @@
 import { useParams } from "react-router";
-import { ARCHIVE_CONFIG } from "@constans/archiveMock";
+import { ARCHIVE_CONFIG, ARCHIVE_DATES } from "@constans/archiveMock";
+import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 
-import type { ArchiveField } from "../types/archive.types";
-
-import DateArchive from "./DateArchive/DateArchive";
-import SubArchive from "./SubArchive/SubArchive";
+import ArticleArchive from "./ArticleArchive/ArticleArchive";
 import StandardArchive from "./StandardArchive/StandardArchive";
-
-export const FIELD_MAP: Record<string, ArchiveField> = {
-  tags: "tags",
-  categories: "categories",
-  authors: "authors",
-  types: "types",
-};
 
 const NOT_FOUND = <p>Nie znaleziono archiwum</p>;
 
@@ -23,20 +14,40 @@ export const Archive = () => {
     return NOT_FOUND;
   }
 
-  if (sub && ARCHIVE_CONFIG[archive]) {
-    return <SubArchive archive={archive} sub={sub} />;
+  const config = ARCHIVE_CONFIG[archive];
+
+  if (sub && config) {
+    const item = config.items.find((item) => item.slug === sub);
+    if (!item) return NOT_FOUND;
+
+    const articles = ARTICLES_CARD_MOCK.filter((article) =>
+      article[config.field].includes(item.label),
+    );
+    return <ArticleArchive heading={item.label} articles={articles} />;
   }
 
   if (sub) {
-    return <DateArchive year={archive} month={sub} />;
+    const dateEntry = ARCHIVE_DATES.find(
+      (date) => date.slug === `${archive}/${sub}`,
+    );
+    if (!dateEntry) return NOT_FOUND;
+
+    const articles = ARTICLES_CARD_MOCK.filter((article) =>
+      article.dates.includes(`${sub}-${archive}`),
+    );
+    return <ArticleArchive heading={dateEntry.label} articles={articles} />;
   }
 
-  if (ARCHIVE_CONFIG[archive]) {
+  if (config) {
     return <StandardArchive archive={archive} />;
   }
 
   if (/^\d{4}$/.test(archive)) {
-    return <DateArchive year={archive} />;
+    const articles = ARTICLES_CARD_MOCK.filter((article) =>
+      article.dates.some((date) => date.endsWith(`-${archive}`)),
+    );
+    if (articles.length === 0) return NOT_FOUND;
+    return <ArticleArchive heading={archive} articles={articles} />;
   }
 
   return NOT_FOUND;

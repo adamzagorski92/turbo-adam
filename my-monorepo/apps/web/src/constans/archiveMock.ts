@@ -17,6 +17,7 @@ export type ArchiveType = "tags" | "categories" | "authors" | "types" | "dates";
 export interface ArchiveConfigEntry {
   heading: string;
   items: ArchiveItem[];
+  field: "tags" | "categories" | "authors" | "types";
 }
 
 const toArchiveItems = (entities: BlogEntity[]): ArchiveItem[] =>
@@ -37,11 +38,12 @@ export const ARCHIVE_YEARS: string[] = [
 ];
 
 export const ARCHIVE_CONFIG: Record<string, ArchiveConfigEntry> = {
-  tags: { heading: "Tagi", items: ARCHIVE_TAGS },
+  tags: { heading: "Tagi", items: ARCHIVE_TAGS, field: "tags" },
   categories: {
     heading: "Kategorie",
     items: ARCHIVE_CATEGORIES,
+    field: "categories",
   },
-  authors: { heading: "Autorzy", items: ARCHIVE_AUTHORS },
-  types: { heading: "Typy", items: ARCHIVE_TYPES },
+  authors: { heading: "Autorzy", items: ARCHIVE_AUTHORS, field: "authors" },
+  types: { heading: "Typy", items: ARCHIVE_TYPES, field: "types" },
 };

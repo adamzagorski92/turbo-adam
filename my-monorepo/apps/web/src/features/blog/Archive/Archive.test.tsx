@@ -10,6 +10,8 @@ vi.mock("react-router", async () => {
 import { useParams } from "react-router";
 import { MemoryRouter } from "react-router";
 import { Archive } from "./Archive";
+import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
+import { ROUTES } from "@constans/routes";
 
 const mockUseParams = vi.mocked(useParams);
 
@@ -33,22 +35,83 @@ describe("Archive", () => {
     expect(screen.getByRole("heading", { name: /Tagi/i })).toBeInTheDocument();
   });
 
-  it("renders SubArchive when archive and sub are known", () => {
+  it("renders articles filtered by tag", () => {
     mockUseParams.mockReturnValue({ archive: "tags", sub: "a11y" });
+
+    const expectedArticles = ARTICLES_CARD_MOCK.filter((a) =>
+      a.tags.includes("A11y"),
+    );
 
     renderArchive();
 
     expect(screen.getByRole("heading", { name: /A11y/i })).toBeInTheDocument();
+    expectedArticles.forEach((article) => {
+      expect(screen.getByText(article.title)).toBeInTheDocument();
+    });
   });
 
-  it("renders DateArchive when archive is a year and sub is a month", () => {
+  it("renders articles filtered by category", () => {
+    mockUseParams.mockReturnValue({ archive: "categories", sub: "frontend" });
+
+    const expectedArticles = ARTICLES_CARD_MOCK.filter((a) =>
+      a.categories.includes("Frontend"),
+    );
+
+    renderArchive();
+
+    expect(
+      screen.getByRole("heading", { name: /Frontend/i }),
+    ).toBeInTheDocument();
+    expectedArticles.forEach((article) => {
+      expect(screen.getByText(article.title)).toBeInTheDocument();
+    });
+  });
+
+  it("renders articles for a year/month date", () => {
     mockUseParams.mockReturnValue({ archive: "2026", sub: "sty" });
+
+    const expectedArticles = ARTICLES_CARD_MOCK.filter((a) =>
+      a.dates.includes("sty-2026"),
+    );
 
     renderArchive();
 
     expect(
       screen.getByRole("heading", { name: /Styczeń 2026/i }),
     ).toBeInTheDocument();
+    expectedArticles.forEach((article) => {
+      expect(screen.getByText(article.title)).toBeInTheDocument();
+    });
+  });
+
+  it("renders all articles for a year-only archive", () => {
+    mockUseParams.mockReturnValue({ archive: "2026" });
+
+    const expectedArticles = ARTICLES_CARD_MOCK.filter((a) =>
+      a.dates.some((d) => d.endsWith("-2026")),
+    );
+
+    renderArchive();
+
+    expect(screen.getByRole("heading", { name: "2026" })).toBeInTheDocument();
+    expectedArticles.forEach((article) => {
+      expect(screen.getByText(article.title)).toBeInTheDocument();
+    });
+  });
+
+  it("generates article links with correct href", () => {
+    mockUseParams.mockReturnValue({ archive: "tags", sub: "a11y" });
+
+    const expectedArticles = ARTICLES_CARD_MOCK.filter((a) =>
+      a.tags.includes("A11y"),
+    );
+
+    renderArchive();
+
+    const links = screen.getAllByRole("link");
+    expect(links[0].getAttribute("href")).toBe(
+      ROUTES.blogArticle(expectedArticles[0].slug),
+    );
   });
 
   it('renders "Nie znaleziono archiwum" for unknown archive type', () => {
@@ -67,11 +130,27 @@ describe("Archive", () => {
     expect(screen.getByText(/Nie znaleziono archiwum/i)).toBeInTheDocument();
   });
 
-  it("renders DateArchive with all year articles when archive is a year without sub", () => {
-    mockUseParams.mockReturnValue({ archive: "2026" });
+  it('renders "Nie znaleziono archiwum" for unknown sub slug', () => {
+    mockUseParams.mockReturnValue({ archive: "tags", sub: "nonexistent" });
 
     renderArchive();
 
-    expect(screen.getByRole("heading", { name: "2026" })).toBeInTheDocument();
+    expect(screen.getByText(/Nie znaleziono archiwum/i)).toBeInTheDocument();
+  });
+
+  it('renders "Nie znaleziono archiwum" for unknown date', () => {
+    mockUseParams.mockReturnValue({ archive: "9999", sub: "xyz" });
+
+    renderArchive();
+
+    expect(screen.getByText(/Nie znaleziono archiwum/i)).toBeInTheDocument();
+  });
+
+  it('renders "Nie znaleziono archiwum" for year with no articles', () => {
+    mockUseParams.mockReturnValue({ archive: "1999" });
+
+    renderArchive();
+
+    expect(screen.getByText(/Nie znaleziono archiwum/i)).toBeInTheDocument();
   });
 });
