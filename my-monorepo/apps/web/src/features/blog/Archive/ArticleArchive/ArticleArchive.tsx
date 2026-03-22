@@ -11,7 +11,7 @@ const ArticleArchive = ({
   heading: string;
   articles: ArticleCard[];
 }) => (
-  <ArchiveList heading={heading}>
+  <ArchiveList ariaLabel={heading}>
     {articles.map((article) => (
       <li key={article.id} className={styles.listItem}>
         <Link to={ROUTES.blogArticle(article.slug)} className={styles.link}>

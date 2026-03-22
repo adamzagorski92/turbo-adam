@@ -17,10 +17,16 @@ const renderArticleArchive = (heading: string, articles = sampleArticles) =>
   );
 
 describe("ArticleArchive", () => {
-  it("renders heading", () => {
+  it("renders section with aria-label matching heading", () => {
     renderArticleArchive("A11y");
 
-    expect(screen.getByRole("heading", { name: /A11y/i })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: /A11y/i })).toBeInTheDocument();
+  });
+
+  it("does not render a visible h2 heading", () => {
+    renderArticleArchive("A11y");
+
+    expect(screen.queryByRole("heading")).not.toBeInTheDocument();
   });
 
   it("renders article titles as links", () => {

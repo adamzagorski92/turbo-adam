@@ -7,7 +7,7 @@ import ArchiveList from "./ArchiveList";
 describe("ArchiveList", () => {
   it("renders heading with provided text", () => {
     render(
-      <ArchiveList heading="Test heading">
+      <ArchiveList heading="Test heading" ariaLabel="Test heading">
         <li>Item</li>
       </ArchiveList>,
     );
@@ -17,9 +17,19 @@ describe("ArchiveList", () => {
     ).toBeInTheDocument();
   });
 
+  it("does not render heading when heading is omitted", () => {
+    render(
+      <ArchiveList ariaLabel="Tagi">
+        <li>Item</li>
+      </ArchiveList>,
+    );
+
+    expect(screen.queryByRole("heading")).not.toBeInTheDocument();
+  });
+
   it("renders children inside a list", () => {
     render(
-      <ArchiveList heading="Heading">
+      <ArchiveList ariaLabel="Heading">
         <li>First</li>
         <li>Second</li>
       </ArchiveList>,
@@ -34,9 +44,9 @@ describe("ArchiveList", () => {
     expect(items[1]).toHaveTextContent("Second");
   });
 
-  it("renders a section with aria-label matching heading", () => {
+  it("renders a section with aria-label", () => {
     render(
-      <ArchiveList heading="Tagi">
+      <ArchiveList ariaLabel="Tagi">
         <li>Item</li>
       </ArchiveList>,
     );

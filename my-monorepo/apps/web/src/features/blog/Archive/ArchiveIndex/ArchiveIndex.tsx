@@ -43,7 +43,7 @@ export const ArchiveIndex = ({ sidebar = false }: { sidebar?: boolean }) => {
   }
 
   const sections: { heading: string; items: SectionItem[] }[] = [
-    { heading: "Archiwum", items: configItems },
+    { heading: "Typy", items: configItems },
     { heading: "Daty", items: dateItems },
     { heading: "Lata", items: yearItems },
   ];
@@ -51,7 +51,7 @@ export const ArchiveIndex = ({ sidebar = false }: { sidebar?: boolean }) => {
   return (
     <div className={styles.outlet}>
       {sections.map(({ heading, items }) => (
-        <ArchiveList key={heading} heading={heading}>
+        <ArchiveList key={heading} heading={heading} ariaLabel={heading}>
           {items.map((item) => (
             <li key={item.key} className={styles.listItem}>
               <Link to={item.to} className={styles.link}>

@@ -32,7 +32,7 @@ describe("Archive", () => {
 
     renderArchive();
 
-    expect(screen.getByRole("heading", { name: /Tagi/i })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: /Tagi/i })).toBeInTheDocument();
   });
 
   it("renders articles filtered by tag", () => {
@@ -44,7 +44,7 @@ describe("Archive", () => {
 
     renderArchive();
 
-    expect(screen.getByRole("heading", { name: /A11y/i })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: /A11y/i })).toBeInTheDocument();
     expectedArticles.forEach((article) => {
       expect(screen.getByText(article.title)).toBeInTheDocument();
     });
@@ -60,7 +60,7 @@ describe("Archive", () => {
     renderArchive();
 
     expect(
-      screen.getByRole("heading", { name: /Frontend/i }),
+      screen.getByRole("region", { name: /Frontend/i }),
     ).toBeInTheDocument();
     expectedArticles.forEach((article) => {
       expect(screen.getByText(article.title)).toBeInTheDocument();
@@ -77,7 +77,7 @@ describe("Archive", () => {
     renderArchive();
 
     expect(
-      screen.getByRole("heading", { name: /Styczeń 2026/i }),
+      screen.getByRole("region", { name: /Styczeń 2026/i }),
     ).toBeInTheDocument();
     expectedArticles.forEach((article) => {
       expect(screen.getByText(article.title)).toBeInTheDocument();
@@ -93,7 +93,7 @@ describe("Archive", () => {
 
     renderArchive();
 
-    expect(screen.getByRole("heading", { name: "2026" })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "2026" })).toBeInTheDocument();
     expectedArticles.forEach((article) => {
       expect(screen.getByText(article.title)).toBeInTheDocument();
     });

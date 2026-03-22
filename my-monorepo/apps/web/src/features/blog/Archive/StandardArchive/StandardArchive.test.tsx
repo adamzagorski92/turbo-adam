@@ -16,32 +16,16 @@ const renderStandardArchive = (archive: string) =>
   );
 
 describe("StandardArchive", () => {
-  it('renders "Tagi" heading when archive is "tags"', () => {
+  it("renders section with aria-label for tags archive", () => {
     renderStandardArchive("tags");
 
-    expect(screen.getByRole("heading", { name: /Tagi/i })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: /Tagi/i })).toBeInTheDocument();
   });
 
-  it('renders "Kategorie" heading when archive is "categories"', () => {
-    renderStandardArchive("categories");
+  it("does not render a visible h2 heading", () => {
+    renderStandardArchive("tags");
 
-    expect(
-      screen.getByRole("heading", { name: /Kategorie/i }),
-    ).toBeInTheDocument();
-  });
-
-  it('renders "Autorzy" heading when archive is "authors"', () => {
-    renderStandardArchive("authors");
-
-    expect(
-      screen.getByRole("heading", { name: /Autorzy/i }),
-    ).toBeInTheDocument();
-  });
-
-  it('renders "Typy" heading when archive is "types"', () => {
-    renderStandardArchive("types");
-
-    expect(screen.getByRole("heading", { name: /Typy/i })).toBeInTheDocument();
+    expect(screen.queryByRole("heading")).not.toBeInTheDocument();
   });
 
   it("renders archive items as links for tags archive", () => {

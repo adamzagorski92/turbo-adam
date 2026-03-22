@@ -15,7 +15,7 @@ const StandardArchive = ({ archive }: { archive: string }) => {
   const { heading, items, field } = config;
 
   return (
-    <ArchiveList heading={heading}>
+    <ArchiveList ariaLabel={heading}>
       {items.map((item) => {
         const count = ARTICLES_CARD_MOCK.filter((article) =>
           article[field].includes(item.label),

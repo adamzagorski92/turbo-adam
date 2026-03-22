@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Outlet, useParams } from "react-router";
+import { Outlet, useLocation, useParams } from "react-router";
 import { CircleHelp } from "lucide-react";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
 import Footer from "@features/Footer/Footer";
@@ -15,23 +15,59 @@ import Breadcrumbs from "@features/blog/Breadcrumbs/Breadcrumbs";
 import BlogNavbar from "@features/blog/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
+import { ARCHIVE_CONFIG, ARCHIVE_DATES } from "@constans/archiveMock";
 import { blogFilterTree } from "@utils/blogMenuItems";
 import { ArchiveIndex } from "../Archive/ArchiveIndex/ArchiveIndex";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
+function resolveHeading(
+  slug?: string,
+  archive?: string,
+  sub?: string,
+  pathname?: string,
+): string {
+  if (slug) {
+    const article = ARTICLES_CARD_MOCK.find((a) => a.slug === slug);
+    return article?.title ?? "Wpisy blogowe";
+  }
+
+  if (archive && sub) {
+    const config = ARCHIVE_CONFIG[archive];
+    if (config) {
+      const item = config.items.find((i) => i.slug === sub);
+      return item?.label ?? "Archiwum";
+    }
+    const dateEntry = ARCHIVE_DATES.find((d) => d.slug === `${archive}/${sub}`);
+    return dateEntry?.label ?? "Archiwum";
+  }
+
+  if (archive) {
+    const config = ARCHIVE_CONFIG[archive];
+    if (config) return config.heading;
+    if (/^\d{4}$/.test(archive)) return `Archiwum: ${archive}`;
+    return "Archiwum";
+  }
+
+  if (pathname?.startsWith("/blog/archive")) return "Archiwum";
+
+  return "Wpisy blogowe";
+}
+
 const BlogLayout = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug, archive, sub } = useParams<{
+    slug?: string;
+    archive?: string;
+    sub?: string;
+  }>();
+  const { pathname } = useLocation();
   const [activeDrawer, setActiveDrawer] = useState<ActiveDrawer>(null);
 
-  const article = slug
-    ? ARTICLES_CARD_MOCK.find((article) => article.slug === slug)
-    : undefined;
-  const heading = article ? article.title : "Wpisy blogowe";
+  const heading = resolveHeading(slug, archive, sub, pathname);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [slug]);
+  }, [slug, archive, sub]);
 
   const drawerActions = useMemo(
     () => ({

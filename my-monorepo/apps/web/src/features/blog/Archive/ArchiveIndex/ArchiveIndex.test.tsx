@@ -125,12 +125,10 @@ describe("ArchiveIndex — sidebar mode", () => {
 });
 
 describe("ArchiveIndex — outlet mode (default)", () => {
-  it('renders "Archiwum" heading', () => {
+  it('renders "Typy" section heading instead of duplicating h1', () => {
     renderArchiveIndex();
 
-    expect(
-      screen.getByRole("heading", { name: /Archiwum/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Typy/i })).toBeInTheDocument();
   });
 
   it("renders all archive type links as card tiles", () => {
