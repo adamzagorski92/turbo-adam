@@ -1,12 +1,6 @@
-.heading {
-  margin-bottom: var(--spacing-md);
-}
-
-.list {
-  list-style: none;
-  padding: 0;
-}
-
-.listItem {
-  margin-bottom: var(--spacing-xs);
+.title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-4);
+  color: var(--color-fg-primary);
 }

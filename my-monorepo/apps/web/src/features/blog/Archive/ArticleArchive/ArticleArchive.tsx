@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import ArchiveList from "../ArchiveList/ArchiveList";
 import { ROUTES } from "@constans/routes";
 import type { ArticleCard } from "@constans/articlesCardMock";
+import styles from "./ArticleArchive.module.css";
 
 const ArticleArchive = ({
   heading,
@@ -12,8 +13,10 @@ const ArticleArchive = ({
 }) => (
   <ArchiveList heading={heading}>
     {articles.map((article) => (
-      <li key={article.id}>
-        <Link to={ROUTES.blogArticle(article.slug)}>{article.title}</Link>
+      <li key={article.id} className={styles.listItem}>
+        <Link to={ROUTES.blogArticle(article.slug)} className={styles.link}>
+          {article.title}
+        </Link>
       </li>
     ))}
   </ArchiveList>

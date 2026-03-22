@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import {
   ARCHIVE_CONFIG,
   ARCHIVE_DATES,
@@ -6,36 +5,36 @@ import {
 } from "@constans/archiveMock";
 import { ROUTES } from "@constans/routes";
 import styles from "./ArchiveIndex.module.css";
+import ArchiveSection from "../ArchiveSection/ArchiveSection";
+import type { SectionItem } from "../ArchiveSection/ArchiveSection";
 
-export const ArchiveIndex = () => (
-  <section aria-label="Archiwum">
-    <h2 className={styles.heading}>Archiwum</h2>
-    <ul className={styles.list}>
-      {Object.entries(ARCHIVE_CONFIG).map(([key, config]) => (
-        <li key={key} className={styles.listItem}>
-          <Link to={ROUTES.blogArchiveType(key)}>{config.heading}</Link>
-        </li>
-      ))}
-    </ul>
-    <h3 className={styles.heading}>Daty</h3>
-    <ul className={styles.list}>
-      {ARCHIVE_DATES.slice()
-        .reverse()
-        .map((date) => (
-          <li key={date.slug} className={styles.listItem}>
-            <Link to={`${ROUTES.blogArchive}/${date.slug}`}>{date.label}</Link>
-          </li>
-        ))}
-    </ul>
-    <h3 className={styles.heading}>Lata</h3>
-    <ul className={styles.list}>
-      {ARCHIVE_YEARS.slice()
-        .reverse()
-        .map((year) => (
-          <li key={year} className={styles.listItem}>
-            <Link to={ROUTES.blogArchiveType(year)}>{year}</Link>
-          </li>
-        ))}
-    </ul>
-  </section>
-);
+export const ArchiveIndex = () => {
+  const configItems: SectionItem[] = Object.entries(ARCHIVE_CONFIG).map(
+    ([key, config]) => ({
+      key,
+      label: config.heading,
+      to: ROUTES.blogArchiveType(key),
+    }),
+  );
+
+  const dateItems: SectionItem[] = [...ARCHIVE_DATES].reverse().map((date) => ({
+    key: date.slug,
+    label: date.label,
+    to: `${ROUTES.blogArchive}/${date.slug}`,
+  }));
+
+  const yearItems: SectionItem[] = [...ARCHIVE_YEARS].reverse().map((year) => ({
+    key: year,
+    label: year,
+    to: ROUTES.blogArchiveType(year),
+  }));
+
+  return (
+    <section aria-label="Archiwum">
+      <h2 className={styles.title}>Archiwum</h2>
+      <ArchiveSection items={configItems} />
+      <ArchiveSection heading="Daty" items={dateItems} />
+      <ArchiveSection heading="Lata" items={yearItems} />
+    </section>
+  );
+};

@@ -3,6 +3,7 @@ import ArchiveList from "../ArchiveList/ArchiveList";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { ROUTES } from "@constans/routes";
 import { Link } from "react-router";
+import styles from "./StandardArchive.module.css";
 
 const StandardArchive = ({ archive }: { archive: string }) => {
   const config = ARCHIVE_CONFIG[archive];
@@ -20,8 +21,11 @@ const StandardArchive = ({ archive }: { archive: string }) => {
           article[field].includes(item.label),
         ).length;
         return (
-          <li key={item.slug}>
-            <Link to={ROUTES.blogArchiveSub(archive, item.slug)}>
+          <li key={item.slug} className={styles.listItem}>
+            <Link
+              to={ROUTES.blogArchiveSub(archive, item.slug)}
+              className={styles.link}
+            >
               {item.label} ({count})
             </Link>
           </li>
