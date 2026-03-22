@@ -24,7 +24,8 @@
       "@constans/*": ["src/constans/*"],
       "@features/*": ["src/features/*"],
       "@leyouts/*": ["src/leyouts/*"],
-      "@app-types/*": ["src/types/*"]
+      "@app-types/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"]
     },
 
     /* Linting */

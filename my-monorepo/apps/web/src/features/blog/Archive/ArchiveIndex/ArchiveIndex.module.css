@@ -1,0 +1,16 @@
+.archiveIndex {
+  padding: var(--spacing-lg);
+}
+
+.heading {
+  margin-bottom: var(--spacing-md);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.listItem {
+  margin-bottom: var(--spacing-xs);
+}

@@ -7,6 +7,10 @@ export interface ArticleCard {
   date: string;
   author: string;
   tags: string[];
+  categories: string[];
+  authors: string[];
+  types: string[];
+  dates: string[];
 }
 
 export const ARTICLES_CARD_MOCK: ArticleCard[] = [
@@ -20,6 +24,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-03-10",
     author: "Adam",
     tags: ["Turborepo", "pnpm", "TypeScript"],
+    categories: ["Frontend", "Narzędzia"],
+    authors: ["Adam"],
+    types: ["unsponsored"],
+    dates: ["mar-2026"],
   },
   {
     id: 2,
@@ -31,6 +39,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-03-05",
     author: "Adam",
     tags: ["CSS", "Design System", "Tokeny"],
+    categories: ["Frontend"],
+    authors: ["Adam"],
+    types: ["unsponsored"],
+    dates: ["mar-2026"],
   },
   {
     id: 3,
@@ -42,6 +54,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-02-28",
     author: "Adam",
     tags: ["NestJS", "Prisma", "PostgreSQL"],
+    categories: ["Backend", "Bazy danych"],
+    authors: ["Adam"],
+    types: ["sponsored"],
+    dates: ["lut-2026"],
   },
   {
     id: 4,
@@ -54,6 +70,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-02-20",
     author: "Adam",
     tags: ["Docker", "DevOps", "nginx"],
+    categories: ["DevOps"],
+    authors: ["Adam"],
+    types: ["unsponsored"],
+    dates: ["lut-2026"],
   },
   {
     id: 5,
@@ -65,6 +85,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-02-15",
     author: "Adam",
     tags: ["React", "Vitest", "Testing Library"],
+    categories: ["Testowanie", "Frontend"],
+    authors: ["Adam"],
+    types: ["unsponsored"],
+    dates: ["lut-2026"],
   },
   {
     id: 6,
@@ -77,6 +101,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-02-10",
     author: "Adam",
     tags: ["Node.js", "ESM", "TypeScript"],
+    categories: ["Backend", "Frontend"],
+    authors: ["Adam"],
+    types: ["unsponsored"],
+    dates: ["lut-2026"],
   },
   {
     id: 7,
@@ -88,6 +116,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-02-05",
     author: "Adam",
     tags: ["CI/CD", "GitHub Actions", "DevOps"],
+    categories: ["DevOps"],
+    authors: ["Adam"],
+    types: ["sponsored"],
+    dates: ["lut-2026"],
   },
   {
     id: 8,
@@ -99,6 +131,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-01-30",
     author: "Adam",
     tags: ["nginx", "DevOps", "Security"],
+    categories: ["DevOps"],
+    authors: ["Adam"],
+    types: ["unsponsored"],
+    dates: ["sty-2026"],
   },
   {
     id: 9,
@@ -110,6 +146,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-01-25",
     author: "Adam",
     tags: ["PostgreSQL", "Bazy danych", "Performance"],
+    categories: ["Bazy danych"],
+    authors: ["Adam"],
+    types: ["unsponsored"],
+    dates: ["sty-2026"],
   },
   {
     id: 10,
@@ -121,6 +161,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-01-20",
     author: "Adam",
     tags: ["Redis", "Cache", "NestJS"],
+    categories: ["Backend", "Bazy danych"],
+    authors: ["Adam"],
+    types: ["unsponsored"],
+    dates: ["sty-2026"],
   },
   {
     id: 11,
@@ -132,6 +176,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-01-15",
     author: "Adam",
     tags: ["React", "A11y", "UX"],
+    categories: ["Frontend"],
+    authors: ["Adam"],
+    types: ["unsponsored"],
+    dates: ["sty-2026"],
   },
   {
     id: 12,
@@ -143,6 +191,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-01-10",
     author: "Adam",
     tags: ["Vite", "Frontend", "Tooling"],
+    categories: ["Frontend", "Narzędzia"],
+    authors: ["Adam"],
+    types: ["sponsored"],
+    dates: ["sty-2026"],
   },
   {
     id: 13,
@@ -154,6 +206,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2026-01-05",
     author: "Adam",
     tags: ["CSS", "React", "Performance"],
+    categories: ["Frontend"],
+    authors: ["Adam"],
+    types: ["unsponsored"],
+    dates: ["sty-2026"],
   },
   {
     id: 14,
@@ -165,6 +221,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2025-12-28",
     author: "Adam",
     tags: ["Prisma", "Bazy danych", "TypeScript"],
+    categories: ["Backend", "Bazy danych"],
+    authors: ["Adam"],
+    types: ["unsponsored"],
+    dates: ["gru-2025"],
   },
   {
     id: 15,
@@ -176,5 +236,9 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     date: "2025-12-20",
     author: "Adam",
     tags: ["React", "Frontend", "SSR"],
+    categories: ["Frontend"],
+    authors: ["Adam"],
+    types: ["unsponsored"],
+    dates: ["gru-2025"],
   },
 ];

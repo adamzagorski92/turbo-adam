@@ -12,11 +12,11 @@ import AsideData from "@features/blog/AsideData/AsideData";
 import styles from "./BlogLayout.module.css";
 import SidebarMenuLayout from "@features/blog/SidebarMenuLayout/SidebarMenuLayout";
 import SideTreeNavigation from "@features/blog/SideTreeNavigation/SideTreeNavigation";
-import { blogFilterTree } from "@constans/blogMenuItems";
 import Breadcrumbs from "@features/blog/Breadcrumbs/Breadcrumbs";
 import BlogNavbar from "@features/blog/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
+import { blogFilterTree } from "@utils/blogMenuItems";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
@@ -25,7 +25,7 @@ const BlogLayout = () => {
   const [activeDrawer, setActiveDrawer] = useState<ActiveDrawer>(null);
 
   const article = slug
-    ? ARTICLES_CARD_MOCK.find((a) => a.slug === slug)
+    ? ARTICLES_CARD_MOCK.find((article) => article.slug === slug)
     : undefined;
   const heading = article ? article.title : "Wpisy blogowe";
 

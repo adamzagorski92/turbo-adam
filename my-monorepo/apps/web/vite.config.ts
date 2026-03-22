@@ -22,6 +22,7 @@ export default defineConfig(({ mode }) => {
         "@features": resolve(__dirname, "./src/features"),
         "@leyouts": resolve(__dirname, "./src/leyouts"),
         "@app-types": resolve(__dirname, "./src/types"),
+        "@utils": resolve(__dirname, "./src/utils"),
       },
       dedupe: ["react", "react-dom"],
     },

@@ -1,0 +1,12 @@
+.archive {
+  padding: var(--spacing-lg);
+}
+
+.heading {
+  margin-bottom: var(--spacing-md);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
