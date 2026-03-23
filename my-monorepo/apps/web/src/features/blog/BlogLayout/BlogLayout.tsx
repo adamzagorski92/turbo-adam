@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Outlet, useParams } from "react-router";
+import { Outlet, useLocation, useParams } from "react-router";
+import { useTranslation } from "react-i18next";
 import { CircleHelp } from "lucide-react";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
 import Footer from "@features/Footer/Footer";
@@ -8,30 +9,74 @@ import {
   Drawer,
   InnerColumnSection,
 } from "@packages/components";
-import AsideData from "@features/blog/AsideData/AsideData";
 import styles from "./BlogLayout.module.css";
 import SidebarMenuLayout from "@features/blog/SidebarMenuLayout/SidebarMenuLayout";
 import SideTreeNavigation from "@features/blog/SideTreeNavigation/SideTreeNavigation";
-import { blogFilterTree } from "@constans/blogMenuItems";
 import Breadcrumbs from "@features/blog/Breadcrumbs/Breadcrumbs";
 import BlogNavbar from "@features/blog/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
+import { getArchiveConfig, getArchiveDates } from "@constans/archiveMock";
+import { getBlogFilterTree } from "@utils/blogMenuItems";
+import { ArchiveIndex } from "../Archive/ArchiveIndex/ArchiveIndex";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
+function resolveHeading(
+  t: (key: string, options?: Record<string, string>) => string,
+  slug?: string,
+  archive?: string,
+  sub?: string,
+  pathname?: string,
+): string {
+  if (slug) {
+    const article = ARTICLES_CARD_MOCK.find((a) => a.slug === slug);
+    return article?.title ?? t("blog.articles");
+  }
+
+  const archiveConfig = getArchiveConfig(t);
+  const archiveDates = getArchiveDates(t);
+
+  if (archive && sub) {
+    const config = archiveConfig[archive];
+    if (config) {
+      const item = config.items.find((i) => i.slug === sub);
+      return item?.label ?? t("blog.archive");
+    }
+    const dateEntry = archiveDates.find((d) => d.slug === `${archive}/${sub}`);
+    return dateEntry?.label ?? t("blog.archive");
+  }
+
+  if (archive) {
+    const config = archiveConfig[archive];
+    if (config) return config.heading;
+    if (/^\d{4}$/.test(archive))
+      return t("blog.archiveWithYear", { year: archive });
+    return t("blog.archive");
+  }
+
+  if (pathname?.startsWith("/blog/archive")) return t("blog.archive");
+
+  return t("blog.articles");
+}
+
 const BlogLayout = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug, archive, sub } = useParams<{
+    slug?: string;
+    archive?: string;
+    sub?: string;
+  }>();
+  const { pathname } = useLocation();
+  const { t, i18n } = useTranslation("UI");
   const [activeDrawer, setActiveDrawer] = useState<ActiveDrawer>(null);
 
-  const article = slug
-    ? ARTICLES_CARD_MOCK.find((a) => a.slug === slug)
-    : undefined;
-  const heading = article ? article.title : "Wpisy blogowe";
+  const heading = resolveHeading(t, slug, archive, sub, pathname);
+  // i18n.language drives recomputation; t is stable but required by exhaustive-deps
+  const filterTree = useMemo(() => getBlogFilterTree(t), [t, i18n.language]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [slug]);
+  }, [slug, archive, sub]);
 
   const drawerActions = useMemo(
     () => ({
@@ -55,7 +100,7 @@ const BlogLayout = () => {
           direction="column"
           sidebarPosition="left"
         >
-          <SideTreeNavigation tree={blogFilterTree} onSearch={handleSearch} />
+          <SideTreeNavigation tree={filterTree} onSearch={handleSearch} />
         </SidebarMenuLayout>
         <InnerColumnSection selector="section" direction="column">
           <BlogNavbar
@@ -91,7 +136,7 @@ const BlogLayout = () => {
               direction="column"
               sidebarPosition="right"
             >
-              <AsideData />
+              <ArchiveIndex sidebar />
             </SidebarMenuLayout>
           </ColumnSection>
           <Footer borderTop />
@@ -102,10 +147,10 @@ const BlogLayout = () => {
         open={activeDrawer === "menu"}
         onClose={drawerActions.close}
         side="left"
-        ariaLabel="Menu nawigacyjne"
+        ariaLabel={t("blog.menuNav")}
       >
         <Logo />
-        <SideTreeNavigation tree={blogFilterTree} onSearch={handleSearch} />
+        <SideTreeNavigation tree={filterTree} onSearch={handleSearch} />
       </Drawer>
     </PageContainer>
   );

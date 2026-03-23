@@ -1,4 +1,5 @@
 import { useFilterNavigation } from "./hooks/useMenuStack";
+import { useTranslation } from "react-i18next";
 import type { FilterNode } from "./types/menu.types";
 import { Button } from "@packages/components";
 import styles from "./SideTreeNavigation.module.css";
@@ -9,6 +10,7 @@ type Props = {
 };
 
 const SideTreeNavigation = ({ tree, onSearch }: Props) => {
+  const { t } = useTranslation("UI");
   const {
     current,
     breadcrumbs,
@@ -20,7 +22,7 @@ const SideTreeNavigation = ({ tree, onSearch }: Props) => {
     isNodeSelected,
     toggleNode,
     snapshot,
-  } = useFilterNavigation(tree);
+  } = useFilterNavigation(tree, t("blog.filters"));
 
   return (
     <nav className={styles.nav}>
@@ -37,7 +39,7 @@ const SideTreeNavigation = ({ tree, onSearch }: Props) => {
 
       {!isRoot && (
         <button type="button" className={styles.backButton} onClick={goBack}>
-          ← Cofnij
+          {t("blog.back")}
         </button>
       )}
 
@@ -49,7 +51,7 @@ const SideTreeNavigation = ({ tree, onSearch }: Props) => {
             checked={isAllCurrentSelected}
             onChange={toggleAllCurrent}
           />
-          <span className={styles.checkboxLabel}>Wszystkie</span>
+          <span className={styles.checkboxLabel}>{t("blog.all")}</span>
         </label>
       )}
 
@@ -81,7 +83,7 @@ const SideTreeNavigation = ({ tree, onSearch }: Props) => {
                     type="button"
                     className={styles.drillButton}
                     onClick={() => goDeeper(item)}
-                    aria-label={`Rozwiń ${item.label}`}
+                    aria-label={t("blog.expand", { label: item.label })}
                   >
                     ›
                   </button>
@@ -98,7 +100,7 @@ const SideTreeNavigation = ({ tree, onSearch }: Props) => {
           className="btn-action btn-action-block"
           onClick={() => onSearch(snapshot)}
         >
-          Szukaj
+          {t("blog.search")}
         </Button>
       )}
     </nav>

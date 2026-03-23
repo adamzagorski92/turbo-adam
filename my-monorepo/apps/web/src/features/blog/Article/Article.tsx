@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+import { useTranslation } from "react-i18next";
 import Markdown from "react-markdown";
 import {
   ColumnSection,
@@ -13,6 +14,7 @@ import ArticleFaq from "../ArticleFaq/ArticleFaq";
 import styles from "./Article.module.css";
 
 const Article = () => {
+  const { t } = useTranslation("UI");
   const { slug } = useParams<{ slug: string }>();
 
   const card = ARTICLES_CARD_MOCK.find((a) => a.slug === slug);
@@ -24,7 +26,7 @@ const Article = () => {
     : undefined;
 
   if (!card || !content) {
-    return <p>Nie znaleziono artykułu.</p>;
+    return <p>{t("blog.articleNotFound")}</p>;
   }
 
   return (

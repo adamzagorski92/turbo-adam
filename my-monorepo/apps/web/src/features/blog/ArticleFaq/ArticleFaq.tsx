@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { ChevronDown, CircleHelp, MessageCircleQuestion } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { FaqItem } from "@constans/articlesFaqMock";
 import styles from "./ArticleFaq.module.css";
 
@@ -8,6 +9,7 @@ interface ArticleFaqProps {
 }
 
 const ArticleFaq: FC<ArticleFaqProps> = ({ faq }) => {
+  const { t } = useTranslation("UI");
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -23,6 +25,7 @@ const ArticleFaq: FC<ArticleFaqProps> = ({ faq }) => {
 
   return (
     <section className={styles.faq} aria-labelledby="faq-heading">
+      {/* TODO: This is dangerouslySetInnerHTML - add proper sanitization */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -30,7 +33,7 @@ const ArticleFaq: FC<ArticleFaqProps> = ({ faq }) => {
       <div className={styles.faqHeader}>
         <MessageCircleQuestion className={styles.faqHeaderIcon} aria-hidden />
         <h2 id="faq-heading" className={styles.faqHeading}>
-          Najczęściej zadawane pytania
+          {t("blog.faqHeading")}
         </h2>
       </div>
       <div className={styles.faqList}>
