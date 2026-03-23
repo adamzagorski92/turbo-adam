@@ -26,7 +26,7 @@ interface BlogFilterState {
   setCategoryGroupIds: (group: string, ids: string[]) => void;
 }
 
-const emptySections: GroupedIds = {
+export const emptySections: GroupedIds = {
   categories: {},
   tags: [],
   authors: [],

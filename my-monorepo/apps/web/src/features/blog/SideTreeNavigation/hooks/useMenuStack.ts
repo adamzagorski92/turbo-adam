@@ -2,24 +2,54 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { FilterNode, NavLevel } from "../types/menu.types";
 import {
   useBlogFilterStore,
+  emptySections,
   type GroupedIds,
   type FilterSection,
 } from "@stores/useBlogFilterStore";
 
-function collectLeafIds(nodes: FilterNode[]): string[] {
-  const ids: string[] = [];
-  for (const node of nodes) {
-    if (node.children) {
-      ids.push(...collectLeafIds(node.children));
-    } else {
-      ids.push(node.id);
-    }
-  }
-  return ids;
+export function collectLeafIds(nodes: FilterNode[]): string[] {
+  return nodes.flatMap((node) =>
+    node.children ? collectLeafIds(node.children) : [node.id],
+  );
 }
 
 function getNodeLeafIds(node: FilterNode): string[] {
   return node.children ? collectLeafIds(node.children) : [node.id];
+}
+
+export function setsEqual(a: string[], b: string[]): boolean {
+  const setA = new Set(a);
+  const setB = new Set(b);
+  return setA.size === setB.size && [...setA].every((id) => setB.has(id));
+}
+
+export function buildLeafIdsGrouped(tree: FilterNode[]): GroupedIds {
+  const result: GroupedIds = { ...emptySections, categories: {} };
+  for (const section of tree) {
+    const sectionId = section.id as FilterSection;
+    if (sectionId === "categories") {
+      for (const child of section.children ?? []) {
+        result.categories[child.id] = getNodeLeafIds(child);
+      }
+    } else {
+      const key = sectionId as Exclude<FilterSection, "categories">;
+      result[key] = collectLeafIds(section.children ?? []);
+    }
+  }
+  return result;
+}
+
+export function groupedIdsEqual(a: GroupedIds, b: GroupedIds): boolean {
+  const allCatKeys = new Set([
+    ...Object.keys(a.categories),
+    ...Object.keys(b.categories),
+  ]);
+  for (const key of allCatKeys) {
+    if (!setsEqual(a.categories[key] ?? [], b.categories[key] ?? []))
+      return false;
+  }
+  const flatKeys = ["tags", "authors", "dates", "types"] as const;
+  return flatKeys.every((key) => setsEqual(a[key], b[key]));
 }
 
 function toggleIds(current: Set<string>, idsToToggle: string[]): string[] {
@@ -40,31 +70,10 @@ export function useFilterNavigation(tree: FilterNode[], rootLabel: string) {
     setStack([{ label: rootLabel, items: tree }]);
   }, [tree, rootLabel]);
 
-  const allLeafIdsGrouped = useMemo<GroupedIds>(() => {
-    const result: GroupedIds = {
-      categories: {},
-      tags: [],
-      authors: [],
-      dates: [],
-      types: [],
-    };
-    for (const section of tree) {
-      const sectionId = section.id as FilterSection;
-      if (sectionId === "categories") {
-        const catRecord: Record<string, string[]> = {};
-        for (const child of section.children ?? []) {
-          catRecord[child.id] = child.children
-            ? collectLeafIds(child.children)
-            : [child.id];
-        }
-        result.categories = catRecord;
-      } else {
-        const key = sectionId as Exclude<FilterSection, "categories">;
-        result[key] = collectLeafIds(section.children ?? []);
-      }
-    }
-    return result;
-  }, [tree]);
+  const allLeafIdsGrouped = useMemo<GroupedIds>(
+    () => buildLeafIdsGrouped(tree),
+    [tree],
+  );
 
   const storedIds = useBlogFilterStore((s) => s.selectedIds);
   const setStoredIds = useBlogFilterStore((s) => s.setSelectedIds);
@@ -122,8 +131,7 @@ export function useFilterNavigation(tree: FilterNode[], rootLabel: string) {
           useBlogFilterStore.getState();
         const groupIds =
           selectedIds?.categories[groupId] ??
-          allLeafIdsGrouped.categories[groupId] ??
-          [];
+          allLeafIdsGrouped.categories[groupId];
         setCategoryGroupIds(
           groupId,
           toggleIds(new Set(groupIds), currentLeafIds),
@@ -176,8 +184,7 @@ export function useFilterNavigation(tree: FilterNode[], rootLabel: string) {
           useBlogFilterStore.getState();
         const groupIds =
           selectedIds?.categories[groupId] ??
-          allLeafIdsGrouped.categories[groupId] ??
-          [];
+          allLeafIdsGrouped.categories[groupId];
         setCategoryGroupIds(groupId, toggleIds(new Set(groupIds), ids));
       } else {
         const { selectedIds, setSectionIds } = useBlogFilterStore.getState();
@@ -193,6 +200,31 @@ export function useFilterNavigation(tree: FilterNode[], rootLabel: string) {
     [allLeafIdsGrouped, stack],
   );
 
+  const isSectionModified = useCallback(
+    (sectionId: string): boolean => {
+      if (storedIds === null) return false;
+      if (sectionId === "categories") {
+        const allKeys = new Set([
+          ...Object.keys(storedIds.categories),
+          ...Object.keys(allLeafIdsGrouped.categories),
+        ]);
+        for (const k of allKeys) {
+          if (
+            !setsEqual(
+              storedIds.categories[k] ?? [],
+              allLeafIdsGrouped.categories[k] ?? [],
+            )
+          )
+            return true;
+        }
+        return false;
+      }
+      const key = sectionId as Exclude<FilterSection, "categories">;
+      return !setsEqual(storedIds[key], allLeafIdsGrouped[key]);
+    },
+    [storedIds, allLeafIdsGrouped],
+  );
+
   return {
     current,
     breadcrumbs,
@@ -203,5 +235,6 @@ export function useFilterNavigation(tree: FilterNode[], rootLabel: string) {
     toggleAllCurrent,
     isNodeSelected,
     toggleNode,
+    isSectionModified,
   };
 }

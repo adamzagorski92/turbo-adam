@@ -19,6 +19,8 @@ import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { getArchiveConfig, getArchiveDates } from "@constans/archiveMock";
 import { getBlogFilterTree } from "@utils/blogMenuItems";
 import { ArchiveIndex } from "../Archive/ArchiveIndex/ArchiveIndex";
+import FilterNotice from "@features/blog/FilterNotice/FilterNotice";
+import { useFilterStatus } from "@features/blog/hooks/useFilterStatus";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
@@ -73,6 +75,7 @@ const BlogLayout = () => {
   const heading = resolveHeading(t, slug, archive, sub, pathname);
   // i18n.language drives recomputation; t is stable but required by exhaustive-deps
   const filterTree = useMemo(() => getBlogFilterTree(t), [t, i18n.language]);
+  const { isModified, reset } = useFilterStatus(filterTree);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -115,6 +118,7 @@ const BlogLayout = () => {
               <h1 className={styles.blogHeading} id="blog-heading">
                 {heading}
               </h1>
+              <FilterNotice isModified={isModified} onReset={reset} />
               <div className={styles.breadcrumbRow}>
                 <Breadcrumbs />
                 {slug && (

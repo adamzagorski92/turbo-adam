@@ -81,6 +81,16 @@
 
 .menuItem {
   min-width: 0;
+  position: relative;
+}
+
+.modifiedBadge {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  color: var(--palette-brand-600);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .menuBranch {

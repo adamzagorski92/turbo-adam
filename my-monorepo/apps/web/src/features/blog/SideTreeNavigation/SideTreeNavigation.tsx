@@ -1,6 +1,7 @@
 import { useFilterNavigation } from "./hooks/useMenuStack";
 import { useTranslation } from "react-i18next";
 import type { FilterNode } from "./types/menu.types";
+import { CircleAlert } from "lucide-react";
 import styles from "./SideTreeNavigation.module.css";
 
 type Props = {
@@ -19,6 +20,7 @@ const SideTreeNavigation = ({ tree }: Props) => {
     toggleAllCurrent,
     isNodeSelected,
     toggleNode,
+    isSectionModified,
   } = useFilterNavigation(tree, t("blog.filters"));
 
   return (
@@ -55,6 +57,9 @@ const SideTreeNavigation = ({ tree }: Props) => {
       <ul className={styles.menuList}>
         {current.items.map((item) => (
           <li key={item.id} className={styles.menuItem}>
+            {isRoot && isSectionModified(item.id) && (
+              <CircleAlert size={14} className={styles.modifiedBadge} aria-label="filtr zmieniony" />
+            )}
             {isRoot ? (
               <button
                 type="button"

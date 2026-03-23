@@ -1,14 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { useBlogFilterStore } from "./useBlogFilterStore";
+import { useBlogFilterStore, emptySections } from "./useBlogFilterStore";
 import type { GroupedIds } from "./useBlogFilterStore";
-
-const emptyGrouped: GroupedIds = {
-  categories: {},
-  tags: [],
-  authors: [],
-  dates: [],
-  types: [],
-};
 
 const fullGrouped: GroupedIds = {
   categories: { frontend: ["react", "vue"], backend: ["node"] },
@@ -54,9 +46,9 @@ describe("useBlogFilterStore", () => {
 
   it("supports empty record (user deselected everything)", () => {
     useBlogFilterStore.getState().setSelectedIds(fullGrouped);
-    useBlogFilterStore.getState().setSelectedIds(emptyGrouped);
+    useBlogFilterStore.getState().setSelectedIds(emptySections);
 
-    expect(useBlogFilterStore.getState().selectedIds).toEqual(emptyGrouped);
+    expect(useBlogFilterStore.getState().selectedIds).toEqual(emptySections);
   });
 
   it("setSectionIds updates only one section", () => {
