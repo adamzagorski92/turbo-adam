@@ -1,15 +1,13 @@
 import { useFilterNavigation } from "./hooks/useMenuStack";
 import { useTranslation } from "react-i18next";
 import type { FilterNode } from "./types/menu.types";
-import { Button } from "@packages/components";
 import styles from "./SideTreeNavigation.module.css";
 
 type Props = {
   tree: FilterNode[];
-  onSearch: (selectedIds: string[]) => void;
 };
 
-const SideTreeNavigation = ({ tree, onSearch }: Props) => {
+const SideTreeNavigation = ({ tree }: Props) => {
   const { t } = useTranslation("UI");
   const {
     current,
@@ -21,7 +19,6 @@ const SideTreeNavigation = ({ tree, onSearch }: Props) => {
     toggleAllCurrent,
     isNodeSelected,
     toggleNode,
-    snapshot,
   } = useFilterNavigation(tree, t("blog.filters"));
 
   return (
@@ -93,16 +90,6 @@ const SideTreeNavigation = ({ tree, onSearch }: Props) => {
           </li>
         ))}
       </ul>
-
-      {!isRoot && (
-        <Button
-          id="filter-search-btn"
-          className="btn-action btn-action-block"
-          onClick={() => onSearch(snapshot)}
-        >
-          {t("blog.search")}
-        </Button>
-      )}
     </nav>
   );
 };

@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { FilterNode, NavLevel } from "../types/menu.types";
+import {
+  useBlogFilterStore,
+  type GroupedIds,
+  type FilterSection,
+} from "@stores/useBlogFilterStore";
 
 function collectLeafIds(nodes: FilterNode[]): string[] {
   const ids: string[] = [];
@@ -13,6 +18,19 @@ function collectLeafIds(nodes: FilterNode[]): string[] {
   return ids;
 }
 
+function getNodeLeafIds(node: FilterNode): string[] {
+  return node.children ? collectLeafIds(node.children) : [node.id];
+}
+
+function toggleIds(current: Set<string>, idsToToggle: string[]): string[] {
+  const allSelected = idsToToggle.every((id) => current.has(id));
+  for (const id of idsToToggle) {
+    if (allSelected) current.delete(id);
+    else current.add(id);
+  }
+  return [...current];
+}
+
 export function useFilterNavigation(tree: FilterNode[], rootLabel: string) {
   const [stack, setStack] = useState<NavLevel[]>([
     { label: rootLabel, items: tree },
@@ -22,11 +40,50 @@ export function useFilterNavigation(tree: FilterNode[], rootLabel: string) {
     setStack([{ label: rootLabel, items: tree }]);
   }, [tree, rootLabel]);
 
-  const allLeafIds = useMemo(() => collectLeafIds(tree), [tree]);
+  const allLeafIdsGrouped = useMemo<GroupedIds>(() => {
+    const result: GroupedIds = {
+      categories: {},
+      tags: [],
+      authors: [],
+      dates: [],
+      types: [],
+    };
+    for (const section of tree) {
+      const sectionId = section.id as FilterSection;
+      if (sectionId === "categories") {
+        const catRecord: Record<string, string[]> = {};
+        for (const child of section.children ?? []) {
+          catRecord[child.id] = child.children
+            ? collectLeafIds(child.children)
+            : [child.id];
+        }
+        result.categories = catRecord;
+      } else {
+        const key = sectionId as Exclude<FilterSection, "categories">;
+        result[key] = collectLeafIds(section.children ?? []);
+      }
+    }
+    return result;
+  }, [tree]);
 
-  const [selected, setSelected] = useState<Set<string>>(
-    () => new Set(allLeafIds),
-  );
+  const storedIds = useBlogFilterStore((s) => s.selectedIds);
+  const setStoredIds = useBlogFilterStore((s) => s.setSelectedIds);
+
+  // null = first visit (never persisted) → default to all selected
+  useEffect(() => {
+    if (storedIds === null) {
+      setStoredIds(allLeafIdsGrouped);
+    }
+  }, [storedIds, allLeafIdsGrouped, setStoredIds]);
+
+  const selected = useMemo(() => {
+    const ids = storedIds ?? allLeafIdsGrouped;
+    const { categories, ...rest } = ids;
+    return new Set([
+      ...Object.values(categories).flat(),
+      ...Object.values(rest).flat(),
+    ]);
+  }, [storedIds, allLeafIdsGrouped]);
 
   const current = stack[stack.length - 1];
   const breadcrumbs = stack.map((lvl) => lvl.label);
@@ -34,7 +91,10 @@ export function useFilterNavigation(tree: FilterNode[], rootLabel: string) {
 
   const goDeeper = useCallback((node: FilterNode) => {
     if (!node.children) return;
-    setStack((prev) => [...prev, { label: node.label, items: node.children! }]);
+    setStack((prev) => [
+      ...prev,
+      { id: node.id, label: node.label, items: node.children! },
+    ]);
   }, []);
 
   const goBack = useCallback(() => {
@@ -52,46 +112,86 @@ export function useFilterNavigation(tree: FilterNode[], rootLabel: string) {
   );
 
   const toggleAllCurrent = useCallback(() => {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      const allChecked = currentLeafIds.every((id) => next.has(id));
-      for (const id of currentLeafIds) {
-        if (allChecked) next.delete(id);
-        else next.add(id);
-      }
-      return next;
-    });
-  }, [currentLeafIds]);
+    const sectionId = stack[1]?.id as FilterSection | undefined;
+    if (!sectionId) return;
 
-  const getNodeLeafIds = useCallback((node: FilterNode): string[] => {
-    return node.children ? collectLeafIds(node.children) : [node.id];
-  }, []);
+    if (sectionId === "categories") {
+      const groupId = stack[2]?.id;
+      if (groupId) {
+        const { selectedIds, setCategoryGroupIds } =
+          useBlogFilterStore.getState();
+        const groupIds =
+          selectedIds?.categories[groupId] ??
+          allLeafIdsGrouped.categories[groupId] ??
+          [];
+        setCategoryGroupIds(
+          groupId,
+          toggleIds(new Set(groupIds), currentLeafIds),
+        );
+      } else {
+        const { selectedIds, setSelectedIds } = useBlogFilterStore.getState();
+        const defaults = allLeafIdsGrouped.categories;
+        const currentCats = selectedIds?.categories ?? defaults;
+        const allCatIds = new Set(Object.values(currentCats).flat());
+        const allChecked = currentLeafIds.every((id) => allCatIds.has(id));
+        const newCats = Object.fromEntries(
+          Object.entries(defaults).map(([key, defaultIds]) => [
+            key,
+            allChecked ? [] : [...defaultIds],
+          ]),
+        );
+        setSelectedIds({
+          ...(selectedIds ?? allLeafIdsGrouped),
+          categories: newCats,
+        });
+      }
+    } else {
+      const { selectedIds, setSectionIds } = useBlogFilterStore.getState();
+      const sectionIds =
+        selectedIds?.[sectionId] ?? (allLeafIdsGrouped[sectionId] as string[]);
+      setSectionIds(
+        sectionId as Exclude<FilterSection, "categories">,
+        toggleIds(new Set(sectionIds), currentLeafIds),
+      );
+    }
+  }, [currentLeafIds, allLeafIdsGrouped, stack]);
 
   const isNodeSelected = useCallback(
     (node: FilterNode) => {
       const ids = getNodeLeafIds(node);
       return ids.every((id) => selected.has(id));
     },
-    [selected, getNodeLeafIds],
+    [selected],
   );
 
   const toggleNode = useCallback(
     (node: FilterNode) => {
       const ids = getNodeLeafIds(node);
-      setSelected((prev) => {
-        const next = new Set(prev);
-        const allChecked = ids.every((id) => next.has(id));
-        for (const id of ids) {
-          if (allChecked) next.delete(id);
-          else next.add(id);
-        }
-        return next;
-      });
-    },
-    [getNodeLeafIds],
-  );
+      const sectionId = stack[1]?.id as FilterSection | undefined;
+      if (!sectionId) return;
 
-  const snapshot = useMemo(() => [...selected], [selected]);
+      if (sectionId === "categories") {
+        const groupId = stack[2]?.id ?? node.id;
+        const { selectedIds, setCategoryGroupIds } =
+          useBlogFilterStore.getState();
+        const groupIds =
+          selectedIds?.categories[groupId] ??
+          allLeafIdsGrouped.categories[groupId] ??
+          [];
+        setCategoryGroupIds(groupId, toggleIds(new Set(groupIds), ids));
+      } else {
+        const { selectedIds, setSectionIds } = useBlogFilterStore.getState();
+        const sectionIds =
+          selectedIds?.[sectionId] ??
+          (allLeafIdsGrouped[sectionId] as string[]);
+        setSectionIds(
+          sectionId as Exclude<FilterSection, "categories">,
+          toggleIds(new Set(sectionIds), ids),
+        );
+      }
+    },
+    [allLeafIdsGrouped, stack],
+  );
 
   return {
     current,
@@ -103,6 +203,5 @@ export function useFilterNavigation(tree: FilterNode[], rootLabel: string) {
     toggleAllCurrent,
     isNodeSelected,
     toggleNode,
-    snapshot,
   };
 }

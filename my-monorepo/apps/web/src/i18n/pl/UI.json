@@ -28,6 +28,7 @@
     "articleNotFound": "Nie znaleziono artykułu.",
     "faqHeading": "Najczęściej zadawane pytania",
     "latestArticle": "Najnowszy wpis",
+    "noResults": "Brak artykułów pasujących do wybranych filtrów.",
     "paginationAriaLabel": "Paginacja wpisów",
     "previousPage": "← Poprzednia",
     "nextPage": "Następna →",

@@ -44,12 +44,12 @@ describe("StandardArchive", () => {
   it("renders article count next to each tag item", () => {
     renderStandardArchive("tags");
 
-    const turborepoCount = ARTICLES_CARD_MOCK.filter((a) =>
-      a.tags.includes("Turborepo"),
+    const monorepoCount = ARTICLES_CARD_MOCK.filter((a) =>
+      a.tags.includes("Monorepo"),
     ).length;
 
     expect(
-      screen.getByText(new RegExp(`Turborepo\\s*\\(${turborepoCount}\\)`)),
+      screen.getByText(new RegExp(`Monorepo\\s*\\(${monorepoCount}\\)`)),
     ).toBeInTheDocument();
   });
 

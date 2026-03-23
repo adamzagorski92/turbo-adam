@@ -28,6 +28,7 @@
     "articleNotFound": "Article not found.",
     "faqHeading": "Frequently Asked Questions",
     "latestArticle": "Latest article",
+    "noResults": "No articles match the selected filters.",
     "paginationAriaLabel": "Post pagination",
     "previousPage": "← Previous",
     "nextPage": "Next →",

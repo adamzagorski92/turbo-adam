@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Outlet, useLocation, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { CircleHelp } from "lucide-react";
@@ -87,11 +87,6 @@ const BlogLayout = () => {
     [],
   );
 
-  // TODO: replace with Zustand action / API call
-  const handleSearch = useCallback((selectedIds: string[]) => {
-    console.log("Blog filters:", selectedIds);
-  }, []);
-
   return (
     <PageContainer>
       <ColumnSection ratio="12rem:1" gapX="gx-16" className={styles.outerGrid}>
@@ -100,7 +95,7 @@ const BlogLayout = () => {
           direction="column"
           sidebarPosition="left"
         >
-          <SideTreeNavigation tree={filterTree} onSearch={handleSearch} />
+          <SideTreeNavigation tree={filterTree} />
         </SidebarMenuLayout>
         <InnerColumnSection selector="section" direction="column">
           <BlogNavbar
@@ -150,7 +145,7 @@ const BlogLayout = () => {
         ariaLabel={t("blog.menuNav")}
       >
         <Logo />
-        <SideTreeNavigation tree={filterTree} onSearch={handleSearch} />
+        <SideTreeNavigation tree={filterTree} />
       </Drawer>
     </PageContainer>
   );
