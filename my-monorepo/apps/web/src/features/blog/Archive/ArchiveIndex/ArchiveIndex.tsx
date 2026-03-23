@@ -1,8 +1,9 @@
 import {
-  ARCHIVE_CONFIG,
-  ARCHIVE_DATES,
   ARCHIVE_YEARS,
+  getArchiveConfig,
+  getArchiveDates,
 } from "@constans/archiveMock";
+import { useTranslation } from "react-i18next";
 import { ROUTES } from "@constans/routes";
 import styles from "./ArchiveIndex.module.css";
 import ArchiveSection from "../ArchiveSection/ArchiveSection";
@@ -11,7 +12,11 @@ import ArchiveList from "../ArchiveList/ArchiveList";
 import { Link } from "react-router";
 
 export const ArchiveIndex = ({ sidebar = false }: { sidebar?: boolean }) => {
-  const configItems: SectionItem[] = Object.entries(ARCHIVE_CONFIG).map(
+  const { t } = useTranslation("UI");
+  const archiveConfig = getArchiveConfig(t);
+  const archiveDates = getArchiveDates(t);
+
+  const configItems: SectionItem[] = Object.entries(archiveConfig).map(
     ([key, config]) => ({
       key,
       label: config.heading,
@@ -19,7 +24,7 @@ export const ArchiveIndex = ({ sidebar = false }: { sidebar?: boolean }) => {
     }),
   );
 
-  const dateItems: SectionItem[] = [...ARCHIVE_DATES].reverse().map((date) => ({
+  const dateItems: SectionItem[] = [...archiveDates].reverse().map((date) => ({
     key: date.slug,
     label: date.label,
     to: `${ROUTES.blogArchive}/${date.slug}`,
@@ -33,19 +38,19 @@ export const ArchiveIndex = ({ sidebar = false }: { sidebar?: boolean }) => {
 
   if (sidebar) {
     return (
-      <section aria-label="Archiwum">
-        <h2 className={styles.title}>Archiwum</h2>
+      <section aria-label={t("blog.archive")}>
+        <h2 className={styles.title}>{t("blog.archive")}</h2>
         <ArchiveSection items={configItems} />
-        <ArchiveSection heading="Daty" items={dateItems} />
-        <ArchiveSection heading="Lata" items={yearItems} />
+        <ArchiveSection heading={t("blog.dates")} items={dateItems} />
+        <ArchiveSection heading={t("blog.years")} items={yearItems} />
       </section>
     );
   }
 
   const sections: { heading: string; items: SectionItem[] }[] = [
-    { heading: "Typy", items: configItems },
-    { heading: "Daty", items: dateItems },
-    { heading: "Lata", items: yearItems },
+    { heading: t("blog.types"), items: configItems },
+    { heading: t("blog.dates"), items: dateItems },
+    { heading: t("blog.years"), items: yearItems },
   ];
 
   return (

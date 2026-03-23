@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import styles from "./PaginationArticles.module.css";
 
 interface PaginationArticlesProps {
@@ -11,6 +12,7 @@ const PaginationArticles = ({
   currentPage,
   setSearchParams,
 }: PaginationArticlesProps) => {
+  const { t } = useTranslation("UI");
   const goToPage = (page: number) => {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
@@ -25,13 +27,16 @@ const PaginationArticles = ({
   return (
     <>
       {totalPages > 1 && (
-        <nav className={styles.pagination} aria-label="Paginacja wpisów">
+        <nav
+          className={styles.pagination}
+          aria-label={t("blog.paginationAriaLabel")}
+        >
           <button
             className={styles.pageButton}
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage <= 1}
           >
-            ← Poprzednia
+            {t("blog.previousPage")}
           </button>
           <div className={styles.pageNumbers}>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -50,7 +55,7 @@ const PaginationArticles = ({
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage >= totalPages}
           >
-            Następna →
+            {t("blog.nextPage")}
           </button>
         </nav>
       )}

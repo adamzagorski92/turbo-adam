@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { FilterNode, NavLevel } from "../types/menu.types";
 
 function collectLeafIds(nodes: FilterNode[]): string[] {
@@ -13,10 +13,14 @@ function collectLeafIds(nodes: FilterNode[]): string[] {
   return ids;
 }
 
-export function useFilterNavigation(tree: FilterNode[]) {
+export function useFilterNavigation(tree: FilterNode[], rootLabel: string) {
   const [stack, setStack] = useState<NavLevel[]>([
-    { label: "Filtry", items: tree },
+    { label: rootLabel, items: tree },
   ]);
+
+  useEffect(() => {
+    setStack([{ label: rootLabel, items: tree }]);
+  }, [tree, rootLabel]);
 
   const allLeafIds = useMemo(() => collectLeafIds(tree), [tree]);
 

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Outlet, useLocation, useParams } from "react-router";
+import { useTranslation } from "react-i18next";
 import { CircleHelp } from "lucide-react";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
 import Footer from "@features/Footer/Footer";
@@ -15,13 +16,14 @@ import Breadcrumbs from "@features/blog/Breadcrumbs/Breadcrumbs";
 import BlogNavbar from "@features/blog/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
-import { ARCHIVE_CONFIG, ARCHIVE_DATES } from "@constans/archiveMock";
-import { blogFilterTree } from "@utils/blogMenuItems";
+import { getArchiveConfig, getArchiveDates } from "@constans/archiveMock";
+import { getBlogFilterTree } from "@utils/blogMenuItems";
 import { ArchiveIndex } from "../Archive/ArchiveIndex/ArchiveIndex";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
 function resolveHeading(
+  t: (key: string, options?: Record<string, string>) => string,
   slug?: string,
   archive?: string,
   sub?: string,
@@ -29,29 +31,33 @@ function resolveHeading(
 ): string {
   if (slug) {
     const article = ARTICLES_CARD_MOCK.find((a) => a.slug === slug);
-    return article?.title ?? "Wpisy blogowe";
+    return article?.title ?? t("blog.articles");
   }
 
+  const archiveConfig = getArchiveConfig(t);
+  const archiveDates = getArchiveDates(t);
+
   if (archive && sub) {
-    const config = ARCHIVE_CONFIG[archive];
+    const config = archiveConfig[archive];
     if (config) {
       const item = config.items.find((i) => i.slug === sub);
-      return item?.label ?? "Archiwum";
+      return item?.label ?? t("blog.archive");
     }
-    const dateEntry = ARCHIVE_DATES.find((d) => d.slug === `${archive}/${sub}`);
-    return dateEntry?.label ?? "Archiwum";
+    const dateEntry = archiveDates.find((d) => d.slug === `${archive}/${sub}`);
+    return dateEntry?.label ?? t("blog.archive");
   }
 
   if (archive) {
-    const config = ARCHIVE_CONFIG[archive];
+    const config = archiveConfig[archive];
     if (config) return config.heading;
-    if (/^\d{4}$/.test(archive)) return `Archiwum: ${archive}`;
-    return "Archiwum";
+    if (/^\d{4}$/.test(archive))
+      return t("blog.archiveWithYear", { year: archive });
+    return t("blog.archive");
   }
 
-  if (pathname?.startsWith("/blog/archive")) return "Archiwum";
+  if (pathname?.startsWith("/blog/archive")) return t("blog.archive");
 
-  return "Wpisy blogowe";
+  return t("blog.articles");
 }
 
 const BlogLayout = () => {
@@ -61,9 +67,12 @@ const BlogLayout = () => {
     sub?: string;
   }>();
   const { pathname } = useLocation();
+  const { t, i18n } = useTranslation("UI");
   const [activeDrawer, setActiveDrawer] = useState<ActiveDrawer>(null);
 
-  const heading = resolveHeading(slug, archive, sub, pathname);
+  const heading = resolveHeading(t, slug, archive, sub, pathname);
+  // i18n.language drives recomputation; t is stable but required by exhaustive-deps
+  const filterTree = useMemo(() => getBlogFilterTree(t), [t, i18n.language]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -91,7 +100,7 @@ const BlogLayout = () => {
           direction="column"
           sidebarPosition="left"
         >
-          <SideTreeNavigation tree={blogFilterTree} onSearch={handleSearch} />
+          <SideTreeNavigation tree={filterTree} onSearch={handleSearch} />
         </SidebarMenuLayout>
         <InnerColumnSection selector="section" direction="column">
           <BlogNavbar
@@ -138,10 +147,10 @@ const BlogLayout = () => {
         open={activeDrawer === "menu"}
         onClose={drawerActions.close}
         side="left"
-        ariaLabel="Menu nawigacyjne"
+        ariaLabel={t("blog.menuNav")}
       >
         <Logo />
-        <SideTreeNavigation tree={blogFilterTree} onSearch={handleSearch} />
+        <SideTreeNavigation tree={filterTree} onSearch={handleSearch} />
       </Drawer>
     </PageContainer>
   );

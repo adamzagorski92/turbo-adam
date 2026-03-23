@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
 import styles from "./ArchiveSection.module.css";
 
 const MAX_VISIBLE = 3;
@@ -17,6 +18,7 @@ const ArchiveSection = ({
   heading?: string;
   items: SectionItem[];
 }) => {
+  const { t } = useTranslation("UI");
   const [expanded, setExpanded] = useState(false);
   const hasMore = items.length > MAX_VISIBLE;
   const visible = hasMore && !expanded ? items.slice(0, MAX_VISIBLE) : items;
@@ -39,7 +41,7 @@ const ArchiveSection = ({
           className={`btn-action btn-action-sm btn-action-block ${styles.showAllButton}`}
           onClick={() => setExpanded(!expanded)}
         >
-          {expanded ? "Zwiń" : "Pokaż wszystkie"}
+          {expanded ? t("blog.collapse") : t("blog.showAll")}
         </button>
       )}
     </div>

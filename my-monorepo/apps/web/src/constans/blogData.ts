@@ -12,6 +12,10 @@ export interface BlogSection {
   label: string;
 }
 
+export type TranslateFn = (key: string) => string;
+
+export const sectionKey = (id: string) => `blog.sections.${id}`;
+
 export const BLOG_SECTIONS: BlogSection[] = [
   { id: "categories", label: "Kategorie" },
   { id: "tags", label: "Tagi" },
@@ -202,3 +206,25 @@ export const PUBLICATION_DATES: BlogEntity[] = [
   { id: "2026/lut", label: "Luty 2026" },
   { id: "2026/mar", label: "Marzec 2026" },
 ];
+
+const MONTH_KEY_MAP: Record<string, string> = {
+  sty: "blog.months.jan",
+  lut: "blog.months.feb",
+  mar: "blog.months.mar",
+  kwi: "blog.months.apr",
+  maj: "blog.months.may",
+  cze: "blog.months.jun",
+  lip: "blog.months.jul",
+  sie: "blog.months.aug",
+  wrz: "blog.months.sep",
+  paź: "blog.months.oct",
+  lis: "blog.months.nov",
+  gru: "blog.months.dec",
+};
+
+export const getPublicationDates = (t: TranslateFn): BlogEntity[] =>
+  PUBLICATION_DATES.map(({ id }) => {
+    const [year, monthKey] = id.split("/");
+    const key = MONTH_KEY_MAP[monthKey];
+    return { id, label: key ? `${t(key)} ${year}` : id };
+  });

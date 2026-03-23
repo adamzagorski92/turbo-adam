@@ -1,4 +1,5 @@
 import type { ArticleCard } from "@constans/articlesCardMock";
+import { useTranslation } from "react-i18next";
 import styles from "./ArticleHeadingContent.module.css";
 
 interface ArticleHeadingContentProps {
@@ -10,11 +11,16 @@ const ArticleHeadingContent = ({
   article,
   variant,
 }: ArticleHeadingContentProps) => {
+  const { t } = useTranslation("UI");
+
   return (
     <>
       <div
         className={`${styles.meta} ${variant === "card" ? styles.metaCard : ""}`}
-        aria-label={`${article.date}, autor: ${article.author}`}
+        aria-label={t("blog.authorMeta", {
+          date: article.date,
+          author: article.author,
+        })}
       >
         <time dateTime={article.date}>{article.date}</time>
         <span>{article.author}</span>
@@ -29,7 +35,7 @@ const ArticleHeadingContent = ({
       >
         {article.excerpt}
       </p>
-      <ul className={styles.tags} aria-label="Tagi">
+      <ul className={styles.tags} aria-label={t("blog.tags")}>
         {article.tags.map((tag) => (
           <li key={tag} className={styles.tag}>
             {tag}

@@ -1,24 +1,28 @@
 import { useParams } from "react-router";
-import { ARCHIVE_CONFIG, ARCHIVE_DATES } from "@constans/archiveMock";
+import { useTranslation } from "react-i18next";
+import { getArchiveConfig, getArchiveDates } from "@constans/archiveMock";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 
 import ArticleArchive from "./ArticleArchive/ArticleArchive";
 import StandardArchive from "./StandardArchive/StandardArchive";
 
-const NOT_FOUND = <p>Nie znaleziono archiwum</p>;
-
 export const Archive = () => {
+  const { t } = useTranslation("UI");
   const { archive, sub } = useParams<{ archive: string; sub?: string }>();
 
+  const archiveConfig = getArchiveConfig(t);
+  const archiveDates = getArchiveDates(t);
+  const notFound = <p>{t("blog.archiveNotFound")}</p>;
+
   if (!archive) {
-    return NOT_FOUND;
+    return notFound;
   }
 
-  const config = ARCHIVE_CONFIG[archive];
+  const config = archiveConfig[archive];
 
   if (sub && config) {
     const item = config.items.find((item) => item.slug === sub);
-    if (!item) return NOT_FOUND;
+    if (!item) return notFound;
 
     const articles = ARTICLES_CARD_MOCK.filter((article) =>
       article[config.field].includes(item.label),
@@ -27,10 +31,10 @@ export const Archive = () => {
   }
 
   if (sub) {
-    const dateEntry = ARCHIVE_DATES.find(
+    const dateEntry = archiveDates.find(
       (date) => date.slug === `${archive}/${sub}`,
     );
-    if (!dateEntry) return NOT_FOUND;
+    if (!dateEntry) return notFound;
 
     const articles = ARTICLES_CARD_MOCK.filter((article) =>
       article.dates.includes(`${sub}-${archive}`),
@@ -46,9 +50,9 @@ export const Archive = () => {
     const articles = ARTICLES_CARD_MOCK.filter((article) =>
       article.dates.some((date) => date.endsWith(`-${archive}`)),
     );
-    if (articles.length === 0) return NOT_FOUND;
+    if (articles.length === 0) return notFound;
     return <ArticleArchive heading={archive} articles={articles} />;
   }
 
-  return NOT_FOUND;
+  return notFound;
 };

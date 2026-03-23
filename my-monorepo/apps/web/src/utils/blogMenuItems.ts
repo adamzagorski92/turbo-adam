@@ -4,10 +4,15 @@ import {
   CATEGORIES,
   AUTHORS,
   ARTICLE_TYPES,
-  PUBLICATION_DATES,
   BLOG_SECTIONS,
+  sectionKey,
+  getPublicationDates,
 } from "../constans/blogData";
-import type { BlogEntity, BlogCategory } from "../constans/blogData";
+import type {
+  BlogEntity,
+  BlogCategory,
+  TranslateFn,
+} from "../constans/blogData";
 
 const toFilterNodes = (entities: BlogEntity[]): FilterNode[] =>
   entities.map((entity) => ({ id: entity.id, label: entity.label }));
@@ -18,33 +23,19 @@ const categoryToFilterNode = (cat: BlogCategory): FilterNode => ({
   children: cat.subcategories ? toFilterNodes(cat.subcategories) : undefined,
 });
 
-const findSection = (id: string) =>
-  BLOG_SECTIONS.find((section) => section.id === id)!;
+type SectionChildrenMap = Record<string, (t: TranslateFn) => FilterNode[]>;
 
-export const blogFilterTree: FilterNode[] = [
-  {
-    id: "categories",
-    label: findSection("categories").label,
-    children: CATEGORIES.map(categoryToFilterNode),
-  },
-  {
-    id: "tags",
-    label: findSection("tags").label,
-    children: toFilterNodes(TAGS),
-  },
-  {
-    id: "authors",
-    label: findSection("authors").label,
-    children: toFilterNodes(AUTHORS),
-  },
-  {
-    id: "dates",
-    label: findSection("dates").label,
-    children: toFilterNodes(PUBLICATION_DATES),
-  },
-  {
-    id: "types",
-    label: findSection("types").label,
-    children: toFilterNodes(ARTICLE_TYPES),
-  },
-];
+const SECTION_CHILDREN: SectionChildrenMap = {
+  categories: () => CATEGORIES.map(categoryToFilterNode),
+  tags: () => toFilterNodes(TAGS),
+  authors: () => toFilterNodes(AUTHORS),
+  dates: (t) => toFilterNodes(getPublicationDates(t)),
+  types: () => toFilterNodes(ARTICLE_TYPES),
+};
+
+export const getBlogFilterTree = (t: TranslateFn): FilterNode[] =>
+  BLOG_SECTIONS.map((section) => ({
+    id: section.id,
+    label: t(sectionKey(section.id)),
+    children: SECTION_CHILDREN[section.id](t),
+  }));

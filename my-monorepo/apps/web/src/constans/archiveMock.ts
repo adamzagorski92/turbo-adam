@@ -4,8 +4,10 @@ import {
   AUTHORS,
   ARTICLE_TYPES,
   PUBLICATION_DATES,
+  getPublicationDates,
+  sectionKey,
 } from "./blogData";
-import type { BlogEntity } from "./blogData";
+import type { BlogEntity, TranslateFn } from "./blogData";
 
 export interface ArchiveItem {
   slug: string;
@@ -45,5 +47,29 @@ export const ARCHIVE_CONFIG: Record<string, ArchiveConfigEntry> = {
     field: "categories",
   },
   authors: { heading: "Autorzy", items: ARCHIVE_AUTHORS, field: "authors" },
-  types: { heading: "Typy", items: ARCHIVE_TYPES, field: "types" },
+  types: { heading: "Typy wpisów", items: ARCHIVE_TYPES, field: "types" },
 };
+
+export const getArchiveConfig = (
+  t: TranslateFn,
+): Record<string, ArchiveConfigEntry> => ({
+  tags: { heading: t(sectionKey("tags")), items: ARCHIVE_TAGS, field: "tags" },
+  categories: {
+    heading: t(sectionKey("categories")),
+    items: ARCHIVE_CATEGORIES,
+    field: "categories",
+  },
+  authors: {
+    heading: t(sectionKey("authors")),
+    items: ARCHIVE_AUTHORS,
+    field: "authors",
+  },
+  types: {
+    heading: t(sectionKey("types")),
+    items: ARCHIVE_TYPES,
+    field: "types",
+  },
+});
+
+export const getArchiveDates = (t: TranslateFn): ArchiveItem[] =>
+  toArchiveItems(getPublicationDates(t));

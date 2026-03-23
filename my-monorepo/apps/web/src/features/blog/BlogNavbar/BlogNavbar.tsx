@@ -24,7 +24,7 @@ const BlogNavbar = ({
       <Button
         id="blog-menu-toggle"
         className={`${styles.iconButton} ${styles.mobileOnly}`}
-        ariaAttributes={{ ariaLabel: "Menu" }}
+        ariaAttributes={{ ariaLabel: t("blog.menu") }}
         onClick={onMenuOpen}
       >
         <Menu className={styles.iconSize} aria-hidden="true" />

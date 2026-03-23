@@ -1,13 +1,19 @@
 import { describe, it, expect } from "vitest";
-import { blogFilterTree } from "@utils/blogMenuItems";
+import { getBlogFilterTree } from "@utils/blogMenuItems";
 import {
   TAGS,
   CATEGORIES,
   AUTHORS,
   ARTICLE_TYPES,
   PUBLICATION_DATES,
+  sectionKey,
   BLOG_SECTIONS,
+  getPublicationDates,
 } from "@constans/blogData";
+
+const t = (key: string) => key;
+const blogFilterTree = getBlogFilterTree(t);
+const translatedDates = getPublicationDates(t);
 
 describe("blogFilterTree structure", () => {
   it("has 5 top-level sections", () => {
@@ -20,11 +26,9 @@ describe("blogFilterTree structure", () => {
     expect(treeIds).toEqual(expect.arrayContaining(sectionIds));
   });
 
-  it("top-level section labels match BLOG_SECTIONS", () => {
+  it("top-level section labels match sectionKey values (pass-through t)", () => {
     blogFilterTree.forEach((node) => {
-      const section = BLOG_SECTIONS.find((s) => s.id === node.id);
-      expect(section).toBeDefined();
-      expect(node.label).toBe(section!.label);
+      expect(node.label).toBe(sectionKey(node.id));
     });
   });
 });
@@ -111,7 +115,7 @@ describe("blogFilterTree — dates section", () => {
     expect(datesNode).toBeDefined();
     expect(datesNode!.children).toHaveLength(PUBLICATION_DATES.length);
 
-    PUBLICATION_DATES.forEach((date) => {
+    translatedDates.forEach((date) => {
       const child = datesNode!.children!.find((c) => c.id === date.id);
       expect(child).toBeDefined();
       expect(child!.label).toBe(date.label);

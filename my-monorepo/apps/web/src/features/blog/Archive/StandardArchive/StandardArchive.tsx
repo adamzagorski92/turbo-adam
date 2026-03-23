@@ -1,4 +1,5 @@
-import { ARCHIVE_CONFIG } from "@constans/archiveMock";
+import { getArchiveConfig } from "@constans/archiveMock";
+import { useTranslation } from "react-i18next";
 import ArchiveList from "../ArchiveList/ArchiveList";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { ROUTES } from "@constans/routes";
@@ -6,10 +7,11 @@ import { Link } from "react-router";
 import styles from "./StandardArchive.module.css";
 
 const StandardArchive = ({ archive }: { archive: string }) => {
-  const config = ARCHIVE_CONFIG[archive];
+  const { t } = useTranslation("UI");
+  const config = getArchiveConfig(t)[archive];
 
   if (!config) {
-    return <p>Nie znaleziono archiwum</p>;
+    return <p>{t("blog.archiveNotFound")}</p>;
   }
 
   const { heading, items, field } = config;
