@@ -5,13 +5,14 @@ import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { ROUTES } from "@constans/routes";
 import { Link } from "react-router";
 import styles from "./StandardArchive.module.css";
+import Page404 from "@components/errors/Page404/Page404";
 
 const StandardArchive = ({ archive }: { archive: string }) => {
   const { t } = useTranslation("UI");
   const config = getArchiveConfig(t)[archive];
 
   if (!config) {
-    return <p>{t("blog.archiveNotFound")}</p>;
+    return <Page404 i18nKey="blog.archiveNotFound" />;
   }
 
   const { heading, items, field } = config;

@@ -5,6 +5,7 @@ import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 
 import ArticleArchive from "./ArticleArchive/ArticleArchive";
 import StandardArchive from "./StandardArchive/StandardArchive";
+import Page404 from "@components/errors/Page404/Page404";
 
 export const Archive = () => {
   const { t } = useTranslation("UI");
@@ -12,17 +13,16 @@ export const Archive = () => {
 
   const archiveConfig = getArchiveConfig(t);
   const archiveDates = getArchiveDates(t);
-  const notFound = <p>{t("blog.archiveNotFound")}</p>;
 
   if (!archive) {
-    return notFound;
+    return <Page404 i18nKey="blog.archiveNotFound" />;
   }
 
   const config = archiveConfig[archive];
 
   if (sub && config) {
     const item = config.items.find((item) => item.slug === sub);
-    if (!item) return notFound;
+    if (!item) return <Page404 i18nKey="blog.archiveNotFound" />;
 
     const articles = ARTICLES_CARD_MOCK.filter((article) =>
       article[config.field].includes(item.label),
@@ -34,7 +34,7 @@ export const Archive = () => {
     const dateEntry = archiveDates.find(
       (date) => date.slug === `${archive}/${sub}`,
     );
-    if (!dateEntry) return notFound;
+    if (!dateEntry) return <Page404 i18nKey="blog.archiveNotFound" />;
 
     const articles = ARTICLES_CARD_MOCK.filter((article) =>
       article.dates.includes(`${sub}-${archive}`),
@@ -50,9 +50,10 @@ export const Archive = () => {
     const articles = ARTICLES_CARD_MOCK.filter((article) =>
       article.dates.some((date) => date.endsWith(`-${archive}`)),
     );
-    if (articles.length === 0) return notFound;
+    if (articles.length === 0)
+      return <Page404 i18nKey="blog.archiveNotFound" />;
     return <ArticleArchive heading={archive} articles={articles} />;
   }
 
-  return notFound;
+  return <Page404 i18nKey="blog.archiveNotFound" />;
 };
