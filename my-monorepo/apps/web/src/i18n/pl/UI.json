@@ -41,6 +41,8 @@
     "collapse": "Zwiń",
     "showAll": "Pokaż wszystkie",
     "filters": "Filtry",
+    "filterNotice": "Ograniczono liczbę wyników filtrami",
+    "clearFilters": "Wyczyść filtry",
     "breadcrumbs": "Ścieżka nawigacji",
     "home": "Strona główna",
     "blogLabel": "Blog",

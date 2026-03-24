@@ -1,4 +1,5 @@
 import { CircleAlert } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import styles from "./FilterNotice.module.css";
 
 type FilterNoticeProps = {
@@ -7,12 +8,14 @@ type FilterNoticeProps = {
 };
 
 const FilterNotice = ({ isModified, onReset }: FilterNoticeProps) => {
+  const { t } = useTranslation("UI");
+
   return (
     <div className={styles.wrapper}>
       {isModified && (
         <p className={styles.notice}>
           <CircleAlert size={14} className={styles.icon} aria-hidden="true" />
-          Ograniczono liczbę wyników filtrami{" "}
+          {t("blog.filterNotice")}{" "}
           <a
             role="button"
             className={styles.resetLink}
@@ -21,7 +24,7 @@ const FilterNotice = ({ isModified, onReset }: FilterNoticeProps) => {
               onReset();
             }}
           >
-            Wyczyść filtry
+            {t("blog.clearFilters")}
           </a>
         </p>
       )}

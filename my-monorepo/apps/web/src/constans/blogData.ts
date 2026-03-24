@@ -7,22 +7,18 @@ export interface BlogCategory extends BlogEntity {
   subcategories?: BlogEntity[];
 }
 
-export interface BlogSection {
-  id: string;
-  label: string;
-}
-
 export type TranslateFn = (key: string) => string;
 
-export const sectionKey = (id: string) => `blog.sections.${id}`;
+export interface SectionDef {
+  id: string;
+  label: string;
+  items: BlogEntity[] | BlogCategory[];
+  getItems?: (t: TranslateFn) => BlogEntity[];
+  nested?: boolean;
+  archive?: boolean;
+}
 
-export const BLOG_SECTIONS: BlogSection[] = [
-  { id: "categories", label: "Kategorie" },
-  { id: "tags", label: "Tagi" },
-  { id: "authors", label: "Autorzy" },
-  { id: "dates", label: "Daty publikacji" },
-  { id: "types", label: "Typy wpisów" },
-];
+export const sectionKey = (id: string) => `blog.sections.${id}`;
 
 export const TAGS: BlogEntity[] = [
   { id: "a11y", label: "A11y" },
@@ -223,3 +219,26 @@ export const getPublicationDates = (t: TranslateFn): BlogEntity[] =>
     const key = MONTH_KEY_MAP[monthKey];
     return { id, label: key ? `${t(key)} ${year}` : id };
   });
+
+export const SECTION_DEFS: SectionDef[] = [
+  {
+    id: "categories",
+    label: "Kategorie",
+    items: CATEGORIES,
+    nested: true,
+    archive: true,
+  },
+  { id: "tags", label: "Tagi", items: TAGS, archive: true },
+  { id: "authors", label: "Autorzy", items: AUTHORS, archive: true },
+  {
+    id: "dates",
+    label: "Daty publikacji",
+    items: PUBLICATION_DATES,
+    getItems: getPublicationDates,
+  },
+  { id: "types", label: "Typy wpisów", items: ARTICLE_TYPES, archive: true },
+];
+
+export const BLOG_SECTIONS: BlogEntity[] = SECTION_DEFS.map(
+  ({ id, label }) => ({ id, label }),
+);

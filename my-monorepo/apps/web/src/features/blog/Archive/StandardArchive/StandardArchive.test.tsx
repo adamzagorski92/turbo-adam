@@ -4,7 +4,7 @@ import "@testing-library/jest-dom/vitest";
 import { MemoryRouter } from "react-router";
 
 import StandardArchive from "./StandardArchive";
-import { ARCHIVE_TAGS } from "@constans/archiveMock";
+import { TAGS } from "@constans/blogData";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { ROUTES } from "@constans/routes";
 
@@ -32,9 +32,9 @@ describe("StandardArchive", () => {
     renderStandardArchive("tags");
 
     const links = screen.getAllByRole("link");
-    expect(links.length).toBe(ARCHIVE_TAGS.length);
+    expect(links.length).toBe(TAGS.length);
 
-    ARCHIVE_TAGS.forEach((tag) => {
+    TAGS.forEach((tag) => {
       expect(
         screen.getByText(new RegExp(`^${tag.label}\\s`)),
       ).toBeInTheDocument();
@@ -72,7 +72,7 @@ describe("StandardArchive", () => {
     const firstLink = links[0];
 
     expect(firstLink.getAttribute("href")).toBe(
-      ROUTES.blogArchiveSub("tags", ARCHIVE_TAGS[0].slug),
+      ROUTES.blogArchiveSub("tags", TAGS[0].id),
     );
   });
 

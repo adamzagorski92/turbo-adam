@@ -4,12 +4,14 @@ import { describe, it, expect } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { MemoryRouter } from "react-router";
 import { ArchiveIndex } from "./ArchiveIndex";
-import {
-  ARCHIVE_CONFIG,
-  ARCHIVE_DATES,
-  ARCHIVE_YEARS,
-} from "@constans/archiveMock";
+import { ARCHIVE_YEARS } from "@utils/archiveConfig";
+import { PUBLICATION_DATES, BLOG_SECTIONS } from "@constans/blogData";
 import { ROUTES } from "@constans/routes";
+
+const ARCHIVE_SECTION_IDS = ["tags", "categories", "authors", "types"];
+const archiveSections = BLOG_SECTIONS.filter((s) =>
+  ARCHIVE_SECTION_IDS.includes(s.id),
+);
 
 const renderArchiveIndex = (sidebar = false) =>
   render(
@@ -30,12 +32,11 @@ describe("ArchiveIndex — sidebar mode", () => {
   it("renders first 3 archive type links initially", () => {
     renderArchiveIndex(true);
 
-    const entries = Object.entries(ARCHIVE_CONFIG);
-    entries.slice(0, 3).forEach(([key, config]) => {
+    archiveSections.slice(0, 3).forEach((section) => {
       const link = screen.getByRole("link", {
-        name: new RegExp(config.heading, "i"),
+        name: new RegExp(section.label, "i"),
       });
-      expect(link).toHaveAttribute("href", ROUTES.blogArchiveType(key));
+      expect(link).toHaveAttribute("href", ROUTES.blogArchiveType(section.id));
     });
   });
 
@@ -48,22 +49,22 @@ describe("ArchiveIndex — sidebar mode", () => {
     });
     await user.click(buttons[0]);
 
-    Object.entries(ARCHIVE_CONFIG).forEach(([key, config]) => {
+    archiveSections.forEach((section) => {
       const link = screen.getByRole("link", {
-        name: new RegExp(config.heading, "i"),
+        name: new RegExp(section.label, "i"),
       });
-      expect(link).toHaveAttribute("href", ROUTES.blogArchiveType(key));
+      expect(link).toHaveAttribute("href", ROUTES.blogArchiveType(section.id));
     });
   });
 
   it("renders first 3 reversed date links initially", () => {
     renderArchiveIndex(true);
 
-    const reversedDates = [...ARCHIVE_DATES].reverse();
+    const reversedDates = [...PUBLICATION_DATES].reverse();
     reversedDates.slice(0, 3).forEach((date) => {
       expect(
         screen.getByRole("link", { name: new RegExp(date.label, "i") }),
-      ).toHaveAttribute("href", `${ROUTES.blogArchive}/${date.slug}`);
+      ).toHaveAttribute("href", `${ROUTES.blogArchive}/${date.id}`);
     });
   });
 
@@ -134,22 +135,22 @@ describe("ArchiveIndex — outlet mode (default)", () => {
   it("renders all archive type links as card tiles", () => {
     renderArchiveIndex();
 
-    Object.entries(ARCHIVE_CONFIG).forEach(([key, config]) => {
+    archiveSections.forEach((section) => {
       const link = screen.getByRole("link", {
-        name: new RegExp(config.heading, "i"),
+        name: new RegExp(section.label, "i"),
       });
-      expect(link).toHaveAttribute("href", ROUTES.blogArchiveType(key));
+      expect(link).toHaveAttribute("href", ROUTES.blogArchiveType(section.id));
     });
   });
 
   it("renders all date links without truncation", () => {
     renderArchiveIndex();
 
-    const reversedDates = [...ARCHIVE_DATES].reverse();
+    const reversedDates = [...PUBLICATION_DATES].reverse();
     reversedDates.forEach((date) => {
       expect(
         screen.getByRole("link", { name: new RegExp(date.label, "i") }),
-      ).toHaveAttribute("href", `${ROUTES.blogArchive}/${date.slug}`);
+      ).toHaveAttribute("href", `${ROUTES.blogArchive}/${date.id}`);
     });
   });
 

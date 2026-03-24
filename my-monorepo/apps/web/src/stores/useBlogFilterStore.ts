@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import { SECTION_DEFS } from "@constans/blogData";
 
 export type FilterSection =
   | "categories"
@@ -26,13 +27,9 @@ interface BlogFilterState {
   setCategoryGroupIds: (group: string, ids: string[]) => void;
 }
 
-export const emptySections: GroupedIds = {
-  categories: {},
-  tags: [],
-  authors: [],
-  dates: [],
-  types: [],
-};
+export const emptySections = Object.fromEntries(
+  SECTION_DEFS.map((def) => [def.id, def.nested ? {} : []]),
+) as GroupedIds;
 
 export const useBlogFilterStore = create<BlogFilterState>()(
   persist(

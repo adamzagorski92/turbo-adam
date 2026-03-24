@@ -7,7 +7,7 @@ import {
   type FilterSection,
 } from "@stores/useBlogFilterStore";
 
-export function collectLeafIds(nodes: FilterNode[]): string[] {
+function collectLeafIds(nodes: FilterNode[]): string[] {
   return nodes.flatMap((node) =>
     node.children ? collectLeafIds(node.children) : [node.id],
   );
@@ -17,7 +17,7 @@ function getNodeLeafIds(node: FilterNode): string[] {
   return node.children ? collectLeafIds(node.children) : [node.id];
 }
 
-export function setsEqual(a: string[], b: string[]): boolean {
+function setsEqual(a: string[], b: string[]): boolean {
   const setA = new Set(a);
   const setB = new Set(b);
   return setA.size === setB.size && [...setA].every((id) => setB.has(id));

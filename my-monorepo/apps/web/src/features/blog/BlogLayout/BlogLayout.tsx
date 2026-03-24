@@ -16,7 +16,7 @@ import Breadcrumbs from "@features/blog/Breadcrumbs/Breadcrumbs";
 import BlogNavbar from "@features/blog/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
-import { getArchiveConfig, getArchiveDates } from "@constans/archiveMock";
+import { getArchiveConfig, getArchiveDates } from "@utils/archiveConfig";
 import { getBlogFilterTree } from "@utils/blogMenuItems";
 import { ArchiveIndex } from "../Archive/ArchiveIndex/ArchiveIndex";
 import FilterNotice from "@features/blog/FilterNotice/FilterNotice";
@@ -42,10 +42,10 @@ function resolveHeading(
   if (archive && sub) {
     const config = archiveConfig[archive];
     if (config) {
-      const item = config.items.find((i) => i.slug === sub);
+      const item = config.items.find((i) => i.id === sub);
       return item?.label ?? t("blog.archive");
     }
-    const dateEntry = archiveDates.find((d) => d.slug === `${archive}/${sub}`);
+    const dateEntry = archiveDates.find((d) => d.id === `${archive}/${sub}`);
     return dateEntry?.label ?? t("blog.archive");
   }
 

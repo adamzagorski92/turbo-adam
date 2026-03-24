@@ -3,8 +3,8 @@ import {
   PUBLICATION_DATES,
   getPublicationDates,
   sectionKey,
-} from "./blogData";
-import type { BlogEntity, TranslateFn } from "./blogData";
+} from "../constans/blogData";
+import type { BlogEntity, TranslateFn } from "../constans/blogData";
 
 interface ArchiveConfigEntry {
   heading: string;
