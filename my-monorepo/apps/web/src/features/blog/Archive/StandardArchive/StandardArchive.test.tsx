@@ -45,7 +45,7 @@ describe("StandardArchive", () => {
     renderStandardArchive("tags");
 
     const monorepoCount = ARTICLES_CARD_MOCK.filter((a) =>
-      a.tags.includes("Monorepo"),
+      a.tags.includes("monorepo"),
     ).length;
 
     expect(
@@ -57,7 +57,7 @@ describe("StandardArchive", () => {
     renderStandardArchive("categories");
 
     const frontendCount = ARTICLES_CARD_MOCK.filter((a) =>
-      a.categories.includes("Frontend"),
+      a.categories.includes("frontend"),
     ).length;
 
     expect(

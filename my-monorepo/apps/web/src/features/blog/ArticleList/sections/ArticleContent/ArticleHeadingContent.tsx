@@ -1,6 +1,11 @@
 import type { ArticleCard } from "@constans/articlesCardMock";
+import { TAGS } from "@constans/blogData";
 import { useTranslation } from "react-i18next";
 import styles from "./ArticleHeadingContent.module.css";
+
+const TAG_LABELS: Record<string, string> = Object.fromEntries(
+  TAGS.map((t) => [t.id, t.label]),
+);
 
 interface ArticleHeadingContentProps {
   article: ArticleCard;
@@ -36,9 +41,9 @@ const ArticleHeadingContent = ({
         {article.excerpt}
       </p>
       <ul className={styles.tags} aria-label={t("blog.tags")}>
-        {article.tags.map((tag) => (
-          <li key={tag} className={styles.tag}>
-            {tag}
+        {article.tags.map((tagId) => (
+          <li key={tagId} className={styles.tag}>
+            {TAG_LABELS[tagId] ?? tagId}
           </li>
         ))}
       </ul>

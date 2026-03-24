@@ -25,7 +25,7 @@ export const Archive = () => {
     if (!item) return <Page404 i18nKey="blog.archiveNotFound" />;
 
     const articles = ARTICLES_CARD_MOCK.filter((article) =>
-      article[config.field].includes(item.label),
+      article[config.field].includes(item.slug),
     );
     return <ArticleArchive heading={item.label} articles={articles} />;
   }
@@ -37,7 +37,7 @@ export const Archive = () => {
     if (!dateEntry) return <Page404 i18nKey="blog.archiveNotFound" />;
 
     const articles = ARTICLES_CARD_MOCK.filter((article) =>
-      article.dates.includes(`${sub}-${archive}`),
+      article.dates.includes(`${archive}/${sub}`),
     );
     return <ArticleArchive heading={dateEntry.label} articles={articles} />;
   }
@@ -48,7 +48,7 @@ export const Archive = () => {
 
   if (/^\d{4}$/.test(archive)) {
     const articles = ARTICLES_CARD_MOCK.filter((article) =>
-      article.dates.some((date) => date.endsWith(`-${archive}`)),
+      article.dates.some((date) => date.startsWith(`${archive}/`)),
     );
     if (articles.length === 0)
       return <Page404 i18nKey="blog.archiveNotFound" />;

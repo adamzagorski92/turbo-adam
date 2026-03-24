@@ -1,7 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import type { ArticleCard } from "@constans/articlesCardMock";
-import { ARCHIVE_TAGS, ARCHIVE_CATEGORIES } from "@constans/archiveMock";
+import {
+  ARCHIVE_TAGS,
+  ARCHIVE_CATEGORIES,
+  ARCHIVE_AUTHORS,
+} from "@constans/archiveMock";
 import type { ArchiveItem } from "@constans/archiveMock";
 
 describe("ArticleCard interface — new archive fields", () => {
@@ -13,11 +17,15 @@ describe("ArticleCard interface — new archive fields", () => {
     });
   });
 
-  it("each article has a non-empty authors array", () => {
+  it("each article authors array contains valid author IDs", () => {
+    const validAuthorSlugs = ARCHIVE_AUTHORS.map((a: ArchiveItem) => a.slug);
     ARTICLES_CARD_MOCK.forEach((article: ArticleCard) => {
       expect(article).toHaveProperty("authors");
       expect(Array.isArray(article.authors)).toBe(true);
       expect(article.authors.length).toBeGreaterThan(0);
+      article.authors.forEach((authorId: string) => {
+        expect(validAuthorSlugs).toContain(authorId);
+      });
     });
   });
 
@@ -28,9 +36,12 @@ describe("ArticleCard interface — new archive fields", () => {
     });
   });
 
-  it("each article authors array contains the same value as author field", () => {
+  it("each article author display field matches the label of its author ID", () => {
+    const authorLabelMap: Record<string, string> = Object.fromEntries(
+      ARCHIVE_AUTHORS.map((a: ArchiveItem) => [a.slug, a.label]),
+    );
     ARTICLES_CARD_MOCK.forEach((article: ArticleCard) => {
-      expect(article.authors).toContain(article.author);
+      expect(authorLabelMap[article.authors[0]]).toBe(article.author);
     });
   });
 
@@ -58,10 +69,10 @@ describe("ArticleCard interface — new archive fields", () => {
     });
   });
 
-  it('each article dates array has Polish short-month format like "sty-2026"', () => {
+  it('each article dates array has format "YYYY/mmm"', () => {
     ARTICLES_CARD_MOCK.forEach((article: ArticleCard) => {
       article.dates.forEach((d: string) => {
-        expect(d).toMatch(/^[a-ząćęłńóśźż]{3}-\d{4}$/);
+        expect(d).toMatch(/^\d{4}\/[a-ząćęłńóśźż]{3}$/);
       });
     });
   });
@@ -69,23 +80,23 @@ describe("ArticleCard interface — new archive fields", () => {
 
 describe("ArticleCard data consistency with archive", () => {
   it("all tags used in articles exist in ARCHIVE_TAGS", () => {
-    const archiveTagLabels = ARCHIVE_TAGS.map((t: ArchiveItem) => t.label);
+    const archiveTagSlugs = ARCHIVE_TAGS.map((t: ArchiveItem) => t.slug);
 
     ARTICLES_CARD_MOCK.forEach((article: ArticleCard) => {
       article.tags.forEach((tag: string) => {
-        expect(archiveTagLabels).toContain(tag);
+        expect(archiveTagSlugs).toContain(tag);
       });
     });
   });
 
   it("all categories used in articles exist in ARCHIVE_CATEGORIES", () => {
-    const archiveCategoryLabels = ARCHIVE_CATEGORIES.map(
-      (c: ArchiveItem) => c.label,
+    const archiveCategorySlugs = ARCHIVE_CATEGORIES.map(
+      (c: ArchiveItem) => c.slug,
     );
 
     ARTICLES_CARD_MOCK.forEach((article: ArticleCard) => {
       article.categories.forEach((cat: string) => {
-        expect(archiveCategoryLabels).toContain(cat);
+        expect(archiveCategorySlugs).toContain(cat);
       });
     });
   });

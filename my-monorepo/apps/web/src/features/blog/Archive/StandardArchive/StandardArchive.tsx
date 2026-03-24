@@ -21,7 +21,7 @@ const StandardArchive = ({ archive }: { archive: string }) => {
     <ArchiveList ariaLabel={heading}>
       {items.map((item) => {
         const count = ARTICLES_CARD_MOCK.filter((article) =>
-          article[field].includes(item.label),
+          article[field].includes(item.slug),
         ).length;
         return (
           <li key={item.slug} className={styles.listItem}>

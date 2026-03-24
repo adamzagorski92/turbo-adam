@@ -39,7 +39,7 @@ describe("Archive", () => {
     mockUseParams.mockReturnValue({ archive: "tags", sub: "a11y" });
 
     const expectedArticles = ARTICLES_CARD_MOCK.filter((a) =>
-      a.tags.includes("A11y"),
+      a.tags.includes("a11y"),
     );
 
     renderArchive();
@@ -54,7 +54,7 @@ describe("Archive", () => {
     mockUseParams.mockReturnValue({ archive: "categories", sub: "frontend" });
 
     const expectedArticles = ARTICLES_CARD_MOCK.filter((a) =>
-      a.categories.includes("Frontend"),
+      a.categories.includes("frontend"),
     );
 
     renderArchive();
@@ -71,7 +71,7 @@ describe("Archive", () => {
     mockUseParams.mockReturnValue({ archive: "2026", sub: "sty" });
 
     const expectedArticles = ARTICLES_CARD_MOCK.filter((a) =>
-      a.dates.includes("sty-2026"),
+      a.dates.includes("2026/sty"),
     );
 
     renderArchive();
@@ -88,7 +88,7 @@ describe("Archive", () => {
     mockUseParams.mockReturnValue({ archive: "2026" });
 
     const expectedArticles = ARTICLES_CARD_MOCK.filter((a) =>
-      a.dates.some((d) => d.endsWith("-2026")),
+      a.dates.some((d) => d.startsWith("2026/")),
     );
 
     renderArchive();
@@ -103,7 +103,7 @@ describe("Archive", () => {
     mockUseParams.mockReturnValue({ archive: "tags", sub: "a11y" });
 
     const expectedArticles = ARTICLES_CARD_MOCK.filter((a) =>
-      a.tags.includes("A11y"),
+      a.tags.includes("a11y"),
     );
 
     renderArchive();
