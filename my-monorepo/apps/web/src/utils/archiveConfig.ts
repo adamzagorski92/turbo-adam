@@ -5,11 +5,12 @@ import {
   sectionKey,
 } from "../constans/blogData";
 import type { BlogEntity, TranslateFn } from "../constans/blogData";
+import type { ArticleCard } from "../constans/articlesCardMock";
 
 interface ArchiveConfigEntry {
   heading: string;
-  items: BlogEntity[];
-  field: string;
+  items: readonly BlogEntity[];
+  field: keyof ArticleCard;
 }
 
 export const ARCHIVE_YEARS: string[] = [

@@ -2,12 +2,8 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { SECTION_DEFS } from "@constans/blogData";
 
-export type FilterSection =
-  | "categories"
-  | "tags"
-  | "authors"
-  | "dates"
-  | "types";
+export type { FilterSection } from "@constans/blogData";
+import type { FilterSection } from "@constans/blogData";
 
 export type GroupedIds = {
   categories: Record<string, string[]>;

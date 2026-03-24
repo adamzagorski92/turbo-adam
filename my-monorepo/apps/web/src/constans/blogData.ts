@@ -12,7 +12,7 @@ export type TranslateFn = (key: string) => string;
 export interface SectionDef {
   id: string;
   label: string;
-  items: BlogEntity[] | BlogCategory[];
+  items: readonly BlogEntity[] | readonly BlogCategory[];
   getItems?: (t: TranslateFn) => BlogEntity[];
   nested?: boolean;
   archive?: boolean;
@@ -20,7 +20,7 @@ export interface SectionDef {
 
 export const sectionKey = (id: string) => `blog.sections.${id}`;
 
-export const TAGS: BlogEntity[] = [
+export const TAGS = [
   { id: "a11y", label: "A11y" },
   { id: "cache", label: "Cache" },
   { id: "ci-cd", label: "CI/CD" },
@@ -46,9 +46,9 @@ export const TAGS: BlogEntity[] = [
   { id: "ux", label: "UX" },
   { id: "wcag", label: "WCAG" },
   { id: "workspaces", label: "Workspaces" },
-];
+] as const satisfies readonly BlogEntity[];
 
-export const CATEGORIES: BlogCategory[] = [
+export const CATEGORIES = [
   {
     id: "frontend",
     label: "Frontend",
@@ -168,19 +168,19 @@ export const CATEGORIES: BlogCategory[] = [
   { id: "devops", label: "DevOps" },
   { id: "narzedzia", label: "Narzędzia" },
   { id: "testowanie", label: "Testowanie" },
-];
+] as const satisfies readonly BlogCategory[];
 
-export const AUTHORS: BlogEntity[] = [
+export const AUTHORS = [
   { id: "adam", label: "Adam" },
   { id: "ewa", label: "Ewa" },
-];
+] as const satisfies readonly BlogEntity[];
 
-export const ARTICLE_TYPES: BlogEntity[] = [
+export const ARTICLE_TYPES = [
   { id: "sponsored", label: "sponsored" },
   { id: "unsponsored", label: "unsponsored" },
-];
+] as const satisfies readonly BlogEntity[];
 
-export const PUBLICATION_DATES: BlogEntity[] = [
+export const PUBLICATION_DATES = [
   { id: "2025/sty", label: "Styczeń 2025" },
   { id: "2025/lut", label: "Luty 2025" },
   { id: "2025/mar", label: "Marzec 2025" },
@@ -196,7 +196,13 @@ export const PUBLICATION_DATES: BlogEntity[] = [
   { id: "2026/sty", label: "Styczeń 2026" },
   { id: "2026/lut", label: "Luty 2026" },
   { id: "2026/mar", label: "Marzec 2026" },
-];
+] as const satisfies readonly BlogEntity[];
+
+export type TagId = (typeof TAGS)[number]["id"];
+export type CategoryId = (typeof CATEGORIES)[number]["id"];
+export type AuthorId = (typeof AUTHORS)[number]["id"];
+export type ArticleTypeId = (typeof ARTICLE_TYPES)[number]["id"];
+export type DateId = (typeof PUBLICATION_DATES)[number]["id"];
 
 const MONTH_KEY_MAP: Record<string, string> = {
   sty: "blog.months.jan",
@@ -220,7 +226,7 @@ export const getPublicationDates = (t: TranslateFn): BlogEntity[] =>
     return { id, label: key ? `${t(key)} ${year}` : id };
   });
 
-export const SECTION_DEFS: SectionDef[] = [
+export const SECTION_DEFS = [
   {
     id: "categories",
     label: "Kategorie",
@@ -235,9 +241,12 @@ export const SECTION_DEFS: SectionDef[] = [
     label: "Daty publikacji",
     items: PUBLICATION_DATES,
     getItems: getPublicationDates,
+    archive: false,
   },
   { id: "types", label: "Typy wpisów", items: ARTICLE_TYPES, archive: true },
-];
+] as const satisfies readonly SectionDef[];
+
+export type FilterSection = (typeof SECTION_DEFS)[number]["id"];
 
 export const BLOG_SECTIONS: BlogEntity[] = SECTION_DEFS.map(
   ({ id, label }) => ({ id, label }),

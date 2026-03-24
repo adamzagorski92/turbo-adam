@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { getArchiveConfig, getArchiveDates } from "@utils/archiveConfig";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
-import type { ArticleCard } from "@constans/articlesCardMock";
+import type { DateId } from "@constans/blogData";
 
 import ArticleArchive from "./ArticleArchive/ArticleArchive";
 import StandardArchive from "./StandardArchive/StandardArchive";
@@ -25,9 +25,8 @@ export const Archive = () => {
     const item = config.items.find((item) => item.id === sub);
     if (!item) return <Page404 i18nKey="blog.archiveNotFound" />;
 
-    const field = config.field as keyof ArticleCard;
     const articles = ARTICLES_CARD_MOCK.filter((article) =>
-      (article[field] as string[]).includes(item.id),
+      (article[config.field] as string[]).includes(item.id),
     );
     return <ArticleArchive heading={item.label} articles={articles} />;
   }
@@ -38,8 +37,9 @@ export const Archive = () => {
     );
     if (!dateEntry) return <Page404 i18nKey="blog.archiveNotFound" />;
 
+    const dateId = `${archive}/${sub}` as DateId;
     const articles = ARTICLES_CARD_MOCK.filter((article) =>
-      article.dates.includes(`${archive}/${sub}`),
+      article.dates.includes(dateId),
     );
     return <ArticleArchive heading={dateEntry.label} articles={articles} />;
   }
