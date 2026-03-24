@@ -7,57 +7,48 @@ export interface BlogCategory extends BlogEntity {
   subcategories?: BlogEntity[];
 }
 
-export interface BlogSection {
+export type TranslateFn = (key: string) => string;
+
+export interface SectionDef {
   id: string;
   label: string;
+  items: readonly BlogEntity[] | readonly BlogCategory[];
+  getItems?: (t: TranslateFn) => BlogEntity[];
+  nested?: boolean;
+  archive?: boolean;
 }
-
-export type TranslateFn = (key: string) => string;
 
 export const sectionKey = (id: string) => `blog.sections.${id}`;
 
-export const BLOG_SECTIONS: BlogSection[] = [
-  { id: "categories", label: "Kategorie" },
-  { id: "tags", label: "Tagi" },
-  { id: "authors", label: "Autorzy" },
-  { id: "dates", label: "Daty publikacji" },
-  { id: "types", label: "Typy wpisów" },
-];
-
-export const TAGS: BlogEntity[] = [
+export const TAGS = [
   { id: "a11y", label: "A11y" },
-  { id: "bazy-danych", label: "Bazy danych" },
   { id: "cache", label: "Cache" },
   { id: "ci-cd", label: "CI/CD" },
-  { id: "css", label: "CSS" },
+  { id: "connection-pooling", label: "Connection pooling" },
+  { id: "coverage", label: "Coverage" },
+  { id: "custom-properties", label: "Custom properties" },
+  { id: "dark-mode", label: "Dark mode" },
   { id: "design-system", label: "Design System" },
-  { id: "devops", label: "DevOps" },
-  { id: "docker", label: "Docker" },
   { id: "esm", label: "ESM" },
-  { id: "frontend", label: "Frontend" },
-  { id: "github-actions", label: "GitHub Actions" },
-  { id: "nestjs", label: "NestJS" },
-  { id: "nginx", label: "nginx" },
-  { id: "node-js", label: "Node.js" },
+  { id: "hot-reload", label: "Hot-reload" },
+  { id: "i18n", label: "i18n" },
+  { id: "migracje", label: "Migracje" },
+  { id: "monorepo", label: "Monorepo" },
+  { id: "multi-stage-builds", label: "Multi-stage builds" },
   { id: "performance", label: "Performance" },
-  { id: "pnpm", label: "pnpm" },
-  { id: "postgresql", label: "PostgreSQL" },
-  { id: "prisma", label: "Prisma" },
-  { id: "react", label: "React" },
-  { id: "redis", label: "Redis" },
+  { id: "reverse-proxy", label: "Reverse proxy" },
   { id: "security", label: "Security" },
+  { id: "snapshot-testing", label: "Snapshot testing" },
   { id: "ssr", label: "SSR" },
-  { id: "testing-library", label: "Testing Library" },
+  { id: "state-management", label: "State management" },
   { id: "tokeny", label: "Tokeny" },
   { id: "tooling", label: "Tooling" },
-  { id: "turborepo", label: "Turborepo" },
-  { id: "typescript", label: "TypeScript" },
   { id: "ux", label: "UX" },
-  { id: "vite", label: "Vite" },
-  { id: "vitest", label: "Vitest" },
-];
+  { id: "wcag", label: "WCAG" },
+  { id: "workspaces", label: "Workspaces" },
+] as const satisfies readonly BlogEntity[];
 
-export const CATEGORIES: BlogCategory[] = [
+export const CATEGORIES = [
   {
     id: "frontend",
     label: "Frontend",
@@ -177,19 +168,19 @@ export const CATEGORIES: BlogCategory[] = [
   { id: "devops", label: "DevOps" },
   { id: "narzedzia", label: "Narzędzia" },
   { id: "testowanie", label: "Testowanie" },
-];
+] as const satisfies readonly BlogCategory[];
 
-export const AUTHORS: BlogEntity[] = [
+export const AUTHORS = [
   { id: "adam", label: "Adam" },
   { id: "ewa", label: "Ewa" },
-];
+] as const satisfies readonly BlogEntity[];
 
-export const ARTICLE_TYPES: BlogEntity[] = [
+export const ARTICLE_TYPES = [
   { id: "sponsored", label: "sponsored" },
   { id: "unsponsored", label: "unsponsored" },
-];
+] as const satisfies readonly BlogEntity[];
 
-export const PUBLICATION_DATES: BlogEntity[] = [
+export const PUBLICATION_DATES = [
   { id: "2025/sty", label: "Styczeń 2025" },
   { id: "2025/lut", label: "Luty 2025" },
   { id: "2025/mar", label: "Marzec 2025" },
@@ -205,7 +196,13 @@ export const PUBLICATION_DATES: BlogEntity[] = [
   { id: "2026/sty", label: "Styczeń 2026" },
   { id: "2026/lut", label: "Luty 2026" },
   { id: "2026/mar", label: "Marzec 2026" },
-];
+] as const satisfies readonly BlogEntity[];
+
+export type TagId = (typeof TAGS)[number]["id"];
+export type CategoryId = (typeof CATEGORIES)[number]["id"];
+export type AuthorId = (typeof AUTHORS)[number]["id"];
+export type ArticleTypeId = (typeof ARTICLE_TYPES)[number]["id"];
+export type DateId = (typeof PUBLICATION_DATES)[number]["id"];
 
 const MONTH_KEY_MAP: Record<string, string> = {
   sty: "blog.months.jan",
@@ -228,3 +225,29 @@ export const getPublicationDates = (t: TranslateFn): BlogEntity[] =>
     const key = MONTH_KEY_MAP[monthKey];
     return { id, label: key ? `${t(key)} ${year}` : id };
   });
+
+export const SECTION_DEFS = [
+  {
+    id: "categories",
+    label: "Kategorie",
+    items: CATEGORIES,
+    nested: true,
+    archive: true,
+  },
+  { id: "tags", label: "Tagi", items: TAGS, archive: true },
+  { id: "authors", label: "Autorzy", items: AUTHORS, archive: true },
+  {
+    id: "dates",
+    label: "Daty publikacji",
+    items: PUBLICATION_DATES,
+    getItems: getPublicationDates,
+    archive: false,
+  },
+  { id: "types", label: "Typy wpisów", items: ARTICLE_TYPES, archive: true },
+] as const satisfies readonly SectionDef[];
+
+export type FilterSection = (typeof SECTION_DEFS)[number]["id"];
+
+export const BLOG_SECTIONS: BlogEntity[] = SECTION_DEFS.map(
+  ({ id, label }) => ({ id, label }),
+);

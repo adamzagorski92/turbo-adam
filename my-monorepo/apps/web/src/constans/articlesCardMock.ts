@@ -1,3 +1,11 @@
+import type {
+  TagId,
+  CategoryId,
+  AuthorId,
+  ArticleTypeId,
+  DateId,
+} from "./blogData";
+
 export interface ArticleCard {
   id: number;
   slug: string;
@@ -5,12 +13,11 @@ export interface ArticleCard {
   subtitle: string;
   excerpt: string;
   date: string;
-  author: string;
-  tags: string[];
-  categories: string[];
-  authors: string[];
-  types: string[];
-  dates: string[];
+  tags: TagId[];
+  categories: CategoryId[];
+  authors: AuthorId[];
+  types: ArticleTypeId[];
+  dates: DateId[];
 }
 
 export const ARTICLES_CARD_MOCK: ArticleCard[] = [
@@ -22,12 +29,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Praktyczny przewodnik po konfiguracji monorepo z użyciem Turborepo, pnpm workspaces i TypeScript. Dowiedz się, jak efektywnie zarządzać wieloma pakietami w jednym repozytorium.",
     date: "2026-03-10",
-    author: "Adam",
-    tags: ["Turborepo", "pnpm", "TypeScript"],
-    categories: ["Frontend", "Narzędzia"],
-    authors: ["Adam"],
+    tags: ["monorepo", "workspaces", "tooling"],
+    categories: ["frontend", "narzedzia"],
+    authors: ["adam"],
     types: ["unsponsored"],
-    dates: ["mar-2026"],
+    dates: ["2026/mar"],
   },
   {
     id: 2,
@@ -37,12 +43,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Tworzenie skalowalnego systemu designu opartego na CSS custom properties. Od tokenów kolorów i typografii po ciemny motyw i responsywne layouty.",
     date: "2026-03-05",
-    author: "Adam",
-    tags: ["CSS", "Design System", "Tokeny"],
-    categories: ["Frontend"],
-    authors: ["Adam"],
+    tags: ["design-system", "custom-properties", "tokeny", "dark-mode"],
+    categories: ["frontend"],
+    authors: ["adam"],
     types: ["unsponsored"],
-    dates: ["mar-2026"],
+    dates: ["2026/mar"],
   },
   {
     id: 3,
@@ -52,12 +57,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Jak połączyć NestJS z Prisma 7 używając @prisma/adapter-pg i surowego pg.Pool. Konfiguracja, migracje i best practices dla produkcyjnego API.",
     date: "2026-02-28",
-    author: "Adam",
-    tags: ["NestJS", "Prisma", "PostgreSQL"],
-    categories: ["Backend", "Bazy danych"],
-    authors: ["Adam"],
+    tags: ["connection-pooling", "migracje"],
+    categories: ["backend", "bazy-danych"],
+    authors: ["adam"],
     types: ["sponsored"],
-    dates: ["lut-2026"],
+    dates: ["2026/lut"],
   },
   {
     id: 4,
@@ -68,12 +72,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Konfiguracja środowisk dev i produkcyjnych z Docker Compose. Nginx jako reverse proxy, hot-reload w kontenerach i multi-stage builds.",
     date: "2026-02-20",
-    author: "Adam",
-    tags: ["Docker", "DevOps", "nginx"],
-    categories: ["DevOps"],
-    authors: ["Adam"],
+    tags: ["hot-reload", "multi-stage-builds"],
+    categories: ["devops"],
+    authors: ["adam"],
     types: ["unsponsored"],
-    dates: ["lut-2026"],
+    dates: ["2026/lut"],
   },
   {
     id: 5,
@@ -83,12 +86,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Strategia testowania w monorepo — unit testy, snapshot testy i coverage. Konfiguracja Vitest z jsdom dla shared component library.",
     date: "2026-02-15",
-    author: "Adam",
-    tags: ["React", "Vitest", "Testing Library"],
-    categories: ["Testowanie", "Frontend"],
-    authors: ["Adam"],
+    tags: ["coverage", "snapshot-testing"],
+    categories: ["testowanie", "frontend"],
+    authors: ["adam"],
     types: ["unsponsored"],
-    dates: ["lut-2026"],
+    dates: ["2026/lut"],
   },
   {
     id: 6,
@@ -99,12 +101,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Migracja z CommonJS do ES Modules w Node.js. Rozszerzenia .js w importach, package.json type module i kompatybilność z ekosystemem.",
     date: "2026-02-10",
-    author: "Adam",
-    tags: ["Node.js", "ESM", "TypeScript"],
-    categories: ["Backend", "Frontend"],
-    authors: ["Adam"],
+    tags: ["esm", "monorepo"],
+    categories: ["backend", "frontend"],
+    authors: ["adam"],
     types: ["unsponsored"],
-    dates: ["lut-2026"],
+    dates: ["2026/lut"],
   },
   {
     id: 7,
@@ -114,12 +115,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Budowanie pipeline CI/CD z GitHub Actions. Automatyczne testy, build, push do GHCR i deployment na VPS.",
     date: "2026-02-05",
-    author: "Adam",
-    tags: ["CI/CD", "GitHub Actions", "DevOps"],
-    categories: ["DevOps"],
-    authors: ["Adam"],
+    tags: ["ci-cd", "tooling"],
+    categories: ["devops"],
+    authors: ["adam"],
     types: ["sponsored"],
-    dates: ["lut-2026"],
+    dates: ["2026/lut"],
   },
   {
     id: 8,
@@ -129,12 +129,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Konfiguracja Nginx dla aplikacji full-stack. TLS termination, upstream balancing, cache headers i security headers.",
     date: "2026-01-30",
-    author: "Adam",
-    tags: ["nginx", "DevOps", "Security"],
-    categories: ["DevOps"],
-    authors: ["Adam"],
+    tags: ["reverse-proxy", "security"],
+    categories: ["devops"],
+    authors: ["adam"],
     types: ["unsponsored"],
-    dates: ["sty-2026"],
+    dates: ["2026/sty"],
   },
   {
     id: 9,
@@ -144,12 +143,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Przegląd nowych funkcji PostgreSQL 17. Incremental backup, JSON improvements i performance tuning dla aplikacji webowych.",
     date: "2026-01-25",
-    author: "Adam",
-    tags: ["PostgreSQL", "Bazy danych", "Performance"],
-    categories: ["Bazy danych"],
-    authors: ["Adam"],
+    tags: ["performance", "migracje"],
+    categories: ["bazy-danych"],
+    authors: ["adam"],
     types: ["unsponsored"],
-    dates: ["sty-2026"],
+    dates: ["2026/sty"],
   },
   {
     id: 10,
@@ -159,12 +157,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Implementacja cache'owania i zarządzania sesjami z Redis 7. AOF persistence, eviction policies i integracja z NestJS.",
     date: "2026-01-20",
-    author: "Adam",
-    tags: ["Redis", "Cache", "NestJS"],
-    categories: ["Backend", "Bazy danych"],
-    authors: ["Adam"],
+    tags: ["cache", "performance"],
+    categories: ["backend", "bazy-danych"],
+    authors: ["adam"],
     types: ["unsponsored"],
-    dates: ["sty-2026"],
+    dates: ["2026/sty"],
   },
   {
     id: 11,
@@ -174,12 +171,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Tworzenie dostępnych komponentów React. ARIA attributes, focus management, screen reader testing i WCAG 2.1 compliance.",
     date: "2026-01-15",
-    author: "Adam",
-    tags: ["React", "A11y", "UX"],
-    categories: ["Frontend"],
-    authors: ["Adam"],
+    tags: ["a11y", "ux", "wcag"],
+    categories: ["frontend"],
+    authors: ["adam"],
     types: ["unsponsored"],
-    dates: ["sty-2026"],
+    dates: ["2026/sty"],
   },
   {
     id: 12,
@@ -189,12 +185,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Przegląd zmian w Vite 7. Environment API, nowy dev server, HMR improvements i migracja z poprzednich wersji.",
     date: "2026-01-10",
-    author: "Adam",
-    tags: ["Vite", "Frontend", "Tooling"],
-    categories: ["Frontend", "Narzędzia"],
-    authors: ["Adam"],
+    tags: ["tooling", "hot-reload"],
+    categories: ["frontend", "narzedzia"],
+    authors: ["adam"],
     types: ["sponsored"],
-    dates: ["sty-2026"],
+    dates: ["2026/sty"],
   },
   {
     id: 13,
@@ -204,12 +199,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Szczegółowe porównanie podejść do stylowania w React. Performance, DX, bundle size i kiedy wybrać które rozwiązanie.",
     date: "2026-01-05",
-    author: "Adam",
-    tags: ["CSS", "React", "Performance"],
-    categories: ["Frontend"],
-    authors: ["Adam"],
+    tags: ["performance", "design-system"],
+    categories: ["frontend"],
+    authors: ["adam"],
     types: ["unsponsored"],
-    dates: ["sty-2026"],
+    dates: ["2026/sty"],
   },
   {
     id: 14,
@@ -219,12 +213,11 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Zarządzanie schematem bazy danych z Prisma. Migration workflow, seeding, reset i best practices dla zespołów.",
     date: "2025-12-28",
-    author: "Adam",
-    tags: ["Prisma", "Bazy danych", "TypeScript"],
-    categories: ["Backend", "Bazy danych"],
-    authors: ["Adam"],
+    tags: ["migracje", "tooling"],
+    categories: ["backend", "bazy-danych"],
+    authors: ["adam"],
     types: ["unsponsored"],
-    dates: ["gru-2025"],
+    dates: ["2025/gru"],
   },
   {
     id: 15,
@@ -234,11 +227,10 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     excerpt:
       "Przegląd React 19. use() hook, Server Components, Actions, useOptimistic i strategie migracji z React 18.",
     date: "2025-12-20",
-    author: "Adam",
-    tags: ["React", "Frontend", "SSR"],
-    categories: ["Frontend"],
-    authors: ["Adam"],
+    tags: ["ssr", "state-management"],
+    categories: ["frontend"],
+    authors: ["adam"],
     types: ["unsponsored"],
-    dates: ["gru-2025"],
+    dates: ["2025/gru"],
   },
 ];

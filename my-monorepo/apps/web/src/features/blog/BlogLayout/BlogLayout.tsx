@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Outlet, useLocation, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { CircleHelp } from "lucide-react";
@@ -16,9 +16,11 @@ import Breadcrumbs from "@features/blog/Breadcrumbs/Breadcrumbs";
 import BlogNavbar from "@features/blog/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
-import { getArchiveConfig, getArchiveDates } from "@constans/archiveMock";
+import { getArchiveConfig, getArchiveDates } from "@utils/archiveConfig";
 import { getBlogFilterTree } from "@utils/blogMenuItems";
 import { ArchiveIndex } from "../Archive/ArchiveIndex/ArchiveIndex";
+import FilterNotice from "@features/blog/FilterNotice/FilterNotice";
+import { useFilterStatus } from "@features/blog/hooks/useFilterStatus";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
@@ -40,10 +42,10 @@ function resolveHeading(
   if (archive && sub) {
     const config = archiveConfig[archive];
     if (config) {
-      const item = config.items.find((i) => i.slug === sub);
+      const item = config.items.find((i) => i.id === sub);
       return item?.label ?? t("blog.archive");
     }
-    const dateEntry = archiveDates.find((d) => d.slug === `${archive}/${sub}`);
+    const dateEntry = archiveDates.find((d) => d.id === `${archive}/${sub}`);
     return dateEntry?.label ?? t("blog.archive");
   }
 
@@ -73,6 +75,7 @@ const BlogLayout = () => {
   const heading = resolveHeading(t, slug, archive, sub, pathname);
   // i18n.language drives recomputation; t is stable but required by exhaustive-deps
   const filterTree = useMemo(() => getBlogFilterTree(t), [t, i18n.language]);
+  const { isModified, reset } = useFilterStatus(filterTree);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -87,11 +90,6 @@ const BlogLayout = () => {
     [],
   );
 
-  // TODO: replace with Zustand action / API call
-  const handleSearch = useCallback((selectedIds: string[]) => {
-    console.log("Blog filters:", selectedIds);
-  }, []);
-
   return (
     <PageContainer>
       <ColumnSection ratio="12rem:1" gapX="gx-16" className={styles.outerGrid}>
@@ -100,7 +98,7 @@ const BlogLayout = () => {
           direction="column"
           sidebarPosition="left"
         >
-          <SideTreeNavigation tree={filterTree} onSearch={handleSearch} />
+          <SideTreeNavigation tree={filterTree} />
         </SidebarMenuLayout>
         <InnerColumnSection selector="section" direction="column">
           <BlogNavbar
@@ -120,6 +118,7 @@ const BlogLayout = () => {
               <h1 className={styles.blogHeading} id="blog-heading">
                 {heading}
               </h1>
+              <FilterNotice isModified={isModified} onReset={reset} />
               <div className={styles.breadcrumbRow}>
                 <Breadcrumbs />
                 {slug && (
@@ -150,7 +149,7 @@ const BlogLayout = () => {
         ariaLabel={t("blog.menuNav")}
       >
         <Logo />
-        <SideTreeNavigation tree={filterTree} onSearch={handleSearch} />
+        <SideTreeNavigation tree={filterTree} />
       </Drawer>
     </PageContainer>
   );

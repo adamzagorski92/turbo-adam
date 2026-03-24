@@ -5,6 +5,7 @@ export type FilterNode = {
 };
 
 export type NavLevel = {
+  id?: string;
   label: string;
   items: FilterNode[];
 };

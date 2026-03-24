@@ -10,6 +10,7 @@
 
 .blogHeading {
   margin-top: var(--spacing-4);
+  margin-bottom: 0;
 }
 
 .breadcrumbRow {

@@ -2,7 +2,7 @@ import {
   ARCHIVE_YEARS,
   getArchiveConfig,
   getArchiveDates,
-} from "@constans/archiveMock";
+} from "@utils/archiveConfig";
 import { useTranslation } from "react-i18next";
 import { ROUTES } from "@constans/routes";
 import styles from "./ArchiveIndex.module.css";
@@ -25,9 +25,9 @@ export const ArchiveIndex = ({ sidebar = false }: { sidebar?: boolean }) => {
   );
 
   const dateItems: SectionItem[] = [...archiveDates].reverse().map((date) => ({
-    key: date.slug,
+    key: date.id,
     label: date.label,
-    to: `${ROUTES.blogArchive}/${date.slug}`,
+    to: `${ROUTES.blogArchive}/${date.id}`,
   }));
 
   const yearItems: SectionItem[] = [...ARCHIVE_YEARS].reverse().map((year) => ({

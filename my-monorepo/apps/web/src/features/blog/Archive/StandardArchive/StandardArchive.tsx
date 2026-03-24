@@ -1,4 +1,4 @@
-import { getArchiveConfig } from "@constans/archiveMock";
+import { getArchiveConfig } from "@utils/archiveConfig";
 import { useTranslation } from "react-i18next";
 import ArchiveList from "../ArchiveList/ArchiveList";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
@@ -21,12 +21,12 @@ const StandardArchive = ({ archive }: { archive: string }) => {
     <ArchiveList ariaLabel={heading}>
       {items.map((item) => {
         const count = ARTICLES_CARD_MOCK.filter((article) =>
-          article[field].includes(item.label),
+          (article[field] as string[]).includes(item.id),
         ).length;
         return (
-          <li key={item.slug} className={styles.listItem}>
+          <li key={item.id} className={styles.listItem}>
             <Link
-              to={ROUTES.blogArchiveSub(archive, item.slug)}
+              to={ROUTES.blogArchiveSub(archive, item.id)}
               className={styles.link}
             >
               {item.label} ({count})

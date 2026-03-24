@@ -25,7 +25,8 @@
       "@features/*": ["src/features/*"],
       "@leyouts/*": ["src/leyouts/*"],
       "@app-types/*": ["src/types/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@stores/*": ["src/stores/*"]
     },
 
     /* Linting */

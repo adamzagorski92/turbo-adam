@@ -7,7 +7,7 @@ import {
   PUBLICATION_DATES,
   BLOG_SECTIONS,
 } from "@constans/blogData";
-import type { BlogEntity, BlogCategory, BlogSection } from "@constans/blogData";
+import type { BlogEntity, BlogCategory } from "@constans/blogData";
 
 describe("BlogEntity interface", () => {
   it("has id and label string fields", () => {
@@ -25,7 +25,7 @@ describe("BLOG_SECTIONS", () => {
   });
 
   it("each entry has id and label strings", () => {
-    BLOG_SECTIONS.forEach((section: BlogSection) => {
+    BLOG_SECTIONS.forEach((section: BlogEntity) => {
       expect(typeof section.id).toBe("string");
       expect(typeof section.label).toBe("string");
     });
@@ -45,9 +45,9 @@ describe("BLOG_SECTIONS", () => {
 });
 
 describe("TAGS", () => {
-  it("is an array of 30 BlogEntity objects", () => {
+  it("is an array of 25 BlogEntity objects", () => {
     expect(Array.isArray(TAGS)).toBe(true);
-    expect(TAGS).toHaveLength(30);
+    expect(TAGS).toHaveLength(25);
   });
 
   it("each tag has id and label strings", () => {
@@ -57,7 +57,7 @@ describe("TAGS", () => {
     });
   });
 
-  it.each(["A11y", "CSS", "React", "TypeScript", "Vite", "NestJS"])(
+  it.each(["A11y", "Cache", "CI/CD", "Design System", "ESM", "Monorepo"])(
     'contains tag with label "%s"',
     (label) => {
       const labels = TAGS.map((t) => t.label);
