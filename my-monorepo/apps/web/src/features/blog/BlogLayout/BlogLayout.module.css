@@ -47,6 +47,10 @@
   outline-offset: 2px;
 }
 
+.outletContainer {
+  padding-bottom: var(--spacing-4);
+}
+
 @media (max-width: 992px) {
   .contentGrid {
     flex-direction: column;

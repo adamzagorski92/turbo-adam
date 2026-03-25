@@ -114,7 +114,11 @@ const BlogLayout = () => {
             gapX="gx-16"
             className={styles.contentGrid}
           >
-            <InnerColumnSection gap={16} direction="column">
+            <InnerColumnSection
+              gap={16}
+              direction="column"
+              className={styles.outletContainer}
+            >
               <h1 className={styles.blogHeading} id="blog-heading">
                 {heading}
               </h1>
