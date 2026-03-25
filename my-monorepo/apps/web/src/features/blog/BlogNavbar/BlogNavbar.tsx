@@ -1,8 +1,9 @@
-import { Coffee, Menu, Search, Settings } from "lucide-react";
+import { Coffee, Menu, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Button, Drawer, InputText, ThemeSwitcher } from "@packages/components";
+import { Button, Drawer, ThemeSwitcher } from "@packages/components";
 import LanguageSwitcher from "@components/LanguageSwitcher/LanguageSwitcher";
 import styles from "./BlogNavbar.module.css";
+import SearchEngine from "../SearchEngine/SearchEngine";
 
 interface BlogNavbarProps {
   onMenuOpen: () => void;
@@ -30,34 +31,7 @@ const BlogNavbar = ({
         <Menu className={styles.iconSize} aria-hidden="true" />
       </Button>
 
-      <div className={styles.searchWrapper}>
-        <InputText
-          type="search"
-          globalAttributes={{ className: styles.searchInput }}
-          textInputSpecificAttrs={{ placeholder: t("blog.searchPlaceholder") }}
-          a11y={{ ariaLabel: t("blog.searchPlaceholder") }}
-          eventHandlers={{
-            onKeyDown: (e) => {
-              if (e.key === "Enter") {
-                console.log("Search:", (e.target as HTMLInputElement).value);
-              }
-            },
-          }}
-        />
-        <button
-          type="button"
-          className={styles.searchButton}
-          aria-label={t("blog.searchPlaceholder")}
-          onClick={() => {
-            const input = document.querySelector<HTMLInputElement>(
-              `.${styles.searchInput}`,
-            );
-            if (input) console.log("Search:", input.value);
-          }}
-        >
-          <Search className={styles.searchButtonIcon} aria-hidden="true" />
-        </button>
-      </div>
+      <SearchEngine />
 
       <Button
         id="blog-settings-toggle"
