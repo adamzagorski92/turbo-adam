@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { useBlogFilterStore } from "@stores/useBlogFilterStore";
 import { filterArticles } from "@utils/filterArticles";
+import { searchArticles } from "../SearchEngine/utils/searchArticles";
 import RemainingArticles from "./sections/RemainingArticles/RemainingArticles";
 
 import PaginationArticles from "./sections/PaginationArticles/PaginationArticles";
@@ -15,14 +16,16 @@ const ARTICLES_CARD_PER_PAGE = 10;
 const ArticleList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedIds = useBlogFilterStore((s) => s.selectedIds);
+  const searchQuery = useBlogFilterStore((s) => s.searchQuery);
   const currentPage = Number(searchParams.get("page") || "1");
 
   const sortedArticles = useMemo(() => {
     const filtered = filterArticles(ARTICLES_CARD_MOCK, selectedIds);
-    return [...filtered].sort(
+    const searched = searchArticles(filtered, searchQuery);
+    return [...searched].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     );
-  }, [selectedIds]);
+  }, [selectedIds, searchQuery]);
 
   const latestArticle = sortedArticles[0];
   const remainingArticles = sortedArticles.slice(1);

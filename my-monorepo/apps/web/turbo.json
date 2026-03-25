@@ -2,13 +2,15 @@
   "extends": ["//"],
   "tasks": {
     "test": {
-      "extends": false
+      "dependsOn": ["^typecheck"]
     },
     "test:cov": {
-      "extends": false
+      "dependsOn": ["^typecheck"],
+      "outputs": ["coverage/**"]
     },
     "test:e2e": {
-      "extends": false
+      "dependsOn": ["^typecheck"],
+      "cache": false
     }
   }
 }

@@ -15,7 +15,9 @@ export type GroupedIds = {
 
 interface BlogFilterState {
   selectedIds: GroupedIds | null;
+  searchQuery: string;
   setSelectedIds: (ids: GroupedIds) => void;
+  setSearchQuery: (query: string) => void;
   setSectionIds: (
     section: Exclude<FilterSection, "categories">,
     ids: string[],
@@ -24,14 +26,16 @@ interface BlogFilterState {
 }
 
 export const emptySections = Object.fromEntries(
-  SECTION_DEFS.map((def) => [def.id, def.nested ? {} : []]),
+  SECTION_DEFS.map((def) => [def.id, "nested" in def && def.nested ? {} : []]),
 ) as GroupedIds;
 
 export const useBlogFilterStore = create<BlogFilterState>()(
   persist(
     (set, get) => ({
       selectedIds: null,
+      searchQuery: "",
       setSelectedIds: (ids) => set({ selectedIds: ids }),
+      setSearchQuery: (query) => set({ searchQuery: query }),
       setSectionIds: (section, ids) =>
         set({
           selectedIds: {
@@ -50,6 +54,10 @@ export const useBlogFilterStore = create<BlogFilterState>()(
           },
         }),
     }),
-    { name: "blog-filters", storage: createJSONStorage(() => sessionStorage) },
+    {
+      name: "blog-filters",
+      storage: createJSONStorage(() => sessionStorage),
+      partialize: ({ searchQuery, ...rest }) => rest,
+    },
   ),
 );

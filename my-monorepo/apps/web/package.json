@@ -17,6 +17,7 @@
   "dependencies": {
     "@my-monorepo/components": "workspace:*",
     "@my-monorepo/styles": "workspace:*",
+    "fuse.js": "^7.1.0",
     "i18next": "^25.8.14",
     "lucide-react": "^0.575.0",
     "react": "^19.2.4",
