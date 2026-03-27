@@ -18,6 +18,7 @@ export interface ArticleCard {
   authors: AuthorId[];
   types: ArticleTypeId[];
   dates: DateId[];
+  seriesId?: string;
 }
 
 export const ARTICLES_CARD_MOCK: ArticleCard[] = [
@@ -34,6 +35,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     authors: ["adam"],
     types: ["unsponsored"],
     dates: ["2026/mar"],
+    seriesId: "full-stack-setup",
   },
   {
     id: 2,
@@ -48,6 +50,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     authors: ["adam"],
     types: ["unsponsored"],
     dates: ["2026/mar"],
+    seriesId: "full-stack-setup",
   },
   {
     id: 3,
@@ -62,6 +65,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     authors: ["adam"],
     types: ["sponsored"],
     dates: ["2026/lut"],
+    seriesId: "full-stack-setup",
   },
   {
     id: 4,
@@ -77,6 +81,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     authors: ["adam"],
     types: ["unsponsored"],
     dates: ["2026/lut"],
+    seriesId: "full-stack-setup",
   },
   {
     id: 5,
@@ -91,6 +96,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     authors: ["adam"],
     types: ["unsponsored"],
     dates: ["2026/lut"],
+    seriesId: "full-stack-setup",
   },
   {
     id: 6,
@@ -106,6 +112,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     authors: ["adam"],
     types: ["unsponsored"],
     dates: ["2026/lut"],
+    seriesId: "full-stack-setup",
   },
   {
     id: 7,
@@ -120,6 +127,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     authors: ["adam"],
     types: ["sponsored"],
     dates: ["2026/lut"],
+    seriesId: "full-stack-setup",
   },
   {
     id: 8,
@@ -134,6 +142,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     authors: ["adam"],
     types: ["unsponsored"],
     dates: ["2026/sty"],
+    seriesId: "full-stack-setup",
   },
   {
     id: 9,
@@ -148,6 +157,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     authors: ["adam"],
     types: ["unsponsored"],
     dates: ["2026/sty"],
+    seriesId: "full-stack-setup",
   },
   {
     id: 10,
@@ -162,6 +172,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     authors: ["adam"],
     types: ["unsponsored"],
     dates: ["2026/sty"],
+    seriesId: "full-stack-setup",
   },
   {
     id: 11,
@@ -232,5 +243,6 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     authors: ["adam"],
     types: ["unsponsored"],
     dates: ["2025/gru"],
+    seriesId: "react-19-focus",
   },
 ];
