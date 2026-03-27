@@ -1,9 +1,6 @@
-.wrapper {
-  min-height: var(--spacing-6);
-}
-
 .notice {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--spacing-1);
   margin: 0;

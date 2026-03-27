@@ -10,25 +10,25 @@ type FilterNoticeProps = {
 const FilterNotice = ({ isModified, onReset }: FilterNoticeProps) => {
   const { t } = useTranslation("UI");
 
+  if (!isModified) {
+    return null;
+  }
+
   return (
-    <div className={styles.wrapper}>
-      {isModified && (
-        <p className={styles.notice}>
-          <CircleAlert size={14} className={styles.icon} aria-hidden="true" />
-          {t("blog.filterNotice")}{" "}
-          <a
-            role="button"
-            className={styles.resetLink}
-            onClick={(e) => {
-              e.preventDefault();
-              onReset();
-            }}
-          >
-            {t("blog.clearFilters")}
-          </a>
-        </p>
-      )}
-    </div>
+    <p className={styles.notice}>
+      <CircleAlert size={14} className={styles.icon} aria-hidden="true" />
+      {t("blog.filterNotice")}{" "}
+      <a
+        role="button"
+        className={styles.resetLink}
+        onClick={(e) => {
+          e.preventDefault();
+          onReset();
+        }}
+      >
+        {t("blog.clearFilters")}
+      </a>
+    </p>
   );
 };
 

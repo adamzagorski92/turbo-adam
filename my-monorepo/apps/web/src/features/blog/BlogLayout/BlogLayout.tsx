@@ -20,6 +20,7 @@ import { getArchiveConfig, getArchiveDates } from "@utils/archiveConfig";
 import { getBlogFilterTree } from "@utils/blogMenuItems";
 import { ArchiveIndex } from "../Archive/ArchiveIndex/ArchiveIndex";
 import FilterNotice from "@features/blog/FilterNotice/FilterNotice";
+import ArticleSeriesNavigation from "@features/blog/ArticleSeriesNavigation/ArticleSeriesNavigation";
 import { useFilterStatus } from "@features/blog/hooks/useFilterStatus";
 
 type ActiveDrawer = "menu" | "settings" | null;
@@ -122,7 +123,28 @@ const BlogLayout = () => {
               <h1 className={styles.blogHeading} id="blog-heading">
                 {heading}
               </h1>
-              <FilterNotice isModified={isModified} onReset={reset} />
+              <div className={styles.noticeRow}>
+                <section
+                  className={`${styles.noticeColumn} ${styles.messagesColumn}`}
+                  aria-label={t("blog.messagesTitle")}
+                >
+                  <p className={styles.noticeColumnTitle}>
+                    {t("blog.messagesTitle")}
+                  </p>
+                  {isModified ? (
+                    <FilterNotice isModified={isModified} onReset={reset} />
+                  ) : (
+                    <p className={styles.noticePlaceholder}>
+                      {t("blog.noMessages")}
+                    </p>
+                  )}
+                </section>
+                <section
+                  className={`${styles.noticeColumn} ${styles.seriesColumn}`}
+                >
+                  <ArticleSeriesNavigation slug={slug} />
+                </section>
+              </div>
               <div className={styles.breadcrumbRow}>
                 <Breadcrumbs />
                 {slug && (
