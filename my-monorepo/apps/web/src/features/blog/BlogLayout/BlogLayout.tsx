@@ -22,6 +22,7 @@ import { ArchiveIndex } from "../Archive/ArchiveIndex/ArchiveIndex";
 import FilterNotice from "@features/blog/FilterNotice/FilterNotice";
 import ArticleSeriesNavigation from "@features/blog/ArticleSeriesNavigation/ArticleSeriesNavigation";
 import { useFilterStatus } from "@features/blog/hooks/useFilterStatus";
+import { SidebarAds } from "@features/blog/SidebarAds/SidebarAds";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
@@ -162,6 +163,7 @@ const BlogLayout = () => {
               sidebarPosition="right"
             >
               <ArchiveIndex sidebar />
+              <SidebarAds category="frontend" />
             </SidebarMenuLayout>
           </ColumnSection>
           <Footer borderTop />
