@@ -23,6 +23,7 @@ import FilterNotice from "@features/blog/FilterNotice/FilterNotice";
 import ArticleSeriesNavigation from "@features/blog/ArticleSeriesNavigation/ArticleSeriesNavigation";
 import { useFilterStatus } from "@features/blog/hooks/useFilterStatus";
 import { SidebarAds } from "@features/blog/SidebarAds/SidebarAds";
+import { TableOfContent } from "@features/blog/TableOfContent/TableOfContent";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
@@ -80,7 +81,7 @@ const BlogLayout = () => {
   const { isModified, reset } = useFilterStatus(filterTree);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, [slug, archive, sub]);
 
   const drawerActions = useMemo(
@@ -162,6 +163,7 @@ const BlogLayout = () => {
               direction="column"
               sidebarPosition="right"
             >
+              {slug && <TableOfContent slug={slug} />}
               <ArchiveIndex sidebar />
               <SidebarAds category="frontend" />
             </SidebarMenuLayout>
