@@ -17,15 +17,21 @@ const SidebarMenuLayout = ({
   sidebarPosition,
   children,
 }: SidebarMenuLayoutProps) => {
+  const isLeft = sidebarPosition === "left";
+
   return (
     <InnerColumnSection
-      gap={16}
+      gap={isLeft ? undefined : 16}
       selector={selector}
       direction={direction}
-      className={`${styles.stickyPanel} ${sidebarPosition === "left" ? styles.leftPanel : styles.rightPanel}`}
+      className={isLeft ? styles.leftPanel : styles.rightPanel}
     >
-      {sidebarPosition === "left" && <Logo />}
-      {children}
+      {isLeft && <Logo />}
+      {isLeft ? (
+        <div className={styles.leftPanelScroll}>{children}</div>
+      ) : (
+        children
+      )}
     </InnerColumnSection>
   );
 };
