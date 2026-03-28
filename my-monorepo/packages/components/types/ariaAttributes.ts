@@ -13,7 +13,7 @@ export interface AriaInteractive extends AriaCommon {
   ariaHaspopup?: HaspopupType;
   ariaControls?: string;
   ariaInvalid?: boolean;
-  ariaRequired?: boolean; // TODO write test in component, where you using that
+  ariaRequired?: boolean;
 }
 
 export interface AriaCombobox extends AriaInteractive {
