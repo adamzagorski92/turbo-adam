@@ -32,9 +32,9 @@ const ArticleFaq: FC<ArticleFaqProps> = ({ faq }) => {
       />
       <div className={styles.faqHeader}>
         <MessageCircleQuestion className={styles.faqHeaderIcon} aria-hidden />
-        <h2 id="faq-heading" className={styles.faqHeading}>
+        <h3 id="faq-heading" className={styles.faqHeading}>
           {t("blog.faqHeading")}
-        </h2>
+        </h3>
       </div>
       <div className={styles.faqList}>
         {faq.map((item, index) => (

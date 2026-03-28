@@ -3,10 +3,11 @@ import { SECTION_DEFS, sectionKey } from "../constans/blogData";
 import type {
   BlogEntity,
   BlogCategory,
+  SectionDef,
   TranslateFn,
 } from "../constans/blogData";
 
-const toFilterNodes = (entities: BlogEntity[]): FilterNode[] =>
+const toFilterNodes = (entities: readonly BlogEntity[]): FilterNode[] =>
   entities.map((entity) => ({ id: entity.id, label: entity.label }));
 
 const categoryToFilterNode = (cat: BlogCategory): FilterNode => ({
@@ -16,10 +17,13 @@ const categoryToFilterNode = (cat: BlogCategory): FilterNode => ({
 });
 
 export const getBlogFilterTree = (t: TranslateFn): FilterNode[] =>
-  SECTION_DEFS.map((def) => ({
-    id: def.id,
-    label: t(sectionKey(def.id)),
-    children: def.nested
-      ? (def.items as BlogCategory[]).map(categoryToFilterNode)
-      : toFilterNodes(def.getItems ? def.getItems(t) : def.items),
-  }));
+  SECTION_DEFS.map((raw) => {
+    const def = raw as SectionDef;
+    return {
+      id: def.id,
+      label: t(sectionKey(def.id)),
+      children: def.nested
+        ? (def.items as readonly BlogCategory[]).map(categoryToFilterNode)
+        : toFilterNodes(def.getItems ? def.getItems(t) : def.items),
+    };
+  });

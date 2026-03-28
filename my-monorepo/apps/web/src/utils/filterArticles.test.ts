@@ -28,49 +28,52 @@ const makeGrouped = (partial: Partial<GroupedIds>): GroupedIds => ({
 
 describe("filterArticles", () => {
   it("returns all articles when selectedIds is null", () => {
-    const articles = [makeArticle({ tags: ["react"] })];
+    const articles = [makeArticle({ tags: ["performance"] })];
 
     expect(filterArticles(articles, null)).toEqual(articles);
   });
 
   it("returns empty array when selectedIds is empty (nothing selected)", () => {
-    const articles = [makeArticle({ tags: ["react"] })];
+    const articles = [makeArticle({ tags: ["performance"] })];
 
     expect(filterArticles(articles, makeGrouped({}))).toEqual([]);
   });
 
   it("excludes article when any of its tags is unchecked", () => {
     const articles = [
-      makeArticle({ tags: ["monorepo", "react"] }),
-      makeArticle({ tags: ["react"] }),
+      makeArticle({ tags: ["monorepo", "performance"] }),
+      makeArticle({ tags: ["performance"] }),
     ];
 
-    expect(filterArticles(articles, makeGrouped({ tags: ["react"] }))).toEqual([
-      articles[1],
-    ]);
+    expect(
+      filterArticles(articles, makeGrouped({ tags: ["performance"] })),
+    ).toEqual([articles[1]]);
   });
 
   it("shows article when all its tags are selected", () => {
     const articles = [
-      makeArticle({ tags: ["monorepo", "react"] }),
-      makeArticle({ tags: ["react"] }),
-    ];
-
-    expect(
-      filterArticles(articles, makeGrouped({ tags: ["react", "monorepo"] })),
-    ).toEqual(articles);
-  });
-
-  it("excludes article when its author is unchecked", () => {
-    const articles = [
-      makeArticle({ tags: ["react"], authors: ["adam"] }),
-      makeArticle({ tags: ["react"], authors: ["jan"] }),
+      makeArticle({ tags: ["monorepo", "performance"] }),
+      makeArticle({ tags: ["performance"] }),
     ];
 
     expect(
       filterArticles(
         articles,
-        makeGrouped({ tags: ["react"], authors: ["adam"] }),
+        makeGrouped({ tags: ["performance", "monorepo"] }),
+      ),
+    ).toEqual(articles);
+  });
+
+  it("excludes article when its author is unchecked", () => {
+    const articles = [
+      makeArticle({ tags: ["performance"], authors: ["adam"] }),
+      makeArticle({ tags: ["performance"], authors: ["ewa"] }),
+    ];
+
+    expect(
+      filterArticles(
+        articles,
+        makeGrouped({ tags: ["performance"], authors: ["adam"] }),
       ),
     ).toEqual([articles[0]]);
   });
@@ -156,7 +159,7 @@ describe("filterArticles", () => {
   it("unchecking any single property is enough to hide the article", () => {
     const articles = [
       makeArticle({
-        tags: ["react"],
+        tags: ["performance"],
         authors: ["adam"],
         types: ["sponsored"],
         dates: ["2026/mar"],
@@ -167,7 +170,7 @@ describe("filterArticles", () => {
       filterArticles(
         articles,
         makeGrouped({
-          tags: ["react"],
+          tags: ["performance"],
           types: ["sponsored"],
           dates: ["2026/mar"],
         }),

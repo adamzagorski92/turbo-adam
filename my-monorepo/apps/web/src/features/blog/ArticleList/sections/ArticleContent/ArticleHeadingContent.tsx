@@ -24,11 +24,11 @@ const ArticleHeadingContent = ({
         className={`${styles.meta} ${variant === "card" ? styles.metaCard : ""}`}
         aria-label={t("blog.authorMeta", {
           date: article.date,
-          author: article.author,
+          author: article.authors.join(", "),
         })}
       >
         <time dateTime={article.date}>{article.date}</time>
-        <span>{article.author}</span>
+        <span>{article.authors.join(", ")}</span>
       </div>
       <h2
         className={`${styles.title} ${variant === "latest" ? styles.titleLatest : styles.titleCard}`}

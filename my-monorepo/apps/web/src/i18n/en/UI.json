@@ -81,6 +81,8 @@
       "oct": "October",
       "nov": "November",
       "dec": "December"
-    }
+    },
+    "adLabel": "Ad",
+    "tableOfContent": "Table of Contents"
   }
 }

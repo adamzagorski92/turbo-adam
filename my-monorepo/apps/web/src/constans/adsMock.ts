@@ -24,7 +24,7 @@ export const ADS_MOCK: Ad[] = [
   },
   {
     id: 2,
-    adsCategory: "frontend",
+    adsCategory: "devops",
     hook: "Deployment to Twój najgorszy koszmar?",
     solution:
       "Zautomatyzuj wdrożenia jednym kliknięciem — zero przestojów, pełna kontrola.",

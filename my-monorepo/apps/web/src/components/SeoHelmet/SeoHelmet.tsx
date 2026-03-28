@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 
@@ -61,7 +62,10 @@ const SeoHelmet = ({
   const runtimePath = window.location.pathname;
   const resolvedLang = i18n.resolvedLanguage ?? i18n.language;
   const resolvedOgLocale = ogLocale ?? toOgLocale(resolvedLang);
-  const resolvedThemeColor = themeColor ?? getRuntimeThemeColor();
+  const resolvedThemeColor = useMemo(
+    () => themeColor ?? getRuntimeThemeColor(),
+    [themeColor],
+  );
 
   const resolvedCanonical =
     canonicalUrl ?? resolveAbsoluteUrl(siteUrl, canonicalPath ?? runtimePath);
