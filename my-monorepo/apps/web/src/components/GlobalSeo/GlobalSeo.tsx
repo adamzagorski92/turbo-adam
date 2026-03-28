@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import SeoHelmet from "@components/SeoHelmet/SeoHelmet";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { ARTICLES_META_MOCK } from "@constans/articlesMetaMock";
+import { ARTICLES_FAQ_MOCK } from "@constans/articlesFaqMock";
 
 type I18nMeta = {
   siteName: string;
@@ -34,6 +35,26 @@ const GlobalSeo = () => {
     const blogMeta = tBlog("meta", { returnObjects: true }) as I18nMeta;
 
     if (articleMeta) {
+      const faqData = ARTICLES_FAQ_MOCK.find((f) => f.id === card!.id);
+      const faqJsonLd = faqData
+        ? {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqData.faq.map((item) => ({
+              "@type": "Question",
+              name: item.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.answer,
+              },
+            })),
+          }
+        : undefined;
+
+      const jsonLd = faqJsonLd
+        ? [articleMeta.articleJsonLd, faqJsonLd]
+        : articleMeta.articleJsonLd;
+
       return (
         <SeoHelmet
           siteName={blogMeta.siteName}
@@ -44,7 +65,7 @@ const GlobalSeo = () => {
           ogType={articleMeta.ogType}
           twitterCard={articleMeta.twitterCard}
           canonicalPath={`/blog/${slug}`}
-          jsonLd={articleMeta.articleJsonLd}
+          jsonLd={jsonLd}
         />
       );
     }

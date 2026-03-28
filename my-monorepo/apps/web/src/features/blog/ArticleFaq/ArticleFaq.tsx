@@ -10,26 +10,9 @@ interface ArticleFaqProps {
 
 const ArticleFaq: FC<ArticleFaqProps> = ({ faq }) => {
   const { t } = useTranslation("UI");
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faq.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
-      },
-    })),
-  };
 
   return (
     <section className={styles.faq} aria-labelledby="faq-heading">
-      {/* TODO: This is dangerouslySetInnerHTML - add proper sanitization */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <div className={styles.faqHeader}>
         <MessageCircleQuestion className={styles.faqHeaderIcon} aria-hidden />
         <h3 id="faq-heading" className={styles.faqHeading}>
