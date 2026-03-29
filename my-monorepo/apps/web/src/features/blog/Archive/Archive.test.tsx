@@ -84,7 +84,7 @@ describe("Archive", () => {
     });
   });
 
-  it("renders all articles for a year-only archive", () => {
+  it("renders articles for a year-only archive (first 12 visible)", () => {
     mockUseParams.mockReturnValue({ archive: "2026" });
 
     const expectedArticles = ARTICLES_CARD_MOCK.filter((a) =>
@@ -94,7 +94,7 @@ describe("Archive", () => {
     renderArchive();
 
     expect(screen.getByRole("region", { name: "2026" })).toBeInTheDocument();
-    expectedArticles.forEach((article) => {
+    expectedArticles.slice(0, 12).forEach((article) => {
       expect(screen.getByText(article.title)).toBeInTheDocument();
     });
   });

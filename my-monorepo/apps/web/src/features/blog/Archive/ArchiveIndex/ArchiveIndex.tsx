@@ -6,17 +6,15 @@ import {
 import { useTranslation } from "react-i18next";
 import { ROUTES } from "@constans/routes";
 import styles from "./ArchiveIndex.module.css";
-import ArchiveSection from "../ArchiveSection/ArchiveSection";
-import type { SectionItem } from "../ArchiveSection/ArchiveSection";
-import ArchiveList from "../ArchiveList/ArchiveList";
-import { Link } from "react-router";
+import ArchiveLinks from "../ArchiveLinks/ArchiveLinks";
+import type { ArchiveLinkItem } from "../ArchiveLinks/ArchiveLinks";
 
-export const ArchiveIndex = ({ sidebar = false }: { sidebar?: boolean }) => {
+export const ArchiveIndex = () => {
   const { t } = useTranslation("UI");
   const archiveConfig = getArchiveConfig(t);
   const archiveDates = getArchiveDates(t);
 
-  const configItems: SectionItem[] = Object.entries(archiveConfig).map(
+  const configItems: ArchiveLinkItem[] = Object.entries(archiveConfig).map(
     ([key, config]) => ({
       key,
       label: config.heading,
@@ -24,47 +22,37 @@ export const ArchiveIndex = ({ sidebar = false }: { sidebar?: boolean }) => {
     }),
   );
 
-  const dateItems: SectionItem[] = [...archiveDates].reverse().map((date) => ({
-    key: date.id,
-    label: date.label,
-    to: `${ROUTES.blogArchive}/${date.id}`,
-  }));
+  const dateItems: ArchiveLinkItem[] = [...archiveDates]
+    .reverse()
+    .map((date) => ({
+      key: date.id,
+      label: date.label,
+      to: `${ROUTES.blogArchive}/${date.id}`,
+    }));
 
-  const yearItems: SectionItem[] = [...ARCHIVE_YEARS].reverse().map((year) => ({
-    key: year,
-    label: year,
-    to: ROUTES.blogArchiveType(year),
-  }));
+  const yearItems: ArchiveLinkItem[] = [...ARCHIVE_YEARS]
+    .reverse()
+    .map((year) => ({
+      key: year,
+      label: year,
+      to: ROUTES.blogArchiveType(year),
+    }));
 
-  if (sidebar) {
-    return (
-      <section aria-label={t("blog.archive")}>
-        <h2 className={styles.title}>{t("blog.archive")}</h2>
-        <ArchiveSection items={configItems} />
-        <ArchiveSection heading={t("blog.dates")} items={dateItems} />
-        <ArchiveSection heading={t("blog.years")} items={yearItems} />
-      </section>
-    );
-  }
-
-  const sections: { heading: string; items: SectionItem[] }[] = [
+  const sections = [
     { heading: t("blog.types"), items: configItems },
     { heading: t("blog.dates"), items: dateItems },
     { heading: t("blog.years"), items: yearItems },
   ];
 
   return (
-    <div className={styles.outlet}>
+    <div className={styles.grid}>
       {sections.map(({ heading, items }) => (
-        <ArchiveList key={heading} heading={heading} ariaLabel={heading}>
-          {items.map((item) => (
-            <li key={item.key} className={styles.listItem}>
-              <Link to={item.to} className={styles.link}>
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ArchiveList>
+        <ArchiveLinks
+          key={heading}
+          ariaLabel={heading}
+          heading={heading}
+          items={items}
+        />
       ))}
     </div>
   );
