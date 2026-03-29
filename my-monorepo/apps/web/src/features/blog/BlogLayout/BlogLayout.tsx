@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Outlet, useLocation, useParams } from "react-router";
+import { Link, Outlet, useLocation, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { CircleHelp } from "lucide-react";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
@@ -18,7 +18,6 @@ import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { getArchiveConfig, getArchiveDates } from "@utils/archiveConfig";
 import { getBlogFilterTree } from "@utils/blogMenuItems";
-import { ArchiveIndex } from "../Archive/ArchiveIndex/ArchiveIndex";
 import FilterNotice from "@features/blog/FilterNotice/FilterNotice";
 import ArticleSeriesNavigation from "@features/blog/ArticleSeriesNavigation/ArticleSeriesNavigation";
 import { useFilterStatus } from "@features/blog/hooks/useFilterStatus";
@@ -102,6 +101,7 @@ const BlogLayout = () => {
           sidebarPosition="left"
         >
           <SideTreeNavigation tree={filterTree} />
+          <Link to="/blog/archive">{t("blog.archive")}</Link>
         </SidebarMenuLayout>
         <InnerColumnSection selector="section" direction="column">
           <BlogNavbar
@@ -164,7 +164,6 @@ const BlogLayout = () => {
               sidebarPosition="right"
             >
               {slug && <TableOfContent slug={slug} />}
-              <ArchiveIndex sidebar />
               <SidebarAds category="frontend" />
             </SidebarMenuLayout>
           </ColumnSection>
