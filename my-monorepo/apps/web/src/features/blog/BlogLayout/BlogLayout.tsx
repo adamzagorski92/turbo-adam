@@ -79,6 +79,12 @@ const BlogLayout = () => {
   const filterTree = useMemo(() => getBlogFilterTree(t), [t, i18n.language]);
   const { isModified, reset } = useFilterStatus(filterTree);
 
+  const isArticle = !!slug;
+  const isArchive = pathname.startsWith("/blog/archive");
+  const isArticleList = !isArticle && !isArchive && !archive;
+
+  const showFilters = isArticleList;
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [slug, archive, sub]);
@@ -100,8 +106,30 @@ const BlogLayout = () => {
           direction="column"
           sidebarPosition="left"
         >
-          <SideTreeNavigation tree={filterTree} />
-          <Link to="/blog/archive">{t("blog.archive")}</Link>
+          <div className={styles.sidebarSection}>
+            <p className={styles.sidebarSectionLabel}>
+              {t("blog.sidebarMain")}
+            </p>
+            <Link to="/" className={styles.sidebarLink}>
+              {t("blog.home")}
+            </Link>
+            {(isArticle || isArchive) && (
+              <Link to="/blog" className={styles.sidebarLink}>
+                {t("blog.blogLabel")}
+              </Link>
+            )}
+            {!isArchive && (
+              <Link to="/blog/archive" className={styles.sidebarLink}>
+                {t("blog.archive")}
+              </Link>
+            )}
+          </div>
+          {showFilters && (
+            <div className={styles.sidebarSection}>
+              <p className={styles.sidebarSectionLabel}>{t("blog.filters")}</p>
+              <SideTreeNavigation tree={filterTree} />
+            </div>
+          )}
         </SidebarMenuLayout>
         <InnerColumnSection selector="section" direction="column">
           <BlogNavbar
@@ -178,7 +206,28 @@ const BlogLayout = () => {
         ariaLabel={t("blog.menuNav")}
       >
         <Logo />
-        <SideTreeNavigation tree={filterTree} />
+        <div className={styles.sidebarSection}>
+          <p className={styles.sidebarSectionLabel}>{t("blog.sidebarMain")}</p>
+          <Link to="/" className={styles.sidebarLink}>
+            {t("blog.home")}
+          </Link>
+          {(isArticle || isArchive) && (
+            <Link to="/blog" className={styles.sidebarLink}>
+              {t("blog.blogLabel")}
+            </Link>
+          )}
+          {!isArchive && (
+            <Link to="/blog/archive" className={styles.sidebarLink}>
+              {t("blog.archive")}
+            </Link>
+          )}
+        </div>
+        {showFilters && (
+          <div className={styles.sidebarSection}>
+            <p className={styles.sidebarSectionLabel}>{t("blog.filters")}</p>
+            <SideTreeNavigation tree={filterTree} />
+          </div>
+        )}
       </Drawer>
     </PageContainer>
   );
