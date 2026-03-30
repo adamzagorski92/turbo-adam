@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-import { CircleHelp, ChevronDown } from "lucide-react";
+import { CircleHelp, ChevronDown, LoaderCircle } from "lucide-react";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
 import Footer from "@features/Footer/Footer";
 import {
@@ -21,6 +21,7 @@ import { getBlogFilterTree } from "@utils/blogMenuItems";
 import FilterNotice from "@features/blog/FilterNotice/FilterNotice";
 import ArticleSeriesNavigation from "@features/blog/ArticleSeriesNavigation/ArticleSeriesNavigation";
 import { useFilterStatus } from "@features/blog/hooks/useFilterStatus";
+import { useBlogFilterStore } from "@stores/useBlogFilterStore";
 import { SidebarAds } from "@features/blog/SidebarAds/SidebarAds";
 import { TableOfContent } from "@features/blog/TableOfContent/TableOfContent";
 
@@ -78,6 +79,7 @@ const BlogLayout = () => {
   // i18n.language drives recomputation; t is stable but required by exhaustive-deps
   const filterTree = useMemo(() => getBlogFilterTree(t), [t, i18n.language]);
   const { isModified, reset } = useFilterStatus(filterTree);
+  const isFiltering = useBlogFilterStore((s) => s.isFiltering);
 
   const isArticle = !!slug;
   const isArchive = pathname.startsWith("/blog/archive");
@@ -87,7 +89,8 @@ const BlogLayout = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-  }, [slug, archive, sub]);
+    setActiveDrawer(null);
+  }, [pathname]);
 
   const drawerActions = useMemo(
     () => ({
@@ -239,6 +242,19 @@ const BlogLayout = () => {
         {showFilters && (
           <div className={styles.sidebarSection}>
             <p className={styles.sidebarSectionLabel}>{t("blog.filters")}</p>
+            {(isFiltering || isModified) && (
+              <div className={styles.drawerFilterStatus}>
+                {isFiltering ? (
+                  <LoaderCircle
+                    size={14}
+                    className={styles.drawerSpinner}
+                    aria-hidden
+                  />
+                ) : (
+                  <FilterNotice isModified={isModified} onReset={reset} />
+                )}
+              </div>
+            )}
             <SideTreeNavigation tree={filterTree} />
           </div>
         )}
