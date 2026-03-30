@@ -84,8 +84,9 @@
 
 .modifiedBadge {
   position: absolute;
-  top: -2px;
-  left: -2px;
+  top: 0;
+  left: 0;
+  transform: translate(-30%, -30%);
   color: var(--palette-brand-600);
   z-index: 1;
   pointer-events: none;
@@ -115,6 +116,11 @@
 .menuBranch:hover {
   color: var(--color-accent);
   background: var(--color-bg-surface-hover);
+}
+
+.menuBranch:focus-visible {
+  outline: 2px solid var(--color-border-default);
+  outline-offset: -2px;
 }
 
 .menuLinkLabel {

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router";
+import { LoaderCircle } from "lucide-react";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { useBlogFilterStore } from "@stores/useBlogFilterStore";
 import { filterArticles } from "@utils/filterArticles";
@@ -10,6 +11,7 @@ import PaginationArticles from "./sections/PaginationArticles/PaginationArticles
 import { ContentSection } from "@packages/components";
 import LatestArticle from "./sections/LatestArticle/LatestArticle";
 import Page404 from "@components/errors/Page404/Page404";
+import styles from "./ArticleList.module.css";
 
 const ARTICLES_CARD_PER_PAGE = 10;
 
@@ -17,6 +19,7 @@ const ArticleList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedIds = useBlogFilterStore((s) => s.selectedIds);
   const searchQuery = useBlogFilterStore((s) => s.searchQuery);
+  const isFiltering = useBlogFilterStore((s) => s.isFiltering);
   const currentPage = Number(searchParams.get("page") || "1");
 
   const sortedArticles = useMemo(() => {
@@ -38,6 +41,18 @@ const ArticleList = () => {
     startIndex,
     startIndex + ARTICLES_CARD_PER_PAGE,
   );
+
+  if (isFiltering) {
+    return (
+      <div className={styles.spinnerOverlay}>
+        <LoaderCircle
+          size={32}
+          className={styles.spinner}
+          aria-label="Loading"
+        />
+      </div>
+    );
+  }
 
   if (sortedArticles.length === 0) {
     return <Page404 i18nKey="blog.noResults" />;
