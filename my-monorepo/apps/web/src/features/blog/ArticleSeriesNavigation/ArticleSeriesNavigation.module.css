@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  min-height: 7rem;
   min-width: 0;
   gap: var(--spacing-2);
   padding: var(--spacing-2) var(--spacing-3);
@@ -74,7 +75,7 @@
 }
 
 .slideButtonActive:hover {
-  color: var(--color-fg-on-accent);
+  color: var(--color-accent-hover);
 }
 
 .slideButton:disabled {
@@ -147,11 +148,11 @@
 }
 
 .stepLink:hover .stepVisual {
-  color: var(--color-fg-on-accent);
+  color: var(--color-accent-hover);
 }
 
 .stepLink[aria-current="page"]:hover .stepVisual {
-  color: var(--color-accent);
+  color: var(--color-accent-hover);
 }
 
 .stepIcon {
@@ -178,13 +179,13 @@
 }
 
 .stepLink:hover .stepBadge {
-  color: var(--color-fg-on-accent);
-  border-color: var(--color-fg-on-accent);
+  color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
 }
 
 .stepLink[aria-current="page"] .stepBadge {
   color: var(--color-accent);
-  border-color: var(--color-border-accent);
+  border-color: var(--color-accent);
 }
 
 .singleArticleMessage {

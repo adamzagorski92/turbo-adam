@@ -22,7 +22,7 @@
 }
 
 .rightPanel {
-  padding: var(--spacing-4);
+  padding: 0 var(--spacing-4) var(--spacing-4);
   border-left: 1px solid var(--color-border-default);
   align-self: flex-start;
 }
