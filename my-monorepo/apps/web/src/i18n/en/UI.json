@@ -86,6 +86,7 @@
     "tableOfContent": "Table of Contents",
     "sidebarMain": "Main",
     "showSidebar": "Table of contents & more",
-    "showSidebarGeneric": "More"
+    "showSidebarGeneric": "More",
+    "goBack": "Back"
   }
 }

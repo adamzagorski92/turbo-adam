@@ -40,6 +40,37 @@
   height: 0.875rem;
 }
 
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: var(--font-size-sm);
+  color: var(--color-fg-secondary);
+  cursor: pointer;
+  transition: var(--transition-colors);
+}
+
+.backButton:hover {
+  color: var(--color-fg-primary);
+}
+
+.backButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.backIcon {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+}
+
 .desktopOnly {
   display: inline-flex;
   flex-shrink: 0;

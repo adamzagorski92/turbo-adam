@@ -133,6 +133,7 @@ const BlogLayout = () => {
         </SidebarMenuLayout>
         <InnerColumnSection selector="section" direction="column">
           <BlogNavbar
+            isArticleList={isArticleList}
             onMenuOpen={drawerActions.openMenu}
             settingsOpen={activeDrawer === "settings"}
             onSettingsOpen={drawerActions.openSettings}

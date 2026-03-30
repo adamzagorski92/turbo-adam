@@ -1,11 +1,13 @@
-import { Coffee, Menu, Settings } from "lucide-react";
+import { Coffee, Menu, Settings, ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { Button, Drawer, ThemeSwitcher } from "@packages/components";
 import LanguageSwitcher from "@components/LanguageSwitcher/LanguageSwitcher";
 import styles from "./BlogNavbar.module.css";
 import SearchEngine from "../SearchEngine/SearchEngine";
 
 interface BlogNavbarProps {
+  isArticleList: boolean;
   onMenuOpen: () => void;
   settingsOpen: boolean;
   onSettingsOpen: () => void;
@@ -13,12 +15,14 @@ interface BlogNavbarProps {
 }
 
 const BlogNavbar = ({
+  isArticleList,
   onMenuOpen,
   settingsOpen,
   onSettingsOpen,
   onSettingsClose,
 }: BlogNavbarProps) => {
   const { t } = useTranslation("UI");
+  const navigate = useNavigate();
 
   return (
     <div className={styles.navbar}>
@@ -31,7 +35,18 @@ const BlogNavbar = ({
         <Menu className={styles.iconSize} aria-hidden="true" />
       </Button>
 
-      <SearchEngine />
+      {isArticleList ? (
+        <SearchEngine />
+      ) : (
+        <button
+          type="button"
+          className={styles.backButton}
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeft className={styles.backIcon} aria-hidden="true" />
+          {t("blog.goBack")}
+        </button>
+      )}
 
       <Button
         id="blog-settings-toggle"
