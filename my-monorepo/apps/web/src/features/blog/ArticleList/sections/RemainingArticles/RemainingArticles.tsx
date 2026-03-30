@@ -18,7 +18,7 @@ const RemainingArticles = ({ paginatedArticles }: RemainingArticlesProps) => {
           className={styles.link}
         >
           <article className={styles.card}>
-            <Thumbnail size="sm" />
+            <Thumbnail size="lg" />
             <div className={styles.cardBody}>
               <ArticleHeadingContent article={article} variant="card" />
             </div>
