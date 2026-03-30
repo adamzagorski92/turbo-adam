@@ -245,4 +245,32 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     dates: ["2025/gru"],
     seriesId: "react-19-focus",
   },
+  {
+    id: 16,
+    slug: "turbobundle-przyspieszamy-bundlowanie-z-rust",
+    title: "TurboBundle — przyspieszamy bundlowanie z Rust",
+    subtitle: "Jak narzędzie oparte na Rust skraca build nawet o 80%",
+    excerpt:
+      "Poznaj TurboBundle — bundler nowej generacji oparty na Rust, który drastycznie skraca czas budowania aplikacji frontendowych.",
+    date: "2026-03-20",
+    tags: ["tooling", "performance"],
+    categories: ["frontend", "narzedzia"],
+    authors: ["adam"],
+    types: ["sponsored"],
+    dates: ["2026/mar"],
+  },
+  {
+    id: 17,
+    slug: "autodeploy-zero-downtime-deployments",
+    title: "AutoDeploy — zero-downtime deployments",
+    subtitle: "Automatyczne wdrożenia jednym kliknięciem bez przestojów",
+    excerpt:
+      "AutoDeploy to narzędzie do automatyzacji wdrożeń z pełną kontrolą i zero downtime. Sprawdź, jak uprościć swój deployment pipeline.",
+    date: "2026-03-15",
+    tags: ["ci-cd", "tooling"],
+    categories: ["devops", "narzedzia"],
+    authors: ["adam"],
+    types: ["sponsored"],
+    dates: ["2026/mar"],
+  },
 ];
