@@ -63,43 +63,38 @@ export function useActiveHeading(
 
     if (ids.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (cancelled) return;
+    const handleScroll = () => {
+      if (cancelled) return;
+      const currentIds = headingIdsRef.current;
 
-        const visible = entries.filter((e) => e.isIntersecting);
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 30;
 
-        if (visible.length > 0) {
-          const topmost = visible.reduce((a, b) =>
-            a.boundingClientRect.top <= b.boundingClientRect.top ? a : b,
-          );
-          setActiveId(topmost.target.id);
-          return;
+      if (atBottom) {
+        setActiveId(currentIds[currentIds.length - 1]);
+        return;
+      }
+
+      const threshold = window.innerHeight * 0.3;
+      let active = currentIds[0];
+
+      for (const id of currentIds) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= threshold) {
+          active = id;
         }
+      }
 
-        const exitedDown = entries
-          .filter((e) => e.boundingClientRect.top > 0)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      setActiveId(active);
+    };
 
-        if (exitedDown.length > 0) {
-          const closest = exitedDown[0];
-          const index = headingIdsRef.current.indexOf(closest.target.id);
-          if (index > 0) {
-            setActiveId(headingIdsRef.current[index - 1]);
-          }
-        }
-      },
-      { rootMargin: "0px 0px -70% 0px", threshold: 0 },
-    );
-
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
 
     return () => {
       cancelled = true;
-      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [containerSelector, contentKey]);
 
