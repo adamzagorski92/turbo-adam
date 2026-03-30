@@ -90,11 +90,33 @@ const BlogNavbar = ({
 
           <hr className={styles.settingsDivider} />
 
-          <div className={styles.settingsRow}>
+          <div
+            className={styles.settingsRow}
+            role="button"
+            tabIndex={0}
+            onClick={(e) => e.currentTarget.querySelector("button")?.click()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                e.currentTarget.querySelector("button")?.click();
+              }
+            }}
+          >
             <span className={styles.settingsLabel}>{t("blog.language")}</span>
             <LanguageSwitcher />
           </div>
-          <div className={styles.settingsRow}>
+          <div
+            className={styles.settingsRow}
+            role="button"
+            tabIndex={0}
+            onClick={(e) => e.currentTarget.querySelector("button")?.click()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                e.currentTarget.querySelector("button")?.click();
+              }
+            }}
+          >
             <span className={styles.settingsLabel}>{t("blog.theme")}</span>
             <ThemeSwitcher />
           </div>

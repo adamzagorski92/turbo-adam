@@ -29,7 +29,7 @@ export const ARTICLES_CARD_MOCK: ArticleCard[] = [
     subtitle: "Turborepo + pnpm workspaces — konfiguracja krok po kroku",
     excerpt:
       "Praktyczny przewodnik po konfiguracji monorepo z użyciem Turborepo, pnpm workspaces i TypeScript. Dowiedz się, jak efektywnie zarządzać wieloma pakietami w jednym repozytorium.",
-    date: "2026-03-10",
+    date: "2026-03-31",
     tags: ["monorepo", "workspaces", "tooling"],
     categories: ["frontend", "narzedzia"],
     authors: ["adam"],
