@@ -84,6 +84,8 @@
     },
     "adLabel": "Reklama",
     "tableOfContent": "Spis treści",
-    "sidebarMain": "Główne"
+    "sidebarMain": "Główne",
+    "showSidebar": "Spis treści i więcej",
+    "showSidebarGeneric": "Więcej"
   }
 }

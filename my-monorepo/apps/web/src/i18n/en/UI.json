@@ -84,6 +84,8 @@
     },
     "adLabel": "Ad",
     "tableOfContent": "Table of Contents",
-    "sidebarMain": "Main"
+    "sidebarMain": "Main",
+    "showSidebar": "Table of contents & more",
+    "showSidebarGeneric": "More"
   }
 }

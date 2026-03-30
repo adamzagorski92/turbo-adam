@@ -29,6 +29,6 @@
 
 @media (max-width: 992px) {
   .rightPanel {
-    border-left: none;
+    display: none;
   }
 }

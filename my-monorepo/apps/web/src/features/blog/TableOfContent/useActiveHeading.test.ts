@@ -2,49 +2,33 @@ import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useActiveHeading } from "./useActiveHeading";
 
-let observerCallback: IntersectionObserverCallback;
-const mockObserve = vi.fn();
-const mockDisconnect = vi.fn();
-
-function createEntry(
-  target: Element,
-  isIntersecting: boolean,
-  top: number,
-): IntersectionObserverEntry {
-  return {
-    isIntersecting,
-    target,
-    boundingClientRect: { top } as DOMRectReadOnly,
-    intersectionRatio: isIntersecting ? 1 : 0,
-    intersectionRect: {} as DOMRectReadOnly,
-    rootBounds: null,
-    time: 0,
-  };
-}
+const scrollListeners: Array<EventListener> = [];
 
 beforeEach(() => {
-  const MockIntersectionObserver = vi.fn(function (
-    this: Record<string, unknown>,
-    callback: IntersectionObserverCallback,
-  ) {
-    observerCallback = callback;
-    this.observe = mockObserve;
-    this.unobserve = vi.fn();
-    this.disconnect = mockDisconnect;
-    this.root = null;
-    this.rootMargin = "";
-    this.thresholds = [];
-    this.takeRecords = vi.fn().mockReturnValue([]);
+  vi.spyOn(window, "addEventListener").mockImplementation(
+    (event: string, handler: EventListenerOrEventListenerObject) => {
+      if (event === "scroll" && typeof handler === "function") {
+        scrollListeners.push(handler);
+      }
+    },
+  );
+  vi.spyOn(window, "removeEventListener").mockImplementation(() => {});
+
+  Object.defineProperty(window, "innerHeight", {
+    writable: true,
+    value: 1000,
   });
-  window.IntersectionObserver =
-    MockIntersectionObserver as unknown as typeof IntersectionObserver;
+  Object.defineProperty(window, "scrollY", { writable: true, value: 0 });
+  Object.defineProperty(document.documentElement, "scrollHeight", {
+    writable: true,
+    value: 3000,
+  });
 });
 
 afterEach(() => {
   document.body.innerHTML = "";
+  scrollListeners.length = 0;
   vi.restoreAllMocks();
-  mockObserve.mockClear();
-  mockDisconnect.mockClear();
 });
 
 function setupArticle(
@@ -58,6 +42,31 @@ function setupArticle(
     article.appendChild(el);
   });
   document.body.appendChild(article);
+}
+
+function mockHeadingPositions(positions: Record<string, number>) {
+  for (const [id, top] of Object.entries(positions)) {
+    const el = document.getElementById(id);
+    if (el) {
+      vi.spyOn(el, "getBoundingClientRect").mockReturnValue({
+        top,
+        bottom: top + 30,
+        left: 0,
+        right: 100,
+        width: 100,
+        height: 30,
+        x: 0,
+        y: top,
+        toJSON: () => {},
+      });
+    }
+  }
+}
+
+function fireScroll() {
+  act(() => {
+    scrollListeners.forEach((fn) => fn(new Event("scroll")));
+  });
 }
 
 describe("useActiveHeading", () => {
@@ -132,12 +141,38 @@ describe("useActiveHeading", () => {
       { tag: "h2", text: "Second" },
     ]);
 
+    // Both headings are below threshold on initial load
+    const firstEl = document.querySelector("h2:first-of-type")!;
+    const secondEl = document.querySelector("h2:last-of-type")!;
+    vi.spyOn(firstEl, "getBoundingClientRect").mockReturnValue({
+      top: 400,
+      bottom: 430,
+      left: 0,
+      right: 100,
+      width: 100,
+      height: 30,
+      x: 0,
+      y: 400,
+      toJSON: () => {},
+    });
+    vi.spyOn(secondEl, "getBoundingClientRect").mockReturnValue({
+      top: 800,
+      bottom: 830,
+      left: 0,
+      right: 100,
+      width: 100,
+      height: 30,
+      x: 0,
+      y: 800,
+      toJSON: () => {},
+    });
+
     const { result } = renderHook(() => useActiveHeading("article", "slug-1"));
 
     expect(result.current.activeId).toBe("first");
   });
 
-  it("observes all heading elements", () => {
+  it("registers a scroll listener", () => {
     setupArticle([
       { tag: "h2", text: "A" },
       { tag: "h3", text: "B" },
@@ -145,10 +180,10 @@ describe("useActiveHeading", () => {
 
     renderHook(() => useActiveHeading("article", "slug-1"));
 
-    expect(mockObserve).toHaveBeenCalledTimes(2);
+    expect(scrollListeners.length).toBeGreaterThan(0);
   });
 
-  it("activates heading when IntersectionObserver fires isIntersecting", () => {
+  it("activates heading that scrolled past the 30% threshold", () => {
     setupArticle([
       { tag: "h2", text: "First" },
       { tag: "h2", text: "Second" },
@@ -156,19 +191,14 @@ describe("useActiveHeading", () => {
 
     const { result } = renderHook(() => useActiveHeading("article", "slug-1"));
 
-    const secondEl = document.getElementById("second")!;
-
-    act(() => {
-      observerCallback(
-        [createEntry(secondEl, true, 50)],
-        {} as IntersectionObserver,
-      );
-    });
+    // Second heading scrolled above threshold (30% of 1000 = 300)
+    mockHeadingPositions({ first: -200, second: 100 });
+    fireScroll();
 
     expect(result.current.activeId).toBe("second");
   });
 
-  it("activates previous heading when current exits downward (scroll up)", () => {
+  it("activates previous heading when scrolling back up", () => {
     setupArticle([
       { tag: "h2", text: "First" },
       { tag: "h2", text: "Second" },
@@ -176,44 +206,18 @@ describe("useActiveHeading", () => {
 
     const { result } = renderHook(() => useActiveHeading("article", "slug-1"));
 
-    const secondEl = document.getElementById("second")!;
-
-    act(() => {
-      observerCallback(
-        [createEntry(secondEl, true, 50)],
-        {} as IntersectionObserver,
-      );
-    });
+    mockHeadingPositions({ first: -200, second: 100 });
+    fireScroll();
     expect(result.current.activeId).toBe("second");
 
-    act(() => {
-      observerCallback(
-        [createEntry(secondEl, false, 400)],
-        {} as IntersectionObserver,
-      );
-    });
+    // Scroll back up — second is now below threshold
+    mockHeadingPositions({ first: 100, second: 500 });
+    fireScroll();
 
     expect(result.current.activeId).toBe("first");
   });
 
-  it("does not change activeId when first heading exits downward", () => {
-    setupArticle([{ tag: "h2", text: "Only" }]);
-
-    const { result } = renderHook(() => useActiveHeading("article", "slug-1"));
-
-    const onlyEl = document.getElementById("only")!;
-
-    act(() => {
-      observerCallback(
-        [createEntry(onlyEl, false, 400)],
-        {} as IntersectionObserver,
-      );
-    });
-
-    expect(result.current.activeId).toBe("only");
-  });
-
-  it("picks topmost heading when multiple are intersecting at once", () => {
+  it("keeps first heading active when all headings are below threshold", () => {
     setupArticle([
       { tag: "h2", text: "First" },
       { tag: "h2", text: "Second" },
@@ -222,25 +226,13 @@ describe("useActiveHeading", () => {
 
     const { result } = renderHook(() => useActiveHeading("article", "slug-1"));
 
-    const firstEl = document.getElementById("first")!;
-    const secondEl = document.getElementById("second")!;
-    const thirdEl = document.getElementById("third")!;
-
-    act(() => {
-      observerCallback(
-        [
-          createEntry(firstEl, true, 10),
-          createEntry(secondEl, true, 200),
-          createEntry(thirdEl, true, 500),
-        ],
-        {} as IntersectionObserver,
-      );
-    });
+    mockHeadingPositions({ first: 400, second: 700, third: 1000 });
+    fireScroll();
 
     expect(result.current.activeId).toBe("first");
   });
 
-  it("keeps first heading active on initial load when all headings are below observation zone", () => {
+  it("picks the last heading that passed threshold when multiple are above", () => {
     setupArticle([
       { tag: "h2", text: "First" },
       { tag: "h2", text: "Second" },
@@ -249,34 +241,40 @@ describe("useActiveHeading", () => {
 
     const { result } = renderHook(() => useActiveHeading("article", "slug-1"));
 
-    const firstEl = document.getElementById("first")!;
-    const secondEl = document.getElementById("second")!;
-    const thirdEl = document.getElementById("third")!;
+    mockHeadingPositions({ first: -300, second: -50, third: 200 });
+    fireScroll();
 
-    // Simulate initial observer callback: all headings below 30% zone
-    act(() => {
-      observerCallback(
-        [
-          createEntry(firstEl, false, 300),
-          createEntry(secondEl, false, 600),
-          createEntry(thirdEl, false, 900),
-        ],
-        {} as IntersectionObserver,
-      );
-    });
-
-    expect(result.current.activeId).toBe("first");
+    expect(result.current.activeId).toBe("third");
   });
 
-  it("disconnects observer on unmount", () => {
+  it("activates last heading when scrolled to page bottom", () => {
+    setupArticle([
+      { tag: "h2", text: "First" },
+      { tag: "h2", text: "Second" },
+      { tag: "h2", text: "Third" },
+    ]);
+
+    const { result } = renderHook(() => useActiveHeading("article", "slug-1"));
+
+    // Simulate at-bottom: innerHeight(1000) + scrollY(2000) >= scrollHeight(3000) - 30
+    Object.defineProperty(window, "scrollY", { writable: true, value: 2000 });
+    mockHeadingPositions({ first: -1000, second: -500, third: 400 });
+    fireScroll();
+
+    expect(result.current.activeId).toBe("third");
+  });
+
+  it("removes scroll listener on unmount", () => {
     setupArticle([{ tag: "h2", text: "Heading" }]);
 
-    const { unmount } = renderHook(() => useActiveHeading("article", "slug-1"));
+    const listenersBefore = scrollListeners.length;
+    renderHook(() => useActiveHeading("article", "slug-1"));
 
-    const callsBefore = mockDisconnect.mock.calls.length;
-    unmount();
-
-    expect(mockDisconnect.mock.calls.length).toBeGreaterThan(callsBefore);
+    expect(scrollListeners.length).toBeGreaterThan(listenersBefore);
+    expect(window.removeEventListener).not.toHaveBeenCalledWith(
+      "scroll",
+      expect.any(Function),
+    );
   });
 
   it("rescans headings when contentKey changes", () => {

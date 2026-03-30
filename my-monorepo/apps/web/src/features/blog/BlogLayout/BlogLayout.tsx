@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-import { CircleHelp } from "lucide-react";
+import { CircleHelp, ChevronDown } from "lucide-react";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
 import Footer from "@features/Footer/Footer";
 import {
@@ -184,6 +184,19 @@ const BlogLayout = () => {
                   </a>
                 )}
               </div>
+              <details className={styles.inlineSidebar}>
+                <summary className={styles.inlineSidebarSummary}>
+                  {t(slug ? "blog.showSidebar" : "blog.showSidebarGeneric")}
+                  <ChevronDown
+                    className={styles.inlineSidebarChevron}
+                    aria-hidden
+                  />
+                </summary>
+                <div className={styles.inlineSidebarContent}>
+                  {slug && <TableOfContent slug={slug} />}
+                  <SidebarAds category="frontend" />
+                </div>
+              </details>
               <Outlet />
             </InnerColumnSection>
             <SidebarMenuLayout
