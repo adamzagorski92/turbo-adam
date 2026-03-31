@@ -1,6 +1,8 @@
 {
   "navbar": {
-    "buyCoffeeCta": "Buy a coffee"
+    "buyCoffeeCta": "Buy a coffee",
+    "blog": "Blog",
+    "settings": "Settings"
   },
   "languageSwitcher": {
     "ariaLabel": "Change language"
