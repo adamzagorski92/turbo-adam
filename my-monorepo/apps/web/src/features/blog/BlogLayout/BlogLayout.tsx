@@ -23,6 +23,7 @@ import { useBlogFilterStore } from "@stores/useBlogFilterStore";
 import { SidebarAds } from "@features/blog/SidebarAds/SidebarAds";
 import { TableOfContent } from "@features/blog/TableOfContent/TableOfContent";
 import TopWidgets from "./sections/TopWidgets/TopWidgets";
+import MobileDetails from "./sections/MobileDetails/MobileDetails";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
@@ -156,24 +157,11 @@ const BlogLayout = () => {
               <h1 className={styles.blogHeading} id="blog-heading">
                 {heading}
               </h1>
-
               <TopWidgets slug={slug} isModified={isModified} reset={reset} />
-
-              <details className={styles.inlineSidebar}>
-                <summary className={styles.inlineSidebarSummary}>
-                  {t(slug ? "blog.showSidebar" : "blog.showSidebarGeneric")}
-                  <ChevronDown
-                    className={styles.inlineSidebarChevron}
-                    aria-hidden
-                  />
-                </summary>
-                <div className={styles.inlineSidebarContent}>
-                  {slug && <TableOfContent slug={slug} />}
-                  <SidebarAds category="frontend" />
-                </div>
-              </details>
+              <MobileDetails slug={slug} />
               <Outlet />
             </InnerColumnSection>
+
             <SidebarMenuLayout
               selector="section"
               direction="column"
