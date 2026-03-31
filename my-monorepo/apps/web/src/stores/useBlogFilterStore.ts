@@ -53,7 +53,10 @@ export const useBlogFilterStore = create<BlogFilterState>()(
           set({ selectedIds: ids });
           markFiltering();
         },
-        setSearchQuery: (query) => set({ searchQuery: query }),
+        setSearchQuery: (query) => {
+          set({ searchQuery: query });
+          markFiltering();
+        },
         setSectionIds: (section, ids) => {
           set({
             selectedIds: {
