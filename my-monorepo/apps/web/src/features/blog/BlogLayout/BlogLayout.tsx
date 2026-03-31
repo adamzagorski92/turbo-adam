@@ -69,12 +69,11 @@ const BlogLayout = () => {
     sub?: string;
   }>();
   const { pathname } = useLocation();
-  const { t, i18n } = useTranslation("UI");
+  const { t } = useTranslation("UI");
   const [activeDrawer, setActiveDrawer] = useState<ActiveDrawer>(null);
 
   const heading = resolveHeading(t, slug, archive, sub, pathname);
-  // i18n.language drives recomputation; t is stable but required by exhaustive-deps
-  const filterTree = useMemo(() => getBlogFilterTree(t), [t, i18n.language]);
+  const filterTree = useMemo(() => getBlogFilterTree(t), [t]);
   const { isModified, reset } = useFilterStatus(filterTree);
 
   const isArticle = !!slug;
@@ -83,9 +82,14 @@ const BlogLayout = () => {
 
   const showFilters = isArticleList;
 
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    if (activeDrawer !== null) setActiveDrawer(null);
+  }
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-    setActiveDrawer(null);
   }, [pathname]);
 
   const drawerActions = useMemo(

@@ -66,9 +66,13 @@ export function useFilterNavigation(tree: FilterNode[], rootLabel: string) {
     { label: rootLabel, items: tree },
   ]);
 
-  useEffect(() => {
+  const [prevTree, setPrevTree] = useState(tree);
+  const [prevLabel, setPrevLabel] = useState(rootLabel);
+  if (prevTree !== tree || prevLabel !== rootLabel) {
+    setPrevTree(tree);
+    setPrevLabel(rootLabel);
     setStack([{ label: rootLabel, items: tree }]);
-  }, [tree, rootLabel]);
+  }
 
   const allLeafIdsGrouped = useMemo<GroupedIds>(
     () => buildLeafIdsGrouped(tree),

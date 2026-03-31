@@ -83,6 +83,7 @@ export const useBlogFilterStore = create<BlogFilterState>()(
     {
       name: "blog-filters",
       storage: createJSONStorage(() => sessionStorage),
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       partialize: ({ searchQuery, isFiltering, ...rest }) => rest,
     },
   ),

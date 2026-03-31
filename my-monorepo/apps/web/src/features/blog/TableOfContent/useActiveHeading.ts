@@ -23,15 +23,18 @@ export function useActiveHeading(
   const [activeId, setActiveId] = useState("");
   const headingIdsRef = useRef<string[]>([]);
 
+  const [prevKey, setPrevKey] = useState(contentKey);
+  if (prevKey !== contentKey) {
+    setPrevKey(contentKey);
+    setHeadings([]);
+    setActiveId("");
+  }
+
   useEffect(() => {
     let cancelled = false;
 
     const container = document.querySelector(containerSelector);
-    if (!container) {
-      setHeadings([]);
-      setActiveId("");
-      return;
-    }
+    if (!container) return;
 
     const elements = container.querySelectorAll<HTMLHeadingElement>("h2, h3");
     const slugCount = new Map<string, number>();
@@ -58,6 +61,8 @@ export function useActiveHeading(
     });
 
     headingIdsRef.current = ids;
+    // DOM scan → sync state (external system read, not a cascading render)
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHeadings(collected);
     setActiveId(ids[0] ?? "");
 
