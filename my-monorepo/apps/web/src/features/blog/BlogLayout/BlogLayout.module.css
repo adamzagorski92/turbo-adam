@@ -17,23 +17,6 @@
   padding-bottom: var(--spacing-4);
 }
 
-.sidebarSection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-1);
-  width: 100%;
-  min-width: 0;
-}
-
-.sidebarSectionLabel {
-  margin: 0;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--color-fg-tertiary);
-}
-
 .drawerFilterStatus {
   display: flex;
   align-items: center;
@@ -58,41 +41,6 @@
   }
 }
 
-.sidebarLink {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-  width: 100%;
-  min-width: 0;
-  padding: var(--spacing-2) var(--spacing-3);
-  border: none;
-  border-radius: var(--radius-base);
-  background: transparent;
-  color: var(--color-fg-secondary);
-  font-family: var(--font-sans);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
-  text-decoration: none;
-  text-align: left;
-  cursor: pointer;
-  transition: var(--transition-interactive);
-  overflow: hidden;
-}
-
-.sidebarLink:hover {
-  color: var(--color-accent);
-  background: var(--color-bg-surface-hover);
-  text-decoration: none;
-}
-
-.sidebarLink:focus-visible {
-  outline: 2px solid var(--color-border-default);
-  outline-offset: -2px;
-  text-decoration: none;
-  color: var(--color-fg-secondary);
-}
-
 @media (max-width: 992px) {
   .contentGrid {
     flex-direction: column;
@@ -105,11 +53,6 @@
 
   .contentGrid > *:last-child {
     display: none;
-  }
-
-  .inlineSidebar {
-    display: block;
-    width: 100%;
   }
 }
 

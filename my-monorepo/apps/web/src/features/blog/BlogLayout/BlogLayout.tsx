@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, Outlet, useLocation, useParams } from "react-router";
+import { Outlet, useLocation, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-import { ChevronDown, LoaderCircle } from "lucide-react";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
 import Footer from "@features/Footer/Footer";
 import {
@@ -11,19 +10,17 @@ import {
 } from "@packages/components";
 import styles from "./BlogLayout.module.css";
 import SidebarMenuLayout from "@features/blog/SidebarMenuLayout/SidebarMenuLayout";
-import SideTreeNavigation from "@features/blog/SideTreeNavigation/SideTreeNavigation";
 import BlogNavbar from "@features/blog/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { getArchiveConfig, getArchiveDates } from "@utils/archiveConfig";
 import { getBlogFilterTree } from "@utils/blogMenuItems";
-import FilterNotice from "@features/blog/FilterNotice/FilterNotice";
 import { useFilterStatus } from "@features/blog/hooks/useFilterStatus";
-import { useBlogFilterStore } from "@stores/useBlogFilterStore";
 import { SidebarAds } from "@features/blog/SidebarAds/SidebarAds";
 import { TableOfContent } from "@features/blog/TableOfContent/TableOfContent";
 import TopWidgets from "./sections/TopWidgets/TopWidgets";
 import MobileDetails from "./sections/MobileDetails/MobileDetails";
+import MenuList from "./sections/MenuList/MenuList";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
@@ -79,7 +76,6 @@ const BlogLayout = () => {
   // i18n.language drives recomputation; t is stable but required by exhaustive-deps
   const filterTree = useMemo(() => getBlogFilterTree(t), [t, i18n.language]);
   const { isModified, reset } = useFilterStatus(filterTree);
-  const isFiltering = useBlogFilterStore((s) => s.isFiltering);
 
   const isArticle = !!slug;
   const isArchive = pathname.startsWith("/blog/archive");
@@ -109,30 +105,12 @@ const BlogLayout = () => {
           direction="column"
           sidebarPosition="left"
         >
-          <div className={styles.sidebarSection}>
-            <p className={styles.sidebarSectionLabel}>
-              {t("blog.sidebarMain")}
-            </p>
-            <Link to="/" className={styles.sidebarLink}>
-              {t("blog.home")}
-            </Link>
-            {(isArticle || isArchive) && (
-              <Link to="/blog" className={styles.sidebarLink}>
-                {t("blog.blogLabel")}
-              </Link>
-            )}
-            {!isArchive && (
-              <Link to="/blog/archive" className={styles.sidebarLink}>
-                {t("blog.archive")}
-              </Link>
-            )}
-          </div>
-          {showFilters && (
-            <div className={styles.sidebarSection}>
-              <p className={styles.sidebarSectionLabel}>{t("blog.filters")}</p>
-              <SideTreeNavigation tree={filterTree} />
-            </div>
-          )}
+          <MenuList
+            isArticle={isArticle}
+            isArchive={isArchive}
+            showFilters={showFilters}
+            filterTree={filterTree}
+          />
         </SidebarMenuLayout>
         <InnerColumnSection selector="section" direction="column">
           <BlogNavbar
@@ -182,41 +160,13 @@ const BlogLayout = () => {
         ariaLabel={t("blog.menuNav")}
       >
         <Logo />
-        <div className={styles.sidebarSection}>
-          <p className={styles.sidebarSectionLabel}>{t("blog.sidebarMain")}</p>
-          <Link to="/" className={styles.sidebarLink}>
-            {t("blog.home")}
-          </Link>
-          {(isArticle || isArchive) && (
-            <Link to="/blog" className={styles.sidebarLink}>
-              {t("blog.blogLabel")}
-            </Link>
-          )}
-          {!isArchive && (
-            <Link to="/blog/archive" className={styles.sidebarLink}>
-              {t("blog.archive")}
-            </Link>
-          )}
-        </div>
-        {showFilters && (
-          <div className={styles.sidebarSection}>
-            <p className={styles.sidebarSectionLabel}>{t("blog.filters")}</p>
-            {(isFiltering || isModified) && (
-              <div className={styles.drawerFilterStatus}>
-                {isFiltering ? (
-                  <LoaderCircle
-                    size={14}
-                    className={styles.drawerSpinner}
-                    aria-hidden
-                  />
-                ) : (
-                  <FilterNotice isModified={isModified} onReset={reset} />
-                )}
-              </div>
-            )}
-            <SideTreeNavigation tree={filterTree} />
-          </div>
-        )}
+        <MenuList
+          isArticle={isArticle}
+          isArchive={isArchive}
+          showFilters={showFilters}
+          filterTree={filterTree}
+          filterStatus={{ isModified, reset }}
+        />
       </Drawer>
     </PageContainer>
   );
