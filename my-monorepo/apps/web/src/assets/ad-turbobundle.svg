@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="200" fill="url(#bg)"/>
+  <circle cx="320" cy="60" r="40" fill="#e94560" opacity="0.3"/>
+  <circle cx="80" cy="150" r="30" fill="#0f3460" opacity="0.5"/>
+  <text x="200" y="90" text-anchor="middle" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#e94560">TurboBundle</text>
+  <text x="200" y="125" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#a0a0b0">Rust-powered bundler</text>
+  <rect x="140" y="145" width="120" height="32" rx="6" fill="#e94560"/>
+  <text x="200" y="166" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#fff">Sprawdź →</text>
+</svg>

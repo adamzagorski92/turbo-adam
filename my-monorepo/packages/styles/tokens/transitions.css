@@ -22,8 +22,7 @@
     background-color var(--duration-base) var(--ease-in-out),
     border-color var(--duration-base) var(--ease-in-out),
     box-shadow var(--duration-base) var(--ease-in-out),
-    opacity var(--duration-base) var(--ease-in-out),
-    transform var(--duration-base) var(--ease-in-out);
+    opacity var(--duration-base) var(--ease-in-out);
   --transition-transform: transform var(--duration-base) var(--ease-in-out);
   --transition-all: all var(--duration-base) var(--ease-in-out);
 }

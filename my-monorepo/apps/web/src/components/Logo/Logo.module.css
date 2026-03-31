@@ -2,8 +2,8 @@
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
-  margin-right: auto;
   text-decoration: none;
+  transform: translateY(-2px);
 }
 
 .logo img {

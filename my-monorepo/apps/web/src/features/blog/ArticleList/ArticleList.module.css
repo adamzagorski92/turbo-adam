@@ -1,0 +1,19 @@
+.spinnerOverlay {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-32, 2rem) 0;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  color: var(--color-text-secondary, currentColor);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

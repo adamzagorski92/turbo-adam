@@ -2,7 +2,7 @@
   --layout-max-width: 1920px;
   --page-body-padding-x: clamp(0px, 4vw, var(--spacing-12));
   --section-padding-x: clamp(var(--spacing-md), 3vw, var(--spacing-12));
-  --section-padding-y: clamp(var(--spacing-2xl), 4vw, var(--spacing-12));
+  --section-padding-y: clamp(var(--spacing-md), 1vw, var(--spacing-6));
   --scrollbar-width: calc(100vw - 100%);
 }
 

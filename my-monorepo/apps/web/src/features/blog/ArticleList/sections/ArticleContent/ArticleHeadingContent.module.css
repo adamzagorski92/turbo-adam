@@ -1,0 +1,55 @@
+.meta {
+  display: flex;
+  gap: var(--spacing-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-fg-tertiary);
+}
+
+.title {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-fg-primary);
+}
+
+.excerpt {
+  font-size: var(--font-size-base);
+  color: var(--color-fg-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+.tags {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tag {
+  display: inline-block;
+  padding: var(--spacing-1) var(--spacing-2);
+  background: var(--color-bg-brand-subtle);
+  color: var(--color-accent);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Variant: latest */
+.titleLatest {
+  font-size: var(--font-size-3xl);
+}
+
+/* Variant: card */
+.metaCard {
+  margin-bottom: var(--spacing-2);
+}
+
+.titleCard {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-2);
+}
+
+.excerptCard {
+  margin-bottom: var(--spacing-3);
+}

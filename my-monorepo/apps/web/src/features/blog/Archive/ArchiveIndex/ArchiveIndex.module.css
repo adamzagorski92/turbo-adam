@@ -1,0 +1,11 @@
+.grid {
+  columns: 2;
+  column-gap: var(--spacing-8);
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    columns: 3;
+  }
+}

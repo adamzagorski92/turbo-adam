@@ -1,9 +1,12 @@
 {
+  // TODO: Remove ignoreDeprecations once ts-jest supports TypeScript 6 natively (tracks: https://github.com/kulshekhar/ts-jest/issues)
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
-    "resolvePackageJsonExports": false
+    "resolvePackageJsonExports": false,
+    "rootDir": ".",
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src/**/*.ts", "test/**/*.ts"],
   "exclude": ["node_modules", "dist"]

@@ -1,0 +1,162 @@
+.topBar {
+  padding-top: var(--spacing-6);
+  padding-bottom: var(--spacing-6);
+  gap: var(--spacing-6);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.navMenu {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex: 1;
+  min-width: 0;
+}
+
+.menuSeparator {
+  width: 2px;
+  height: 2rem;
+  background: var(--color-border-default);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.blogLink {
+  color: var(--color-fg-secondary);
+  text-decoration: none;
+  transition: var(--transition-colors);
+  white-space: nowrap;
+}
+
+.blogLink:hover {
+  color: var(--color-fg-primary);
+  text-decoration: none;
+}
+
+.coffeeLinkIcon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.desktopOnly {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.iconButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-input);
+  cursor: pointer;
+  color: var(--color-fg-secondary);
+  transition: var(--transition-colors);
+}
+
+.iconButton:hover {
+  color: var(--color-fg-primary);
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.iconSize {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.mobileOnly {
+  display: none;
+}
+
+.settingsDrawerContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.settingsCoffeeLink {
+  font-size: var(--font-size-sm);
+}
+
+.settingsDivider {
+  border: none;
+  border-top: 1px solid var(--color-border-default);
+  margin: var(--spacing-1) 0;
+}
+
+.settingsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: var(--transition-interactive);
+}
+
+.settingsRow:hover {
+  background: var(--color-bg-surface-hover);
+}
+
+.settingsRow:focus-visible {
+  outline: 2px solid var(--color-border-default);
+  outline-offset: -2px;
+}
+
+.settingsRow > * {
+  pointer-events: none;
+}
+
+.settingsLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-fg-secondary);
+}
+
+@media (max-width: 480px) {
+  .topBar {
+    gap: var(--spacing-2);
+    padding-top: var(--spacing-3);
+    padding-bottom: var(--spacing-3);
+    flex-wrap: nowrap;
+  }
+
+  .coffeeLink {
+    height: auto;
+    padding: var(--spacing-2) var(--spacing-3);
+  }
+
+  .coffeeLinkIcon {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .menuSeparator {
+    height: 1rem;
+  }
+
+  .desktopOnly {
+    display: none;
+  }
+
+  .mobileOnly {
+    display: inline-flex;
+  }
+}

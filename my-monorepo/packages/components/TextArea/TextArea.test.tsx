@@ -4,7 +4,9 @@ import TextArea from "./TextArea";
 
 describe("TextArea", () => {
   it("has been rendered", () => {
-    render(<TextArea>Type your text there</TextArea>);
-    expect(screen.getByText("Type your text there")).toBeInTheDocument();
+    render(<TextArea defaultValue="Type your text there" />);
+    expect(
+      screen.getByDisplayValue("Type your text there"),
+    ).toBeInTheDocument();
   });
 });

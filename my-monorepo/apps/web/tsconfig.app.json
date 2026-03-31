@@ -16,15 +16,16 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
     "paths": {
       "@packages/*": ["../../packages/*"],
-      "@assets/*": ["src/assets/*"],
-      "@components/*": ["src/components/*"],
-      "@constans/*": ["src/constans/*"],
-      "@features/*": ["src/features/*"],
-      "@leyouts/*": ["src/leyouts/*"],
-      "@app-types/*": ["src/types/*"]
+      "@assets/*": ["./src/assets/*"],
+      "@components/*": ["./src/components/*"],
+      "@constans/*": ["./src/constans/*"],
+      "@features/*": ["./src/features/*"],
+      "@leyouts/*": ["./src/leyouts/*"],
+      "@app-types/*": ["./src/types/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@stores/*": ["./src/stores/*"]
     },
 
     /* Linting */

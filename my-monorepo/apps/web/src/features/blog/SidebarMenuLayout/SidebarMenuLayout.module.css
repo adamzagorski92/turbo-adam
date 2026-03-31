@@ -1,0 +1,39 @@
+.leftPanel {
+  padding: 0;
+  border-right: 1px solid var(--color-border-default);
+  position: sticky;
+  top: 0;
+  min-height: 100dvh;
+  max-height: 100dvh;
+  flex: 0 0 auto;
+  align-self: auto;
+  gap: var(--spacing-6);
+}
+
+.leftPanel > :first-child {
+  padding: 0 var(--spacing-4);
+}
+
+.leftPanelScroll {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--spacing-1) var(--spacing-4);
+  gap: var(--spacing-4);
+}
+
+.rightPanel {
+  padding: 0 var(--spacing-4) var(--spacing-4);
+  border-left: 1px solid var(--color-border-default);
+  align-self: flex-start;
+}
+
+@media (max-width: 992px) {
+  .rightPanel {
+    display: none;
+  }
+}

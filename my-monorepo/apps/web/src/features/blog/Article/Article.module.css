@@ -1,0 +1,23 @@
+.content {
+  font-size: var(--font-size-base);
+  color: var(--color-fg-secondary);
+  line-height: var(--line-height-relaxed);
+  padding-block: var(--spacing-6);
+}
+
+.content p + p {
+  margin-top: var(--spacing-4);
+}
+
+@media (min-width: 1025px) {
+  .columns {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  .columns {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,216 @@
+.seriesNav {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 7rem;
+  min-width: 0;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.widgetTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  margin: 0;
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-fg-secondary);
+}
+
+.widgetCount {
+  font-size: 0.68rem;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-fg-tertiary);
+}
+
+.seriesSubtitle {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-fg-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slider {
+  display: grid;
+  grid-template-columns: 1.35rem minmax(0, 1fr) 1.35rem;
+  align-items: center;
+  min-height: 2.2rem;
+  gap: var(--spacing-2);
+}
+
+.slideButton {
+  width: 1.35rem;
+  height: 1.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--color-fg-muted);
+  transition:
+    color 160ms ease,
+    opacity 160ms ease;
+}
+
+.slideButtonActive {
+  color: var(--color-accent);
+  cursor: pointer;
+}
+
+.slideButtonActive:hover {
+  color: var(--color-accent-hover);
+}
+
+.slideButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.slideButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  height: 2rem;
+  gap: var(--spacing-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-width: 0;
+}
+
+.stepLink,
+.stepPending {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.stepLink:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.stepVisual {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  color: var(--color-fg-secondary);
+  transition: var(--transition-interactive);
+}
+
+.stepVisualActive {
+  color: var(--color-accent);
+}
+
+.stepVisualPending {
+  color: var(--color-fg-tertiary);
+}
+
+.stepLink:hover .stepVisual {
+  color: var(--color-accent-hover);
+}
+
+.stepLink[aria-current="page"]:hover .stepVisual {
+  color: var(--color-accent-hover);
+}
+
+.stepIcon {
+  flex-shrink: 0;
+}
+
+.stepBadge {
+  position: absolute;
+  right: -0.32rem;
+  top: -0.18rem;
+  min-width: 1rem;
+  height: 1rem;
+  padding: 0 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--color-bg-canvas);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-fg-secondary);
+  font-size: 0.6rem;
+  font-weight: var(--font-weight-semibold);
+  transition: var(--transition-interactive);
+}
+
+.stepLink:hover .stepBadge {
+  color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+.stepLink[aria-current="page"] .stepBadge {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.singleArticleMessage {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-fg-secondary);
+}
+
+@media (max-width: 768px) {
+  .seriesNav {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--spacing-2);
+  }
+
+  .header {
+    width: 100%;
+  }
+
+  .slider {
+    grid-template-columns: 1.15rem minmax(0, 1fr) 1.15rem;
+    gap: var(--spacing-1);
+  }
+
+  .steps {
+    gap: var(--spacing-1);
+  }
+}

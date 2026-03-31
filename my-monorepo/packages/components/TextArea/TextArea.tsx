@@ -1,7 +1,5 @@
-import type { ReactNode } from "react";
-
-const TextArea = ({ children }: { children: ReactNode }) => {
-  return <textarea>{children}</textarea>;
+const TextArea = ({ defaultValue }: { defaultValue?: string }) => {
+  return <textarea defaultValue={defaultValue} />;
 };
 
 export default TextArea;

@@ -1,0 +1,41 @@
+.link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  width: 100%;
+}
+
+.link:hover,
+.link:focus-visible {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  width: 100%;
+  gap: var(--spacing-4);
+  padding: var(--spacing-6);
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border-default);
+  transition: var(--transition-interactive);
+}
+
+.card:hover,
+.link:hover .card {
+  background: var(--color-bg-surface-hover);
+  border-color: var(--color-border-accent);
+}
+
+.cardBody {
+  min-width: 0;
+  align-self: center;
+}
+
+@media (max-width: 768px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+}
