@@ -1,6 +1,8 @@
 {
   "navbar": {
-    "buyCoffeeCta": "Buy a coffee"
+    "buyCoffeeCta": "Buy a coffee",
+    "blog": "Blog",
+    "settings": "Settings"
   },
   "languageSwitcher": {
     "ariaLabel": "Change language"
@@ -83,6 +85,10 @@
       "dec": "December"
     },
     "adLabel": "Ad",
-    "tableOfContent": "Table of Contents"
+    "tableOfContent": "Table of Contents",
+    "sidebarMain": "Main",
+    "showSidebar": "Table of contents & more",
+    "showSidebarGeneric": "More",
+    "goBack": "Back"
   }
 }

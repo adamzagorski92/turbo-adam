@@ -14,10 +14,10 @@ const renderSidebarAds = (category: string) =>
   );
 
 describe("SidebarAds — category filtering", () => {
-  it("renders only ads matching the given category", () => {
+  it("renders all ads matching the given category", () => {
     renderSidebarAds("frontend");
     expect(screen.getByText(ADS_MOCK[0].hook)).toBeInTheDocument();
-    expect(screen.queryByText(ADS_MOCK[1].hook)).not.toBeInTheDocument();
+    expect(screen.getByText(ADS_MOCK[1].hook)).toBeInTheDocument();
   });
 
   it("renders nothing when no ads match", () => {

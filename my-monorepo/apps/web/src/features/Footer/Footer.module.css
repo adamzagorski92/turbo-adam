@@ -4,6 +4,10 @@
   color: var(--color-fg-tertiary);
   line-height: var(--line-height-relaxed);
   text-align: left;
+
+  p {
+    margin-bottom: 0;
+  }
 }
 
 .footer a {

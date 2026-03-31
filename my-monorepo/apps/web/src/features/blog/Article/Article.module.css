@@ -9,6 +9,13 @@
   margin-top: var(--spacing-4);
 }
 
+@media (min-width: 1025px) {
+  .columns {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
 @media (max-width: 1024px) {
   .columns {
     flex-direction: column;

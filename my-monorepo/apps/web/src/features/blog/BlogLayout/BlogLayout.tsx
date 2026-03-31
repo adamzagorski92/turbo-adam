@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Outlet, useLocation, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-import { CircleHelp } from "lucide-react";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
 import Footer from "@features/Footer/Footer";
 import {
@@ -11,19 +10,17 @@ import {
 } from "@packages/components";
 import styles from "./BlogLayout.module.css";
 import SidebarMenuLayout from "@features/blog/SidebarMenuLayout/SidebarMenuLayout";
-import SideTreeNavigation from "@features/blog/SideTreeNavigation/SideTreeNavigation";
-import Breadcrumbs from "@features/blog/Breadcrumbs/Breadcrumbs";
 import BlogNavbar from "@features/blog/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { getArchiveConfig, getArchiveDates } from "@utils/archiveConfig";
 import { getBlogFilterTree } from "@utils/blogMenuItems";
-import { ArchiveIndex } from "../Archive/ArchiveIndex/ArchiveIndex";
-import FilterNotice from "@features/blog/FilterNotice/FilterNotice";
-import ArticleSeriesNavigation from "@features/blog/ArticleSeriesNavigation/ArticleSeriesNavigation";
 import { useFilterStatus } from "@features/blog/hooks/useFilterStatus";
 import { SidebarAds } from "@features/blog/SidebarAds/SidebarAds";
 import { TableOfContent } from "@features/blog/TableOfContent/TableOfContent";
+import TopWidgets from "./sections/TopWidgets/TopWidgets";
+import MobileDetails from "./sections/MobileDetails/MobileDetails";
+import MenuList from "./sections/MenuList/MenuList";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
@@ -72,17 +69,28 @@ const BlogLayout = () => {
     sub?: string;
   }>();
   const { pathname } = useLocation();
-  const { t, i18n } = useTranslation("UI");
+  const { t } = useTranslation("UI");
   const [activeDrawer, setActiveDrawer] = useState<ActiveDrawer>(null);
 
   const heading = resolveHeading(t, slug, archive, sub, pathname);
-  // i18n.language drives recomputation; t is stable but required by exhaustive-deps
-  const filterTree = useMemo(() => getBlogFilterTree(t), [t, i18n.language]);
+  const filterTree = useMemo(() => getBlogFilterTree(t), [t]);
   const { isModified, reset } = useFilterStatus(filterTree);
+
+  const isArticle = !!slug;
+  const isArchive = pathname.startsWith("/blog/archive");
+  const isArticleList = !isArticle && !isArchive && !archive;
+
+  const showFilters = isArticleList;
+
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    if (activeDrawer !== null) setActiveDrawer(null);
+  }
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-  }, [slug, archive, sub]);
+  }, [pathname]);
 
   const drawerActions = useMemo(
     () => ({
@@ -101,10 +109,16 @@ const BlogLayout = () => {
           direction="column"
           sidebarPosition="left"
         >
-          <SideTreeNavigation tree={filterTree} />
+          <MenuList
+            isArticle={isArticle}
+            isArchive={isArchive}
+            showFilters={showFilters}
+            filterTree={filterTree}
+          />
         </SidebarMenuLayout>
         <InnerColumnSection selector="section" direction="column">
           <BlogNavbar
+            isArticleList={isArticleList}
             onMenuOpen={drawerActions.openMenu}
             settingsOpen={activeDrawer === "settings"}
             onSettingsOpen={drawerActions.openSettings}
@@ -125,47 +139,20 @@ const BlogLayout = () => {
               <h1 className={styles.blogHeading} id="blog-heading">
                 {heading}
               </h1>
-              <div className={styles.noticeRow}>
-                <section
-                  className={`${styles.noticeColumn} ${styles.messagesColumn}`}
-                  aria-label={t("blog.messagesTitle")}
-                >
-                  <p className={styles.noticeColumnTitle}>
-                    {t("blog.messagesTitle")}
-                  </p>
-                  {isModified ? (
-                    <FilterNotice isModified={isModified} onReset={reset} />
-                  ) : (
-                    <p className={styles.noticePlaceholder}>
-                      {t("blog.noMessages")}
-                    </p>
-                  )}
-                </section>
-                <section
-                  className={`${styles.noticeColumn} ${styles.seriesColumn}`}
-                >
-                  <ArticleSeriesNavigation slug={slug} />
-                </section>
-              </div>
-              <div className={styles.breadcrumbRow}>
-                <Breadcrumbs />
-                {slug && (
-                  <a href="#faq-heading" className={styles.faqLink}>
-                    <CircleHelp size={14} aria-hidden />
-                    FAQ
-                  </a>
-                )}
-              </div>
+              <TopWidgets slug={slug} isModified={isModified} reset={reset} />
+              <MobileDetails slug={slug} />
               <Outlet />
             </InnerColumnSection>
+
             <SidebarMenuLayout
               selector="section"
               direction="column"
               sidebarPosition="right"
             >
-              {slug && <TableOfContent slug={slug} />}
-              <ArchiveIndex sidebar />
-              <SidebarAds category="frontend" />
+              <div key={pathname} className={styles.rightSidebarContent}>
+                {slug && <TableOfContent slug={slug} />}
+                <SidebarAds category="frontend" />
+              </div>
             </SidebarMenuLayout>
           </ColumnSection>
           <Footer borderTop />
@@ -179,7 +166,13 @@ const BlogLayout = () => {
         ariaLabel={t("blog.menuNav")}
       >
         <Logo />
-        <SideTreeNavigation tree={filterTree} />
+        <MenuList
+          isArticle={isArticle}
+          isArchive={isArchive}
+          showFilters={showFilters}
+          filterTree={filterTree}
+          filterStatus={{ isModified, reset }}
+        />
       </Drawer>
     </PageContainer>
   );

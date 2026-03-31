@@ -154,4 +154,24 @@ React 19 to największa zmiana od Hooks. \`use()\` hook pozwala czytać Promise 
 
 \`use()\` hook ma fundamentalną różnicę od innych hooków — można go wywoływać warunkowo, wewnątrz pętli czy bloku \`if\`. Server Actions definiujemy przez dyrektywę \`'use server'\` — funkcje mogą być przekazywane jako prop \`action\` w formularzu. \`useFormStatus\` udostępnia stan bieżącej akcji formularza — \`pending\`, \`data\`, \`method\`. Transitions przez \`useTransition\` oznaczają aktualizacje jako low-priority — UI pozostaje responsywny podczas przetwarzania.`,
   },
+  {
+    id: 16,
+    content: `## Czym jest TurboBundle?
+
+TurboBundle to bundler nowej generacji napisany w Rust, zaprojektowany z myślą o szybkości. Dzięki natywnej kompilacji i wielowątkowemu przetwarzaniu, TurboBundle osiąga czas budowania nawet o 80% krótszy niż tradycyjne bundlery oparte na JavaScript. Integruje się bezproblemowo z istniejącymi projektami React, Vue i Svelte — wystarczy zamienić bundler w konfiguracji.
+
+## Jak zacząć z TurboBundle?
+
+Instalacja sprowadza się do jednej komendy: \`npm install -D turbobundle\`. Konfiguracja jest minimalna — TurboBundle automatycznie wykrywa framework i dostosowuje pipeline. Wspiera hot module replacement z natychmiastowym odświeżaniem, code splitting, tree shaking i lazy loading. Migracja z Webpack lub Vite wymaga jedynie podmianki konfiguracji — API jest kompatybilne z popularnymi pluginami.`,
+  },
+  {
+    id: 17,
+    content: `## Automatyzacja wdrożeń z AutoDeploy
+
+AutoDeploy to platforma do automatyzacji deploymentów, która eliminuje ręczne procesy i minimalizuje ryzyko przestojów. Obsługuje strategie blue-green i canary deployment out of the box. Integracja z GitHub Actions, GitLab CI i Bitbucket Pipelines pozwala na seamless włączenie w istniejący workflow CI/CD.
+
+## Zero-downtime w praktyce
+
+AutoDeploy monitoruje healthchecki nowych instancji przed przełączeniem ruchu. Rollback jest automatyczny — jeśli nowa wersja nie przejdzie healthchecków, system wraca do poprzedniej wersji w sekundach. Dashboard w czasie rzeczywistym pokazuje status deploymentu, logi i metryki. Wspiera Docker, Kubernetes i bare-metal serwery z jednolitym interfejsem.`,
+  },
 ];

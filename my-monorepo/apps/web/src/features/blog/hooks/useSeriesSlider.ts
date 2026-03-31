@@ -2,7 +2,7 @@
  * Custom hook for managing series slider state and logic
  */
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { ArticleSeriesContext } from "@features/blog/utils/getArticleSeriesContext";
 import {
   VISIBLE_STEPS,
@@ -13,19 +13,20 @@ import {
 export function useSeriesSlider(seriesContext: ArticleSeriesContext | null) {
   const [windowStart, setWindowStart] = useState(0);
 
-  // Reset and initialize window on series change
-  useEffect(() => {
+  const [prevContext, setPrevContext] = useState(seriesContext);
+  if (prevContext !== seriesContext) {
+    setPrevContext(seriesContext);
     if (!seriesContext) {
       setWindowStart(0);
-      return;
+    } else {
+      setWindowStart(
+        getInitialWindowStart(
+          seriesContext.currentIndex,
+          seriesContext.steps.length,
+        ),
+      );
     }
-
-    const initialStart = getInitialWindowStart(
-      seriesContext.currentIndex,
-      seriesContext.steps.length,
-    );
-    setWindowStart(initialStart);
-  }, [seriesContext]);
+  }
 
   // Compute derived state
   const totalSteps = seriesContext?.steps.length ?? 0;

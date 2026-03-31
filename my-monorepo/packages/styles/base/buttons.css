@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--spacing-2);
-  height: calc(2.25rem + var(--spacing-3) * 2 + 2px);
+  height: calc(2.25rem + var(--spacing-1) * 2 + 2px);
   padding: 0 var(--spacing-4);
   background-color: var(--color-bg-surface);
   border-radius: var(--radius-input);

@@ -1,3 +1,4 @@
+import { startTransition } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./PaginationArticles.module.css";
 
@@ -18,10 +19,10 @@ const PaginationArticles = ({
       document.activeElement.blur();
     }
 
-    setSearchParams({ page: String(page) });
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    startTransition(() => {
+      setSearchParams({ page: String(page) });
     });
   };
   return (
