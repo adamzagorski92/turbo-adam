@@ -41,6 +41,19 @@
   }
 }
 
+.rightSidebarContent {
+  animation: sidebar-fade-in 200ms ease-out both;
+}
+
+@keyframes sidebar-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 992px) {
   .contentGrid {
     flex-direction: column;

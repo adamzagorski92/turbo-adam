@@ -66,6 +66,19 @@
   padding: var(--spacing-4) var(--spacing-2);
 }
 
+.fadeIn {
+  animation: mobile-sidebar-fade-in 200ms ease-out both;
+}
+
+@keyframes mobile-sidebar-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 992px) {
   .inlineSidebar {
     display: block;

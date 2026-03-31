@@ -149,8 +149,10 @@ const BlogLayout = () => {
               direction="column"
               sidebarPosition="right"
             >
-              {slug && <TableOfContent slug={slug} />}
-              <SidebarAds category="frontend" />
+              <div key={pathname} className={styles.rightSidebarContent}>
+                {slug && <TableOfContent slug={slug} />}
+                <SidebarAds category="frontend" />
+              </div>
             </SidebarMenuLayout>
           </ColumnSection>
           <Footer borderTop />
