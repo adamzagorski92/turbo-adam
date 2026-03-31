@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-import { CircleHelp, ChevronDown, LoaderCircle } from "lucide-react";
+import { ChevronDown, LoaderCircle } from "lucide-react";
 import { PageContainer } from "@packages/components/basePageContainers/PageContainer/PageContainer";
 import Footer from "@features/Footer/Footer";
 import {
@@ -12,18 +12,17 @@ import {
 import styles from "./BlogLayout.module.css";
 import SidebarMenuLayout from "@features/blog/SidebarMenuLayout/SidebarMenuLayout";
 import SideTreeNavigation from "@features/blog/SideTreeNavigation/SideTreeNavigation";
-import Breadcrumbs from "@features/blog/Breadcrumbs/Breadcrumbs";
 import BlogNavbar from "@features/blog/BlogNavbar/BlogNavbar";
 import Logo from "@components/Logo/Logo";
 import { ARTICLES_CARD_MOCK } from "@constans/articlesCardMock";
 import { getArchiveConfig, getArchiveDates } from "@utils/archiveConfig";
 import { getBlogFilterTree } from "@utils/blogMenuItems";
 import FilterNotice from "@features/blog/FilterNotice/FilterNotice";
-import ArticleSeriesNavigation from "@features/blog/ArticleSeriesNavigation/ArticleSeriesNavigation";
 import { useFilterStatus } from "@features/blog/hooks/useFilterStatus";
 import { useBlogFilterStore } from "@stores/useBlogFilterStore";
 import { SidebarAds } from "@features/blog/SidebarAds/SidebarAds";
 import { TableOfContent } from "@features/blog/TableOfContent/TableOfContent";
+import TopWidgets from "./sections/TopWidgets/TopWidgets";
 
 type ActiveDrawer = "menu" | "settings" | null;
 
@@ -157,37 +156,9 @@ const BlogLayout = () => {
               <h1 className={styles.blogHeading} id="blog-heading">
                 {heading}
               </h1>
-              <div className={styles.noticeRow}>
-                <section
-                  className={`${styles.noticeColumn} ${styles.messagesColumn}`}
-                  aria-label={t("blog.messagesTitle")}
-                >
-                  <p className={styles.noticeColumnTitle}>
-                    {t("blog.messagesTitle")}
-                  </p>
-                  {isModified ? (
-                    <FilterNotice isModified={isModified} onReset={reset} />
-                  ) : (
-                    <p className={styles.noticePlaceholder}>
-                      {t("blog.noMessages")}
-                    </p>
-                  )}
-                </section>
-                <section
-                  className={`${styles.noticeColumn} ${styles.seriesColumn}`}
-                >
-                  <ArticleSeriesNavigation slug={slug} />
-                </section>
-              </div>
-              <div className={styles.breadcrumbRow}>
-                <Breadcrumbs />
-                {slug && (
-                  <a href="#faq-heading" className={styles.faqLink}>
-                    <CircleHelp size={14} aria-hidden />
-                    FAQ
-                  </a>
-                )}
-              </div>
+
+              <TopWidgets slug={slug} isModified={isModified} reset={reset} />
+
               <details className={styles.inlineSidebar}>
                 <summary className={styles.inlineSidebarSummary}>
                   {t(slug ? "blog.showSidebar" : "blog.showSidebarGeneric")}
