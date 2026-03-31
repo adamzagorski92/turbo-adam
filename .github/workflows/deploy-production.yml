@@ -185,6 +185,12 @@ jobs:
             df -h || true
             docker system df || true
 
+            # Gracefully stop the old stack first to release networks/ports cleanly.
+            # This prevents stale iptables rules that cause "No chain/target/match" errors.
+            if [ -f "$COMPOSE_ENV_FILE" ]; then
+              docker compose --env-file "$COMPOSE_ENV_FILE" -f "$COMPOSE_FILE" down --remove-orphans || true
+            fi
+
             # Free space on the Docker host (safe: does NOT remove named volumes / DB data).
             # This helps avoid: "failed to register layer: ... no space left on device".
             docker system prune -af || true
